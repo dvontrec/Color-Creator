@@ -36,11 +36,11 @@ const config = {
     contentBase: path.join(__dirname, '../build/'),
     // Redirects 404 errors to index.html
     historyApiFallback: true,
-    host: 'localhost',
+    host: '0.0.0.0',
     disableHostCheck: true,
     open: true,
     // Uncomment to access from nginx deveopment docket file on port 8081
-    // public: '0.0.0.0:8081',
+    public: '0.0.0.0:8081',
     port: 8080
   },
   // Allows webpack to use babel loaders/rules

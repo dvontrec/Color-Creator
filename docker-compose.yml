@@ -1,8 +1,22 @@
 version: '3'
 services:
+  nginx:
+    restart: always
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./nginx
+    ports:
+      - '8081:80'
   api:
     build:
       dockerfile: Dockerfile.dev
       context: ./api
     ports:
       - '8083:8001'
+  client:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./client
+    volumes:
+      - /app/node_modules
+      - ./client:/app

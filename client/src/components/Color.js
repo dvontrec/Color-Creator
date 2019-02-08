@@ -10,7 +10,7 @@ class Color extends Component {
   }
 
   async componentDidMount() {
-    const res = await fetch('http://localhost:8001/blue');
+    const res = await fetch('/api/yellow');
     const json = await res.json();
     this.setState({ color: json.color });
   }
@@ -18,7 +18,7 @@ class Color extends Component {
   render() {
     return (
       <div>
-        <p>{this.state.color}</p>
+        <p>Color:{this.state.color}</p>
       </div>
     );
   }
