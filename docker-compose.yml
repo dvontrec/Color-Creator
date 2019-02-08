@@ -1,0 +1,8 @@
+version: '3'
+services:
+  api:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./api
+    ports:
+      - '8083:8001'
