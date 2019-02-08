@@ -7,7 +7,7 @@ import (
 )
 
 func index(w http.ResponseWriter, req *http.Request) {
-	fmt.Fprintf(w, "Hello from the server")
+	fmt.Fprintf(w, "Hello from the api")
 }
 
 func redRoute(w http.ResponseWriter, req *http.Request) {
@@ -37,6 +37,14 @@ func yellowRoute(w http.ResponseWriter, req *http.Request) {
 func greenRoute(w http.ResponseWriter, req *http.Request) {
 	c := color{
 		"green",
+	}
+	err := json.NewEncoder(w).Encode(c)
+	check(err)
+}
+
+func purpleRoute(w http.ResponseWriter, req *http.Request) {
+	c := color{
+		"purple",
 	}
 	err := json.NewEncoder(w).Encode(c)
 	check(err)

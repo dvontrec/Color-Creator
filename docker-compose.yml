@@ -13,6 +13,8 @@ services:
       context: ./api
     ports:
       - '8083:8001'
+    volumes:
+      - ./api:/app
   client:
     build:
       dockerfile: Dockerfile.dev
