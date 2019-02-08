@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"net/http"
+
+	"github.com/rs/cors"
 )
 
 type color struct {
@@ -10,11 +12,15 @@ type color struct {
 }
 
 func main() {
-	http.HandleFunc("/", index)
-	http.HandleFunc("/red", redRoute)
-	http.HandleFunc("/blue", blueRoute)
-	http.HandleFunc("/yellow", yellowRoute)
-	http.ListenAndServe(":8001", nil)
+	// Create a mux for handling cors
+	mux := http.NewServeMux()
+	mux.HandleFunc("/", index)
+	mux.HandleFunc("/red", redRoute)
+	mux.HandleFunc("/blue", blueRoute)
+	mux.HandleFunc("/yellow", yellowRoute)
+
+	handler := cors.Default().Handler(mux)
+	http.ListenAndServe(":8001", handler)
 }
 
 func check(err error) {
