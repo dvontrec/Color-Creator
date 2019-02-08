@@ -5,11 +5,18 @@ import (
 	"net/http"
 )
 
+type color struct {
+	Color string `json:"color"`
+}
+
 func main() {
 	http.HandleFunc("/", index)
+	http.HandleFunc("/red", redRoute)
 	http.ListenAndServe(":8001", nil)
 }
 
-func index(w http.ResponseWriter, req *http.Request) {
-	fmt.Fprintf(w, "Hello from the server")
+func check(err error) {
+	if err != nil {
+		fmt.Println(err)
+	}
 }
