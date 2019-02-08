@@ -17,3 +17,19 @@ func redRoute(w http.ResponseWriter, req *http.Request) {
 	err := json.NewEncoder(w).Encode(c)
 	check(err)
 }
+
+func blueRoute(w http.ResponseWriter, req *http.Request) {
+	c := color{
+		"blue",
+	}
+	err := json.NewEncoder(w).Encode(c)
+	check(err)
+}
+
+func yellowRoute(w http.ResponseWriter, req *http.Request) {
+	c := color{
+		"yellow",
+	}
+	err := json.NewEncoder(w).Encode(c)
+	check(err)
+}

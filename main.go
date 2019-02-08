@@ -12,6 +12,8 @@ type color struct {
 func main() {
 	http.HandleFunc("/", index)
 	http.HandleFunc("/red", redRoute)
+	http.HandleFunc("/blue", blueRoute)
+	http.HandleFunc("/yellow", yellowRoute)
 	http.ListenAndServe(":8001", nil)
 }
 
