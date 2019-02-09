@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 )
 
@@ -42,7 +41,6 @@ func getColors(w http.ResponseWriter) {
 
 	}
 	err = json.NewEncoder(w).Encode(colors)
-	log.Println(rows)
 	check(err)
 }
 
@@ -66,6 +64,5 @@ func getColor(w http.ResponseWriter, c string) {
 	}
 
 	err = json.NewEncoder(w).Encode(co)
-	log.Println(rows)
 	check(err)
 }

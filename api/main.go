@@ -64,8 +64,6 @@ func connectDB() {
 	// combines env variables into a database path
 	dbpath = fmt.Sprint(dbuser, ":", dbpassword, "@(", dbhost, ")/", dbname)
 	fmt.Println()
-	fmt.Printf(dbpath)
-	fmt.Println()
 	fmt.Println()
 }
 
