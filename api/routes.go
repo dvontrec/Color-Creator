@@ -10,6 +10,17 @@ func index(w http.ResponseWriter, req *http.Request) {
 	fmt.Fprintf(w, "Hello from the api")
 }
 
+func colors(w http.ResponseWriter, req *http.Request) {
+	if req.Method == http.MethodGet {
+		getColors(w)
+		return
+	}
+}
+
+func getColors(w http.ResponseWriter) {
+	fmt.Fprintf(w, "Seperated get and post route")
+}
+
 func redRoute(w http.ResponseWriter, req *http.Request) {
 	c := color{
 		"red",
