@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 )
 
@@ -15,10 +16,34 @@ func colors(w http.ResponseWriter, req *http.Request) {
 		getColors(w)
 		return
 	}
+	fmt.Fprintf(w, dbpath)
 }
 
 func getColors(w http.ResponseWriter) {
-	fmt.Fprintf(w, "Seperated get and post route")
+	defer db.Close()
+	var colors []color
+	log.Println("before query")
+
+	// runs a query to pull data from the database
+	rows, err := db.Query(`SELECT * FROM colors`)
+	check(err)
+	log.Println("after query")
+
+	var name string
+	var views int
+
+	for rows.Next() {
+		err = rows.Scan(&name, &views)
+		c := color{
+			name,
+		}
+		check(err)
+		colors = append(colors, c)
+
+	}
+	err = json.NewEncoder(w).Encode(colors)
+	log.Println(rows)
+	check(err)
 }
 
 func redRoute(w http.ResponseWriter, req *http.Request) {
