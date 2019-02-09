@@ -37,11 +37,6 @@ func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", index)
 	mux.HandleFunc("/colors", colors)
-	mux.HandleFunc("/red", redRoute)
-	mux.HandleFunc("/blue", blueRoute)
-	mux.HandleFunc("/yellow", yellowRoute)
-	mux.HandleFunc("/green", greenRoute)
-	mux.HandleFunc("/purple", purpleRoute)
 	mux.Handle("/favicon.ico", http.NotFoundHandler())
 
 	handler := cors.Default().Handler(mux)

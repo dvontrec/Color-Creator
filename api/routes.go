@@ -13,27 +13,27 @@ func index(w http.ResponseWriter, req *http.Request) {
 
 func colors(w http.ResponseWriter, req *http.Request) {
 	if req.Method == http.MethodGet {
-		getColors(w)
+		c := req.FormValue("color")
+		if c == "" {
+			getColors(w)
+			return
+		}
+		getColor(w, c)
 		return
 	}
-	fmt.Fprintf(w, dbpath)
 }
 
 func getColors(w http.ResponseWriter) {
-	defer db.Close()
 	var colors []color
-	log.Println("before query")
 
 	// runs a query to pull data from the database
-	rows, err := db.Query(`SELECT * FROM colors`)
+	rows, err := db.Query(`SELECT color FROM colors`)
 	check(err)
-	log.Println("after query")
 
 	var name string
-	var views int
 
 	for rows.Next() {
-		err = rows.Scan(&name, &views)
+		err = rows.Scan(&name)
 		c := color{
 			name,
 		}
@@ -46,42 +46,26 @@ func getColors(w http.ResponseWriter) {
 	check(err)
 }
 
-func redRoute(w http.ResponseWriter, req *http.Request) {
-	c := color{
-		"red",
-	}
-	err := json.NewEncoder(w).Encode(c)
+func getColor(w http.ResponseWriter, c string) {
+	q := fmt.Sprint(`SELECT color FROM colors WHERE color ="`, c, `";`)
+	rows, err := db.Query(q)
 	check(err)
-}
 
-func blueRoute(w http.ResponseWriter, req *http.Request) {
-	c := color{
-		"blue",
-	}
-	err := json.NewEncoder(w).Encode(c)
-	check(err)
-}
+	var name string
+	var co color
 
-func yellowRoute(w http.ResponseWriter, req *http.Request) {
-	c := color{
-		"yellow",
+	for rows.Next() {
+		err = rows.Scan(&name)
+		co = color{
+			name,
+		}
 	}
-	err := json.NewEncoder(w).Encode(c)
-	check(err)
-}
+	if co.Color == "" {
+		fmt.Fprintf(w, "Color has to be created")
+		return
+	}
 
-func greenRoute(w http.ResponseWriter, req *http.Request) {
-	c := color{
-		"green",
-	}
-	err := json.NewEncoder(w).Encode(c)
-	check(err)
-}
-
-func purpleRoute(w http.ResponseWriter, req *http.Request) {
-	c := color{
-		"purple",
-	}
-	err := json.NewEncoder(w).Encode(c)
+	err = json.NewEncoder(w).Encode(co)
+	log.Println(rows)
 	check(err)
 }
