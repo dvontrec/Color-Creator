@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS colors;
 CREATE TABLE colors
 (
   color VARCHAR(30),
+  rgba VARCHAR(8) DEFAULT "00000000",
   views INT DEFAULT 0
 );
 
