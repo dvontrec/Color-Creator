@@ -17,6 +17,10 @@ var dbpath string
 
 type color struct {
 	Color string `json:"color"`
+	R     string `json:"r"`
+	G     string `json:"g"`
+	B     string `json:"b"`
+	A     string `json:"a"`
 }
 
 func main() {

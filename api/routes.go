@@ -26,15 +26,16 @@ func getColors(w http.ResponseWriter) {
 	var colors []color
 
 	// runs a query to pull data from the database
-	rows, err := db.Query(`SELECT color FROM colors`)
+	rows, err := db.Query(`SELECT color, r, g, b, a FROM colors`)
 	check(err)
 
-	var name string
+	var name, r, g, b, a string
 
 	for rows.Next() {
-		err = rows.Scan(&name)
+		err = rows.Scan(&name, &r, &g, &b, &a)
 		c := color{
 			name,
+			r, g, b, a,
 		}
 		check(err)
 		colors = append(colors, c)
@@ -45,17 +46,18 @@ func getColors(w http.ResponseWriter) {
 }
 
 func getColor(w http.ResponseWriter, c string) {
-	q := fmt.Sprint(`SELECT color FROM colors WHERE color ="`, c, `";`)
+	q := fmt.Sprint(`SELECT color, r, g, b, a FROM colors WHERE color ="`, c, `";`)
 	rows, err := db.Query(q)
 	check(err)
 
-	var name string
+	var name, r, g, b, a string
 	var co color
 
 	for rows.Next() {
-		err = rows.Scan(&name)
+		err = rows.Scan(&name, &r, &g, &b, &a)
 		co = color{
 			name,
+			r, g, b, a,
 		}
 	}
 	if co.Color == "" {
