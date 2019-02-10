@@ -12,8 +12,8 @@ services:
       dockerfile: Dockerfile.dev
       context: ./api
     # Waits for the db to start then runs the app
-    depends_on:
-      - 'sql'
+    # depends_on:
+    #   - 'sql'
     ports:
       - '8083:8001'
     volumes:
@@ -40,3 +40,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: colors
+    expose:
+      - '3306'
+    ports:
+      - '3306:3306'
