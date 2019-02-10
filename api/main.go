@@ -30,6 +30,9 @@ func main() {
 	// defer the close
 	defer db.Close()
 
+	fmt.Println()
+	fmt.Println("Pinging db...")
+	fmt.Println()
 	// Pings the db
 	err = db.Ping()
 	check(err)
@@ -61,9 +64,14 @@ func connectDB() {
 	if dbname == "" {
 		dbname = "colors"
 	}
+	dbport := os.Getenv("DBPORT")
+	if dbport == "" {
+		dbport = "3306"
+	}
 	// combines env variables into a database path
-	dbpath = fmt.Sprint(dbuser, ":", dbpassword, "@(", dbhost, ")/", dbname)
+	dbpath = fmt.Sprint(dbuser, ":", dbpassword, "@(", dbhost, ":", dbport, ")/", dbname)
 	fmt.Println()
+	fmt.Println(dbpath)
 	fmt.Println()
 }
 

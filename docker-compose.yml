@@ -1,11 +1,5 @@
 version: '3'
 services:
-  sql:
-    image: mysql
-    command: --default-authentication-plugin=mysql_native_password
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: example
   nginx:
     restart: always
     build:
@@ -17,10 +11,19 @@ services:
     build:
       dockerfile: Dockerfile.dev
       context: ./api
+    # Waits for the db to start then runs the app
+    depends_on:
+      - 'sql'
     ports:
       - '8083:8001'
     volumes:
       - ./api:/app
+    environment:
+      DBUSER: root
+      DBPASSWORD: password
+      DBHOST: sql
+      DBNAME: colors
+      DBPORT: '3306'
   client:
     build:
       dockerfile: Dockerfile.dev
@@ -28,3 +31,12 @@ services:
     volumes:
       - /app/node_modules
       - ./client:/app
+  sql:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./db
+    # command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: colors
