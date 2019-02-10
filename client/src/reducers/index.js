@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux';
 
+import colorReducer from './colorReducer';
+
 const rootReducer = combineReducers({
-  // remove this when there are reducers to alter state
-  state: (state = {}) => state
+  colors: colorReducer
 });
 
 export default rootReducer;

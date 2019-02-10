@@ -3,13 +3,14 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
+import reduxThunk from 'redux-thunk';
 
 import App from './components/App';
 import reducers from './reducers';
 import './style.css';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const createStoreWithMiddleware = composeEnhancers(applyMiddleware())(
+const createStoreWithMiddleware = composeEnhancers(applyMiddleware(reduxThunk))(
   createStore
 );
 // Renders the App element in the document element with the root ID
