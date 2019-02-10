@@ -5,20 +5,25 @@ class Color extends Component {
   constructor() {
     super();
     this.state = {
-      color: 'green'
+      color: {
+        color: 'teal'
+      }
     };
   }
 
   async componentDidMount() {
-    const res = await fetch('/api/colors?color=yellow');
+    const res = await fetch('/api/colors?color=green');
     const json = await res.json();
-    this.setState({ color: json.color });
+    this.setState({ color: json });
   }
 
   render() {
+    const color = this.state.color;
     return (
-      <div>
-        <p>Color:{this.state.color}</p>
+      <div
+        style={{ color: `rgba(${color.r},${color.g},${color.b},${color.a})` }}
+      >
+        <p>Color:{color.color}</p>
       </div>
     );
   }
