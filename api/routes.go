@@ -20,6 +20,9 @@ func colors(w http.ResponseWriter, req *http.Request) {
 		getColor(w, c)
 		return
 	}
+	if req.Method == http.MethodPost {
+		addColor(w, req)
+	}
 }
 
 func getColors(w http.ResponseWriter) {
@@ -67,4 +70,36 @@ func getColor(w http.ResponseWriter, c string) {
 
 	err = json.NewEncoder(w).Encode(co)
 	check(err)
+}
+
+func addColor(w http.ResponseWriter, req *http.Request) {
+	cName := req.PostFormValue("color")
+	r := req.PostFormValue("r")
+	g := req.PostFormValue("g")
+	b := req.PostFormValue("b")
+	a := req.PostFormValue("a")
+
+	c := color{
+		cName,
+		r,
+		g,
+		b,
+		a,
+	}
+	fmt.Fprintln(w, addColorToDB(c))
+
+}
+
+func addColorToDB(c color) string {
+	q := fmt.Sprint("INSERT INTO colors(color, r, g, b, a) VALUES(\"", c.Color, "\",", c.R, ",", c.G, ",", c.B, ",", c.A, ");")
+	stmt, err := db.Prepare(q)
+	check(err)
+
+	r, err := stmt.Exec()
+	check(err)
+
+	n, err := r.RowsAffected()
+	check(err)
+
+	return (fmt.Sprint("Colors created ", n))
 }

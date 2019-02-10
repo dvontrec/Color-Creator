@@ -14,6 +14,7 @@ services:
     # Waits for the db to start then runs the app
     # depends_on:
     #   - 'sql'
+    restart: always
     ports:
       - '8083:8001'
     volumes:
