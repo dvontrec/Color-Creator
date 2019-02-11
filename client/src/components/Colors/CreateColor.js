@@ -21,6 +21,10 @@ class CreateColor extends Component {
     this.setState({ [Skey]: e.target.value });
   };
 
+  submitColorForm = values => {
+    console.log(values);
+  };
+
   render() {
     const colorCode = `rgba(${this.state.r},${this.state.g},${
       this.state.b
@@ -31,77 +35,84 @@ class CreateColor extends Component {
         className="colorCreator"
         style={{ backgroundColor: colorCode, height: '100vh' }}
       >
-        <div className="color-group">
-          <div className="input-group">
-            <label>Red </label>
-            <input
-              type="number"
-              onChange={this.updateSlider}
-              value={this.state.r}
-              name="r"
-            />
-            <input
-              type="range"
-              min="0"
-              max="255"
-              value={this.state.r}
-              onChange={this.updateSlider}
-              name="r"
-            />
+        <form action="">
+          <div>
+            <label htmlFor="colorName">Color Name</label>
+            <input type="text" name="colorName" />
           </div>
+          <div className="color-group">
+            <div className="input-group">
+              <label>Red </label>
+              <input
+                type="number"
+                onChange={this.updateSlider}
+                value={this.state.r}
+                name="r"
+              />
+              <input
+                type="range"
+                min="0"
+                max="255"
+                value={this.state.r}
+                onChange={this.updateSlider}
+                name="r"
+              />
+            </div>
 
-          <div className="input-group">
-            <label>Green </label>
-            <input
-              type="number"
-              onChange={this.updateSlider}
-              value={this.state.g}
-              name="g"
-            />
-            <input
-              type="range"
-              min="0"
-              max="255"
-              value={this.state.g}
-              onChange={this.updateSlider}
-              name="g"
-            />
+            <div className="input-group">
+              <label>Green </label>
+              <input
+                type="number"
+                onChange={this.updateSlider}
+                value={this.state.g}
+                name="g"
+              />
+              <input
+                type="range"
+                min="0"
+                max="255"
+                value={this.state.g}
+                onChange={this.updateSlider}
+                name="g"
+              />
+            </div>
+            <div className="input-group">
+              <label>Blue </label>
+              <input
+                type="number"
+                onChange={this.updateSlider}
+                value={this.state.b}
+                name="b"
+              />
+              <input
+                type="range"
+                min="0"
+                max="255"
+                value={this.state.b}
+                onChange={this.updateSlider}
+                name="b"
+              />
+            </div>
+            <div className="input-group">
+              <label>Alpha/Opacity </label>
+              <input
+                type="number"
+                onChange={this.updateSlider}
+                value={this.state.a}
+                name="a"
+              />
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value={this.state.a}
+                onChange={this.updateSlider}
+                name="a"
+              />
+            </div>
+            <input type="submit" />
           </div>
-          <div className="input-group">
-            <label>Blue </label>
-            <input
-              type="number"
-              onChange={this.updateSlider}
-              value={this.state.b}
-              name="b"
-            />
-            <input
-              type="range"
-              min="0"
-              max="255"
-              value={this.state.b}
-              onChange={this.updateSlider}
-              name="b"
-            />
-          </div>
-          <div className="input-group">
-            <label>Alpha/Opacity </label>
-            <input
-              type="number"
-              onChange={this.updateSlider}
-              value={this.state.a}
-              name="a"
-            />
-            <input
-              type="range"
-              min="0"
-              max="100"
-              value={this.state.a}
-              onChange={this.updateSlider}
-              name="a"
-            />
-          </div>
-        </div>
+        </form>
       </div>
     );
   }
