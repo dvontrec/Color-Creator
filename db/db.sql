@@ -15,7 +15,7 @@ CREATE TABLE colors
   (1)  UNSIGNED DEFAULT 0 ,
 
   a TINYINT
-  (1)  UNSIGNED DEFAULT 255 ,
+  (1)  UNSIGNED DEFAULT 100 ,
   
   views INT DEFAULT 0
 );
@@ -31,3 +31,7 @@ CREATE TABLE colors
   INSERT INTO colors
     (color,g)
   VALUES("green", 255);
+
+  INSERT INTO colors
+    (color,r,g,b)
+  VALUES("pink", 220, 80, 125);
