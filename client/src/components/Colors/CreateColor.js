@@ -4,6 +4,7 @@ class CreateColor extends Component {
   constructor() {
     super();
     this.state = {
+      colorName: '',
       r: this.getRandomNum(255),
       g: this.getRandomNum(255),
       b: this.getRandomNum(255),
@@ -15,14 +16,21 @@ class CreateColor extends Component {
     const num = Math.floor(Math.random() * max);
     return num;
   }
+  randomizeColor = () => {
+    const rR = this.getRandomNum(255);
+    const rG = this.getRandomNum(255);
+    const rB = this.getRandomNum(255);
+    this.setState({ colorName: 'Random', r: rG, g: rG, b: rB });
+  };
 
   updateSlider = e => {
     const Skey = String(e.target.name);
     this.setState({ [Skey]: e.target.value });
   };
 
-  submitColorForm = values => {
-    console.log(values);
+  submitColorForm = e => {
+    e.preventDefault();
+    console.log(this.state);
   };
 
   render() {
@@ -35,10 +43,15 @@ class CreateColor extends Component {
         className="colorCreator"
         style={{ backgroundColor: colorCode, height: '100vh' }}
       >
-        <form action="">
+        <form action="" onSubmit={this.submitColorForm}>
           <div>
             <label htmlFor="colorName">Color Name</label>
-            <input type="text" name="colorName" />
+            <input
+              type="text"
+              name="colorName"
+              value={this.state.colorName}
+              onChange={this.updateSlider}
+            />
           </div>
           <div className="color-group">
             <div className="input-group">
@@ -113,6 +126,7 @@ class CreateColor extends Component {
             <input type="submit" />
           </div>
         </form>
+        <button onClick={this.randomizeColor}>Randomize</button>
       </div>
     );
   }
