@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Route, HashRouter, IndexRoute } from 'react-router-dom';
+import { Route, Router, IndexRoute } from 'react-router-dom';
 
+import history from '../history';
 import ShowColors from './Colors/ShowColors';
 import CreateColor from './Colors/CreateColor';
 import Nav from './Nav';
@@ -8,7 +9,7 @@ import Nav from './Nav';
 class App extends Component {
   render() {
     return (
-      <HashRouter>
+      <Router history={history}>
         <div>
           <div>
             <Nav />
@@ -16,7 +17,7 @@ class App extends Component {
           <Route exact path="/" component={ShowColors} />
           <Route path="/newcolor/" component={CreateColor} />
         </div>
-      </HashRouter>
+      </Router>
     );
   }
 }

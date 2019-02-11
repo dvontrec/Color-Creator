@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { createColor } from '../../actions';
 
 class CreateColor extends Component {
   constructor() {
     super();
     this.state = {
-      colorName: '',
+      color: '',
       r: this.getRandomNum(255),
       g: this.getRandomNum(255),
       b: this.getRandomNum(255),
@@ -20,7 +22,7 @@ class CreateColor extends Component {
     const rR = this.getRandomNum(255);
     const rG = this.getRandomNum(255);
     const rB = this.getRandomNum(255);
-    this.setState({ colorName: 'Random', r: rG, g: rG, b: rB });
+    this.setState({ color: 'Random', r: rR, g: rG, b: rB });
   };
 
   updateSlider = e => {
@@ -30,7 +32,10 @@ class CreateColor extends Component {
 
   submitColorForm = e => {
     e.preventDefault();
-    console.log(this.state);
+    const queryString = `color=${this.state.color}&r=${this.state.r}&g=${
+      this.state.g
+    }&b=${this.state.b}&a=${this.state.a}`;
+    this.props.createColor(queryString);
   };
 
   render() {
@@ -48,8 +53,8 @@ class CreateColor extends Component {
             <label htmlFor="colorName">Color Name</label>
             <input
               type="text"
-              name="colorName"
-              value={this.state.colorName}
+              name="color"
+              value={this.state.color}
               onChange={this.updateSlider}
             />
           </div>
@@ -132,4 +137,7 @@ class CreateColor extends Component {
   }
 }
 
-export default CreateColor;
+export default connect(
+  null,
+  { createColor }
+)(CreateColor);

@@ -73,11 +73,11 @@ func getColor(w http.ResponseWriter, c string) {
 }
 
 func addColor(w http.ResponseWriter, req *http.Request) {
-	cName := req.PostFormValue("color")
-	r := req.PostFormValue("r")
-	g := req.PostFormValue("g")
-	b := req.PostFormValue("b")
-	a := req.PostFormValue("a")
+	cName := req.FormValue("color")
+	r := req.FormValue("r")
+	g := req.FormValue("g")
+	b := req.FormValue("b")
+	a := req.FormValue("a")
 
 	c := color{
 		cName,
