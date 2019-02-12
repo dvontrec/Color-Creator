@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import colorapi from '../../apis/colors';
 
 import { fetchColor } from '../../actions';
+import style from '../../style.css';
 
 class Color extends Component {
   constructor() {
@@ -17,10 +18,23 @@ class Color extends Component {
     if (this.state.color) {
       const color = this.state.color;
       return (
-        <div
-          style={{ color: `rgba(${color.r},${color.g},${color.b},${color.a})` }}
-        >
-          <p>Color:{color.color}</p>
+        <div className={style.colorDiv}>
+          <div
+            className={style.colorBlock}
+            style={{
+              background: `rgba(${color.r},${color.g},${color.b},${color.a})`
+            }}
+          />
+          <p>
+            Color:{' '}
+            <span
+              style={{
+                color: `rgba(${color.r},${color.g},${color.b},${color.a})`
+              }}
+            >
+              {color.color}
+            </span>
+          </p>
         </div>
       );
     }
