@@ -3,6 +3,24 @@ body {
   width: 100%;
 }
 
+.nav {
+  background-color: #1f1f1f;
+  height: 30px;
+  border-bottom: solid 1px black;
+}
+.nav ul {
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+}
+.nav ul a {
+  color: white;
+  opacity: 0.7;
+}
+.nav ul a:hover {
+  opacity: 1;
+  text-decoration: none;
+}
 .colorContainer {
   display: flex;
   flex-wrap: wrap;
