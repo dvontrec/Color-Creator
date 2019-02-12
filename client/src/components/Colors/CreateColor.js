@@ -56,6 +56,7 @@ class CreateColor extends Component {
               name="color"
               value={this.state.color}
               onChange={this.updateSlider}
+              required
             />
           </div>
           <div className="color-group">

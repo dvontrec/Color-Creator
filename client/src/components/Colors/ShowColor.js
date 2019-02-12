@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import colorapi from '../../apis/colors';
 
-import { fetchColor } from '../../actions';
 import style from '../../style.css';
 
 class Color extends Component {
@@ -18,7 +17,12 @@ class Color extends Component {
     if (this.state.color) {
       const color = this.state.color;
       return (
-        <div className={style.colorDiv}>
+        <div
+          className={style.colorDiv}
+          style={{
+            borderColor: `rgba(${color.r},${color.g},${color.b},${color.a})`
+          }}
+        >
           <div
             className={style.colorBlock}
             style={{
