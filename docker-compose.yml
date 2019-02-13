@@ -11,9 +11,9 @@ services:
     build:
       dockerfile: Dockerfile.dev
       context: ./api
-    # Waits for the db to start then runs the app
-    # depends_on:
-    #   - 'sql'
+    # Tells docker to start sql first
+    depends_on:
+      - 'sql'
     restart: always
     ports:
       - '8083:8001'
@@ -36,7 +36,6 @@ services:
     build:
       dockerfile: Dockerfile.dev
       context: ./db
-    # command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: password
