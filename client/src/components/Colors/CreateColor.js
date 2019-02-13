@@ -8,6 +8,7 @@ class CreateColor extends Component {
     this.state = {
       color: '',
       textColor: '',
+      hex: '',
       r: 0,
       g: 0,
       b: 0,
@@ -23,13 +24,32 @@ class CreateColor extends Component {
     const rR = this.getRandomNum(255);
     const rG = this.getRandomNum(255);
     const rB = this.getRandomNum(255);
-    this.setState({ r: rR, g: rG, b: rB });
+    const hex = `#${rR.toString(16)}${rG.toString(16)}${rB.toString(16)}`;
+    this.setState({ r: rR, g: rG, b: rB, hex: hex });
     this.updateColorState();
   };
 
   updateSlider = e => {
     const Skey = String(e.target.name);
-    this.setState({ [Skey]: e.target.value });
+    this.setState({ [Skey]: e.target.value }, () => {
+      const r = parseInt(this.state.r);
+      const g = parseInt(this.state.g);
+      const b = parseInt(this.state.b);
+      let hexr = r.toString(16);
+      if (hexr.length == 1) {
+        hexr = `0${hexr}`;
+      }
+      let hexg = g.toString(16);
+      if (hexg.length == 1) {
+        hexg = `0${hexg}`;
+      }
+      let hexb = b.toString(16);
+      if (hexb.length == 1) {
+        hexb = `0${hexb}`;
+      }
+      const hex = `%23${hexr}${hexg}${hexb}`;
+      this.setState({ hex: hex });
+    });
     this.updateColorState();
   };
 
@@ -48,6 +68,7 @@ class CreateColor extends Component {
       this.setState({ textColor: 'black' });
     }
   }
+
   componentDidMount() {
     this.randomizeColor();
   }
@@ -56,7 +77,8 @@ class CreateColor extends Component {
     e.preventDefault();
     const queryString = `color=${this.state.color}&r=${this.state.r}&g=${
       this.state.g
-    }&b=${this.state.b}&a=${this.state.a}`;
+    }&b=${this.state.b}&a=${this.state.a}&hex=${this.state.hex}`;
+    console.log(queryString);
     this.props.createColor(queryString);
   };
 

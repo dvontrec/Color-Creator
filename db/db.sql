@@ -16,22 +16,23 @@ CREATE TABLE colors
 
   a TINYINT
   (1)  UNSIGNED DEFAULT 100 ,
-  
+  hex VARCHAR
+  (7) NOT NULL UNIQUE,
   views INT DEFAULT 0
 );
 
 
   -- Insert red, blue, and yellow into the db
   INSERT INTO colors
-    (color,r)
-  VALUES("red", 255);
+    (color,r, hex)
+  VALUES("red", 255, "#ff0000");
   INSERT INTO colors
-    (color,b)
-  VALUES("blue", 255);
+    (color,b, hex)
+  VALUES("blue", 255, "#0000ff");
   INSERT INTO colors
-    (color,g)
-  VALUES("green", 255);
+    (color,g, hex)
+  VALUES("green", 255, "#00ff00");
 
   INSERT INTO colors
-    (color,r,g,b)
-  VALUES("pink", 220, 80, 125);
+    (color,r,g,b, hex)
+  VALUES("pink", 220, 80, 125, "#dc507d");

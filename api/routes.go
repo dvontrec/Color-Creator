@@ -29,16 +29,16 @@ func getColors(w http.ResponseWriter) {
 	var colors []color
 
 	// runs a query to pull data from the database
-	rows, err := db.Query(`SELECT color, r, g, b, a FROM colors;`)
+	rows, err := db.Query(`SELECT color, r, g, b, a, hex FROM colors;`)
 	check(err)
 
-	var name, r, g, b, a string
+	var name, r, g, b, a, hex string
 
 	for rows.Next() {
-		err = rows.Scan(&name, &r, &g, &b, &a)
+		err = rows.Scan(&name, &r, &g, &b, &a, &hex)
 		c := color{
 			name,
-			r, g, b, a,
+			r, g, b, a, hex,
 		}
 		check(err)
 		colors = append(colors, c)
@@ -49,18 +49,18 @@ func getColors(w http.ResponseWriter) {
 }
 
 func getColor(w http.ResponseWriter, c string) {
-	q := fmt.Sprint(`SELECT color, r, g, b, a FROM colors WHERE color ="`, c, `";`)
+	q := fmt.Sprint(`SELECT color, r, g, b, a, hex FROM colors WHERE color ="`, c, `";`)
 	rows, err := db.Query(q)
 	check(err)
 
-	var name, r, g, b, a string
+	var name, r, g, b, a, hex string
 	var co color
 
 	for rows.Next() {
-		err = rows.Scan(&name, &r, &g, &b, &a)
+		err = rows.Scan(&name, &r, &g, &b, &a, &hex)
 		co = color{
 			name,
-			r, g, b, a,
+			r, g, b, a, hex,
 		}
 	}
 	if co.Color == "" {
@@ -78,20 +78,23 @@ func addColor(w http.ResponseWriter, req *http.Request) {
 	g := req.FormValue("g")
 	b := req.FormValue("b")
 	a := req.FormValue("a")
+	hex := req.FormValue("hex")
 
+	fmt.Printf("hex %v", hex)
 	c := color{
 		cName,
 		r,
 		g,
 		b,
 		a,
+		hex,
 	}
 	fmt.Fprintln(w, addColorToDB(c))
 
 }
 
 func addColorToDB(c color) string {
-	q := fmt.Sprint("INSERT INTO colors(color, r, g, b, a) VALUES(\"", c.Color, "\",", c.R, ",", c.G, ",", c.B, ",", c.A, ");")
+	q := fmt.Sprint("INSERT INTO colors(color, r, g, b, a, hex) VALUES(\"", c.Color, "\",", c.R, ",", c.G, ",", c.B, ",", c.A, ",\"", c.Hex, "\");")
 	stmt, err := db.Prepare(q)
 	check(err)
 

@@ -21,6 +21,7 @@ type color struct {
 	G     string `json:"g"`
 	B     string `json:"b"`
 	A     string `json:"a"`
+	Hex   string `json:"hex"`
 }
 
 func main() {
