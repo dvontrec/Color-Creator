@@ -25,6 +25,7 @@
           "containerPort": 80
         }
       ],
+      "memory": 218,
       "links": ["api", "server"]
     }
   ]
