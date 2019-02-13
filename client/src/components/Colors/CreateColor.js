@@ -43,8 +43,9 @@ class CreateColor extends Component {
       if (avgColor < 140) {
         this.setState({ textColor: 'white' });
       } else {
-        this.setState({ textColor: 'black' });
       }
+    } else {
+      this.setState({ textColor: 'black' });
     }
   }
   componentDidMount() {
