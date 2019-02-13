@@ -1,0 +1,30 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "client",
+      "image": "dvontrec/colors-client",
+      "hostname": "client",
+      "essential": false
+    },
+    {
+      "name": "api",
+      "image": "dvontrec/colors-api",
+      "hostname": "api",
+      "essential": false,
+      "memory": 218
+    },
+    {
+      "name": "nginx",
+      "image": "dvontrec/colors-nginx",
+      "essential": true,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
+      "links": ["api", "server"]
+    }
+  ]
+}
