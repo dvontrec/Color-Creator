@@ -5,7 +5,8 @@
       "name": "client",
       "image": "dvontrec/colors-client",
       "hostname": "client",
-      "essential": false
+      "essential": false,
+      "memory": 218
     },
     {
       "name": "api",
