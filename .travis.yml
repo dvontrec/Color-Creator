@@ -19,8 +19,8 @@ deploy:
   region: 'us-east-1'
   app: Color-Creator
   env: ColorCreator-env
-  bucketname: elasticbeanstalk-us-east-1-092753704309
-  bucketpath: Color-Creator
+  bucket_name: elasticbeanstalk-us-east-1-092753704309
+  bucket_path: Color-Creator
   on:
     branch: master
   access_key_id: $AWS_ACCESS_KEY
