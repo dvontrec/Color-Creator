@@ -8,11 +8,11 @@ script:
   - docker run dvontrec/client-test npm run test:coverage
 after_success:
   - docker build -t dvontrec/colors-client ./client
-  - docker build -t dvontrec/colors-server ./server
+  - docker build -t dvontrec/colors-nginx ./nginx
   - docker build -t dvontrec/colors-api ./api
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker push dvontrec/colors-client
-  - docker push dvontrec/colors-server
+  - docker push dvontrec/colors-nginx
   - docker push dvontrec/colors-api
 deploy:
   provider: 'elasticbeanstalk'
