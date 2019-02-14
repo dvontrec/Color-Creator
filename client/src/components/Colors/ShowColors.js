@@ -19,7 +19,9 @@ class ShowColors extends Component {
     if (this.state.termterm === '') {
       return this.state.color;
     } else {
-      return this.props.colors.filter(c => c.color.includes(this.state.term));
+      return this.props.colors.filter(c =>
+        c.color.toLowerCase().includes(this.state.term.toLowerCase())
+      );
     }
   };
 
