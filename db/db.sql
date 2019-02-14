@@ -25,14 +25,14 @@ CREATE TABLE colors
   -- Insert red, blue, and yellow into the db
   INSERT INTO colors
     (color,r, hex)
-  VALUES("red", 255, "#ff0000");
+  VALUES("True Red", 255, "#ff0000");
   INSERT INTO colors
     (color,b, hex)
-  VALUES("blue", 255, "#0000ff");
+  VALUES("True Blue", 255, "#0000ff");
   INSERT INTO colors
     (color,g, hex)
-  VALUES("green", 255, "#00ff00");
+  VALUES("True Green", 255, "#00ff00");
 
   INSERT INTO colors
     (color,r,g,b, hex)
-  VALUES("pink", 220, 80, 125, "#dc507d");
+  VALUES("Semi Pink", 220, 80, 125, "#dc507d");
