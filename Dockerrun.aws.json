@@ -2,13 +2,6 @@
   "AWSEBDockerrunVersion": 2,
   "containerDefinitions": [
     {
-      "name": "client",
-      "image": "dvontrec/colors-client",
-      "hostname": "client",
-      "essential": false,
-      "memory": 218
-    },
-    {
       "name": "api",
       "image": "dvontrec/colors-api",
       "hostname": "api",
@@ -26,7 +19,7 @@
         }
       ],
       "links": ["client", "api"],
-      "memory": 218
+      "memory": 128
     }
   ]
 }
