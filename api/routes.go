@@ -89,20 +89,29 @@ func addColor(w http.ResponseWriter, req *http.Request) {
 		a,
 		hex,
 	}
-	fmt.Fprintln(w, addColorToDB(c))
+	fmt.Fprintln(w, addColorToDB(w, c))
 
 }
 
-func addColorToDB(c color) string {
+func addColorToDB(w http.ResponseWriter, c color) string {
 	q := fmt.Sprint("INSERT INTO colors(color, r, g, b, a, hex) VALUES(\"", c.Color, "\",", c.R, ",", c.G, ",", c.B, ",", c.A, ",\"", c.Hex, "\");")
 	stmt, err := db.Prepare(q)
-	check(err)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return (fmt.Sprint("There was an error ", err))
+	}
 
 	r, err := stmt.Exec()
-	check(err)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return (fmt.Sprint("There was an error ", err))
+	}
 
 	n, err := r.RowsAffected()
-	check(err)
-
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return (fmt.Sprint("There was an error ", err))
+	}
+	w.WriteHeader(http.StatusCreated)
 	return (fmt.Sprint("Colors created ", n))
 }
