@@ -23,7 +23,11 @@ class ColorDisplay extends Component {
         </div>
         <div
           className="col-md-8"
-          style={{ backgroundColor: color.hex, border: '3px solid black' }}
+          style={{
+            backgroundColor: color.hex,
+            border: '3px solid black',
+            minHeight: '100px'
+          }}
         />
       </div>
     );
