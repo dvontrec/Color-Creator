@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { Route, Router, IndexRoute } from 'react-router-dom';
 
+import Nav from './Nav';
 import history from '../history';
 import ShowColors from './Colors/ShowColors';
 import CreateColor from './Colors/CreateColor';
-import Nav from './Nav';
+
+import ColorDisplay from './Colors/ColorDisplay';
 
 class App extends Component {
   render() {
@@ -16,6 +18,7 @@ class App extends Component {
           </div>
           <Route exact path="/" component={ShowColors} />
           <Route path="/newcolor/" component={CreateColor} />
+          <Route path="/color/:color" component={ColorDisplay} />
         </div>
       </Router>
     );

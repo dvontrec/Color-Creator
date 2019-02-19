@@ -6,7 +6,7 @@ export default (state = {}, action) => {
       return { ...state, ..._.mapKeys(action.payload, 'color') };
     case 'FETCH_COLOR':
       // Returns the state and the stream with a key of the id
-      return { ...state, color: action.payload };
+      return { ...state, [action.payload.color]: action.payload };
     default:
       return state;
   }
