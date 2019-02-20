@@ -32,7 +32,7 @@ class Color extends Component {
         </Link>
       );
     }
-    return <div>nope</div>;
+    return <div>Loading Color</div>;
   };
   render() {
     return <div>{this.renderColor()}</div>;
