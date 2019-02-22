@@ -5,6 +5,7 @@ import Nav from './Nav';
 import history from '../history';
 import ShowColors from './Colors/ShowColors';
 import CreateColor from './Colors/CreateColor';
+import RegisterForm from './Users/RegisterForm';
 
 import ColorDisplay from './Colors/ColorDisplay';
 
@@ -19,6 +20,7 @@ class App extends Component {
           <Route exact path="/" component={ShowColors} />
           <Route path="/newcolor/" component={CreateColor} />
           <Route path="/color/:color" component={ColorDisplay} />
+          <Route path="/register" component={RegisterForm} />
         </div>
       </Router>
     );

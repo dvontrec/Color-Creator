@@ -13,6 +13,9 @@ const Nav = props => {
         <li>
           <Link to="/newcolor">Create Color</Link>
         </li>
+        <li>
+          <Link to="/register">Register</Link>/<Link to="/login">Login</Link>
+        </li>
       </ul>
     </div>
   );
