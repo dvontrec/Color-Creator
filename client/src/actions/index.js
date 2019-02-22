@@ -31,3 +31,9 @@ export const signIn = userQuery => async dispatch => {
   dispatch({ type: 'SIGN_IN', payload: response.data });
   history.push('/');
 };
+
+export const signOut = () => {
+  return {
+    type: 'SIGN_OUT'
+  };
+};

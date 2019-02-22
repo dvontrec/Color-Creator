@@ -7,7 +7,7 @@ import ShowColors from './Colors/ShowColors';
 import CreateColor from './Colors/CreateColor';
 import RegisterForm from './Users/RegisterForm';
 import LoginForm from './Users/LoginForm';
-
+import Logout from './Users/Logout';
 import ColorDisplay from './Colors/ColorDisplay';
 
 class App extends Component {
@@ -23,6 +23,7 @@ class App extends Component {
           <Route path="/color/:color" component={ColorDisplay} />
           <Route path="/register" component={RegisterForm} />
           <Route path="/login" component={LoginForm} />
+          <Route path="/logout" component={Logout} />
         </div>
       </Router>
     );
