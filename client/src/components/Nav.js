@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import style from '../style.css';
 
@@ -21,4 +22,8 @@ const Nav = props => {
   );
 };
 
-export default Nav;
+const mapStateToProps(state){
+
+}
+
+export default connect()(Nav);

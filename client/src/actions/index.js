@@ -21,13 +21,13 @@ export const createColor = colorQuery => async dispatch => {
 };
 
 export const registerUser = userQuery => async dispatch => {
-  const response = await api.post(`api/auth?${userQuery}`);
+  const response = await api.post(`api/${userQuery}`);
   dispatch({ type: 'REGISTER_USER', payload: response.data });
   history.push('/');
 };
 
 export const signIn = userQuery => async dispatch => {
-  const response = await api.get(`api/auth?${userQuery}`);
+  const response = await api.get(`api/${userQuery}`);
   dispatch({ type: 'SIGN_IN', payload: response.data });
   history.push('/');
 };

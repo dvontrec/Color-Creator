@@ -6,7 +6,10 @@ import UserForm from './UserForm';
 
 class RegisterForm extends Component {
   onSubmit = formValues => {
-    console.log(formValues);
+    const username = formValues.username;
+    const password = formValues.password;
+    const userQuery = `auth?username=${username}&password=${password}`;
+    this.props.registerUser(userQuery);
   };
 
   render() {
