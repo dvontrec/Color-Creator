@@ -2,11 +2,20 @@ import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 
 class UserForm extends Component {
-  renderinput = ({ input, label }) => {
+  renderInput = ({ input, label }) => {
     return (
       <div>
         <label>{label}: </label>
         <input {...input} autoComplete="off" />
+      </div>
+    );
+  };
+
+  renderPasswordInput = ({ input, label }) => {
+    return (
+      <div>
+        <label>{label}: </label>
+        <input {...input} type="password" autoComplete="off" />
       </div>
     );
   };
@@ -18,8 +27,20 @@ class UserForm extends Component {
   render() {
     return (
       <form onSubmit={this.props.handleSubmit(this.onSubmit)}>
-        <Field name="username" component={this.renderinput} label="Username" />
-        <Field name="password" component={this.renderinput} label="Password" />
+        <Field name="username" component={this.renderInput} label="Username" />
+        <Field
+          name="password"
+          component={this.renderPasswordInput}
+          label="Password"
+        />
+        {this.props.isRegister && (
+          <Field
+            name="password2"
+            component={this.renderPasswordInput}
+            label="Repeat Password"
+            type="password"
+          />
+        )}
         <button>{this.props.submitButton}</button>
       </form>
     );
