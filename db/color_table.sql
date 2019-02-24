@@ -16,24 +16,33 @@ CREATE TABLE colors
 
   a TINYINT
   (1)  UNSIGNED DEFAULT 100 ,
+
   hex VARCHAR
   (7) NOT NULL UNIQUE,
-  views INT DEFAULT 0
+
+  creatorId INT NOT NULL,
+
+  views INT DEFAULT 0,
+
+  FOREIGN KEY
+  (creatorId) REFERENCES users
+  (id)
+
 );
 
   -- Insert red, blue, and yellow into the db
   INSERT INTO colors
-    (color,r, hex)
-  VALUES("True Red", 255, "#ff0000");
+    (color,r, hex, creatorId)
+  VALUES("True Red", 255, "#ff0000", 1);
   INSERT INTO colors
-    (color,b, hex)
-  VALUES("True Blue", 255, "#0000ff");
+    (color,b, hex, creatorId)
+  VALUES("True Blue", 255, "#0000ff", 1);
   INSERT INTO colors
-    (color,g, hex)
-  VALUES("True Green", 255, "#00ff00");
+    (color,g, hex, creatorId)
+  VALUES("True Green", 255, "#00ff00", 1);
 
   INSERT INTO colors
-    (color,r,g,b, hex)
-  VALUES("Semi Pink", 220, 80, 125, "#dc507d");
+    (color,r,g,b, hex, creatorId)
+  VALUES("Semi Pink", 220, 80, 125, "#dc507d", 1);
 
 

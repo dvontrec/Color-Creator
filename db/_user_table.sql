@@ -13,3 +13,7 @@ CREATE TABLE users
   password CHAR
 (50) NOT NULL
 );
+
+INSERT INTO users
+  (username, password)
+VALUES('admin', 'admin');
