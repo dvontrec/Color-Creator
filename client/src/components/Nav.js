@@ -9,9 +9,7 @@ class Nav extends Component {
     if (this.props.isSignedIn) {
       return (
         <li>
-          <Link to="/logout">
-            <span>Test</span>Log Out
-          </Link>
+          <Link to="/logout">Log Out</Link>
         </li>
       );
     }
