@@ -3,7 +3,15 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"hash/fnv"
 )
+
+// Function used to hash string to int
+func hash(s string) uint32 {
+	h := fnv.New32a()
+	h.Write([]byte(s))
+	return h.Sum32()
+}
 
 func users(w http.ResponseWriter, req *http.Request) {
 	if req.Method == http.MethodGet {
@@ -48,7 +56,7 @@ func registerUser(w http.ResponseWriter, req *http.Request) string {
 
 }
 
-func handleLogIn(req *http.Request) (int, error) {
+func handleLogIn(req *http.Request) (uint32, error) {
 	username := req.FormValue("username")
 	password := req.FormValue("password")
 	q := fmt.Sprint("SELECT id FROM users WHERE username='", username, "' AND password='", password, "';")
@@ -65,5 +73,7 @@ func handleLogIn(req *http.Request) (int, error) {
 			return 0, err
 		}
 	}
-	return id, nil
+	// Sets the hashed id that is username hashed 
+	h := hash(username)
+	return h, nil
 }
