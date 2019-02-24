@@ -1,4 +1,9 @@
-export default (state = {}, action) => {
+export default (
+  state = {
+    isSignedIn: localStorage.getItem('id') ? true : false
+  },
+  action
+) => {
   switch (action.type) {
     case 'REGISTER_USER':
       return { ...state, isSignedIn: false, userId: null };

@@ -29,10 +29,12 @@ export const registerUser = userQuery => async dispatch => {
 export const signIn = userQuery => async dispatch => {
   const response = await api.get(`api/${userQuery}`);
   dispatch({ type: 'SIGN_IN', payload: response.data });
+  localStorage.setItem('id', response.data);
   history.push('/');
 };
 
 export const signOut = () => {
+  localStorage.removeItem('id');
   return {
     type: 'SIGN_OUT'
   };
