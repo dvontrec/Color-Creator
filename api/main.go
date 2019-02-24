@@ -24,6 +24,11 @@ type color struct {
 	Hex   string `json:"hex"`
 }
 
+type UserData struct {
+	Userid int  `json:"id"`
+	Userhash uint32 `json:"hash"`
+}
+
 func main() {
 
 	fmt.Printf("Server is running ")

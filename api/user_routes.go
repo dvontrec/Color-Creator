@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"hash/fnv"
+	"encoding/json"
 )
 
 // Function used to hash string to int
@@ -15,13 +16,14 @@ func hash(s string) uint32 {
 
 func users(w http.ResponseWriter, req *http.Request) {
 	if req.Method == http.MethodGet {
-		id, err := handleLogIn(req)
-		if err != nil || id == 0 {
+		u, err := handleLogIn(req)
+		if err != nil || u.Userid == 0 {
 			w.WriteHeader(http.StatusBadRequest)
 			fmt.Fprintln(w, "Invalid Credentials")
 			return
 		}
-		fmt.Fprintln(w, id)
+		err = json.NewEncoder(w).Encode(u)
+		check(err)
 		return
 	}
 	if req.Method == http.MethodPost {
@@ -56,24 +58,28 @@ func registerUser(w http.ResponseWriter, req *http.Request) string {
 
 }
 
-func handleLogIn(req *http.Request) (uint32, error) {
+func handleLogIn(req *http.Request) (UserData, error) {
 	username := req.FormValue("username")
 	password := req.FormValue("password")
 	q := fmt.Sprint("SELECT id FROM users WHERE username='", username, "' AND password='", password, "';")
 	rows, err := db.Query(q)
 	if err != nil {
 
-		return 0, err
+		return UserData{}, err
 	}
 	var id int
 	for rows.Next() {
 		err = rows.Scan(&id)
 		if err != nil {
 
-			return 0, err
+			return UserData{}, err
 		}
 	}
 	// Sets the hashed id that is username hashed 
 	h := hash(username)
-	return h, nil
+	u:= UserData{
+		id,
+		h,
+	}
+	return u, nil
 }
