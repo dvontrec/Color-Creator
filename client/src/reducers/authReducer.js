@@ -1,6 +1,7 @@
 export default (
   state = {
-    isSignedIn: localStorage.getItem('id') ? true : false
+    isSignedIn: localStorage.getItem('id') ? true : false,
+    userId: localStorage.getItem('id') ? localStorage.getItem('id') : null
   },
   action
 ) => {
