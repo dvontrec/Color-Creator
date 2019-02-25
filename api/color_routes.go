@@ -29,16 +29,22 @@ func getColors(w http.ResponseWriter) {
 	var colors []color
 
 	// runs a query to pull data from the database
-	rows, err := db.Query(`SELECT color, r, g, b, a, hex FROM colors;`)
+	rows, err := db.Query(`SELECT color, r, g, b, a, hex, creatorId, creatorHash FROM colors;`)
 	check(err)
 
-	var name, r, g, b, a, hex string
+	var name, r, g, b, a, hex, cId, cH  string
 
 	for rows.Next() {
-		err = rows.Scan(&name, &r, &g, &b, &a, &hex)
+		err = rows.Scan(&name, &r, &g, &b, &a, &hex, &cId, &cH)
 		c := color{
 			name,
-			r, g, b, a, hex,
+			r, 
+			g, 
+			b, 
+			a, 
+			hex,
+			cId, 
+			cH,
 		}
 		check(err)
 		colors = append(colors, c)
@@ -49,18 +55,24 @@ func getColors(w http.ResponseWriter) {
 }
 
 func getColor(w http.ResponseWriter, c string) {
-	q := fmt.Sprint(`SELECT color, r, g, b, a, hex FROM colors WHERE color ="`, c, `";`)
+	q := fmt.Sprint(`SELECT color, r, g, b, a, hex, creatorId, creatorHash FROM colors WHERE color ="`, c, `";`)
 	rows, err := db.Query(q)
 	check(err)
 
-	var name, r, g, b, a, hex string
+	var name, r, g, b, a, hex, cId, cH  string
 	var co color
 
 	for rows.Next() {
-		err = rows.Scan(&name, &r, &g, &b, &a, &hex)
+		err = rows.Scan(&name, &r, &g, &b, &a, &hex, &cId, &cH)
 		co = color{
 			name,
-			r, g, b, a, hex,
+			r, 
+			g, 
+			b, 
+			a, 
+			hex,
+			cId, 
+			cH,
 		}
 	}
 	if co.Color == "" {
@@ -79,8 +91,9 @@ func addColor(w http.ResponseWriter, req *http.Request) {
 	b := req.FormValue("b")
 	a := req.FormValue("a")
 	hex := req.FormValue("hex")
+	cId := req.FormValue("creatorId")
+	cH := req.FormValue("creatorHash")
 
-	fmt.Printf("hex %v", hex)
 	c := color{
 		cName,
 		r,
@@ -88,13 +101,16 @@ func addColor(w http.ResponseWriter, req *http.Request) {
 		b,
 		a,
 		hex,
+		cId,
+		cH,
 	}
 	fmt.Fprintln(w, addColorToDB(w, c))
 
 }
 
 func addColorToDB(w http.ResponseWriter, c color) string {
-	q := fmt.Sprint("INSERT INTO colors(color, r, g, b, a, hex) VALUES(\"", c.Color, "\",", c.R, ",", c.G, ",", c.B, ",", c.A, ",\"", c.Hex, "\");")
+	fmt.Printf("Adding")
+	q := fmt.Sprint("INSERT INTO colors(color, r, g, b, a, hex, creatorId, creatorHash) VALUES('", c.Color, "',", c.R, ",", c.G, ",", c.B, ",", c.A, ",'", c.Hex, "',", c.CreatorId, ",",  c.CreatorHash, ");")
 	stmt, err := db.Prepare(q)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)

@@ -7,7 +7,7 @@ import (
 	"os"
 
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/rs/cors"
+		"github.com/rs/cors"
 )
 
 // sets a db variable
@@ -22,6 +22,8 @@ type color struct {
 	B     string `json:"b"`
 	A     string `json:"a"`
 	Hex   string `json:"hex"`
+	CreatorId   string `json:"creatorId"`
+	CreatorHash   string `json:"creatorHash"`
 }
 
 type UserData struct {
@@ -81,7 +83,7 @@ func connectDB() {
 	}
 	// combines env variables into a database path
 	dbpath = fmt.Sprint(dbuser, ":", dbpassword, "@(", dbhost, ":", dbport, ")/", dbname)
-}
+} 
 
 func check(err error) {
 	if err != nil {

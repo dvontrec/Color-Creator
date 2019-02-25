@@ -77,7 +77,9 @@ class CreateColor extends Component {
     e.preventDefault();
     const queryString = `color=${this.state.color}&r=${this.state.r}&g=${
       this.state.g
-    }&b=${this.state.b}&a=${this.state.a}&hex=${this.state.hex}`;
+    }&b=${this.state.b}&a=${this.state.a}&hex=${this.state.hex}&creatorId=${
+      this.props.auth.userId
+    }&creatorHash=${this.props.auth.userHash}`;
     console.log(queryString);
     this.props.createColor(queryString);
   };
@@ -187,7 +189,11 @@ class CreateColor extends Component {
   }
 }
 
+const mapStateToProps = ({ auth }) => {
+  return { auth };
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   { createColor }
 )(CreateColor);
