@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 
+import ColorForm from './ColorForm';
+
 class ColorEdit extends Component {
   render() {
-    return <div>Edit Color</div>;
+    return (
+      <div>
+        <ColorForm />
+      </div>
+    );
   }
 }
 

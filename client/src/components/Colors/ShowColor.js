@@ -17,8 +17,6 @@ class Color extends Component {
   }
 
   renderColor = () => {
-    console.log(this.state.color);
-    console.log(this.props.auth);
     if (this.state.color) {
       const color = this.state.color;
       const colorCode = `rgba(${color.r},${color.g},${color.b},${color.a})`;
