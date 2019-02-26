@@ -24,6 +24,8 @@ export const editColor = colorQuery => async dispatch => {
   const response = await api.patch(`api/colors?${colorQuery}`);
   dispatch({ type: 'EDIT_COLOR', payload: response.data });
   alert('Color Updated');
+  window.location.reload();
+  history.push('/');
 };
 
 export const registerUser = userQuery => async dispatch => {
