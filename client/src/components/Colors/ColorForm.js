@@ -6,7 +6,7 @@ class ColorForm extends Component {
     return (
       <div>
         <label>{label}</label>
-        <input {...input} />
+        <input {...input} autoComplete="off" />
       </div>
     );
   };
