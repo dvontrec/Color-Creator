@@ -9,6 +9,7 @@ import RegisterForm from './Users/RegisterForm';
 import LoginForm from './Users/LoginForm';
 import Logout from './Users/Logout';
 import ColorDisplay from './Colors/ColorDisplay';
+import ColorEdit from './Colors/ColorEdit';
 
 class App extends Component {
   render() {
@@ -19,7 +20,8 @@ class App extends Component {
             <Nav />
           </div>
           <Route exact path="/" component={ShowColors} />
-          <Route path="/newcolor/" component={CreateColor} />
+          <Route path="/new/color/" component={CreateColor} />
+          <Route path="/edit/color/:color" component={ColorEdit} />
           <Route path="/color/:color" component={ColorDisplay} />
           <Route path="/register" component={RegisterForm} />
           <Route path="/login" component={LoginForm} />

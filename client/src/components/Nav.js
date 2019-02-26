@@ -29,7 +29,7 @@ class Nav extends Component {
             <Link to="/">Colors</Link>
           </li>
           <li>
-            <Link to="/newcolor">Create Color</Link>
+            <Link to="/new/color">Create Color</Link>
           </li>
           {this.renderNav()}
         </ul>
