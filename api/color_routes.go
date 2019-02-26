@@ -136,6 +136,25 @@ func addColorToDB(w http.ResponseWriter, c color) string {
 }
 
 func editColor(w http.ResponseWriter, req *http.Request) {
-	// colorName := req.FormValue("color")
-	fmt.Println("here")
+	colorName := req.FormValue("color")
+	newColorName := req.FormValue("name")
+	q := fmt.Sprintf(`UPDATE colors SET color = '%v' WHERE color = '%v' `, newColorName, colorName)
+
+	stmt, err := db.Prepare(q)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintln(w, err)
+	}
+	r, err := stmt.Exec()
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintln(w, err)
+	}
+	n, err := r.RowsAffected()
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintln(w, err)
+	}
+	w.WriteHeader(http.StatusCreated)
+	fmt.Fprintln(w, n)
 }
