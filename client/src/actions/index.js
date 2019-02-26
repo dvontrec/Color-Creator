@@ -20,8 +20,8 @@ export const createColor = colorQuery => async dispatch => {
   history.push('/');
 };
 
-export const editColor = (color, colorQuery) => async dispatch => {
-  const response = await api.patch(`api/colors`);
+export const editColor = colorQuery => async dispatch => {
+  const response = await api.patch(`api/colors?${colorQuery}`);
   dispatch({ type: 'EDIT_COLOR', payload: response.data });
 };
 

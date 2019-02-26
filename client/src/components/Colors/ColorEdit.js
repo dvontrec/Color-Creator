@@ -14,7 +14,11 @@ class ColorEdit extends Component {
     if (this.props.color.creatorHash != this.props.auth.userHash) {
       return;
     }
-    this.props.editColor(this.props.match.params.color, formValues);
+    console.log(formValues);
+    const colorQuery = `color=${this.props.match.params.color}&name=${
+      formValues.color
+    }`;
+    this.props.editColor(colorQuery);
   };
 
   renderColor() {

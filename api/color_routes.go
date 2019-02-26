@@ -23,6 +23,9 @@ func colors(w http.ResponseWriter, req *http.Request) {
 	if req.Method == http.MethodPost {
 		addColor(w, req)
 	}
+	if req.Method == http.MethodPatch {
+		editColor(w, req)
+	}
 }
 
 func getColors(w http.ResponseWriter) {
@@ -32,18 +35,18 @@ func getColors(w http.ResponseWriter) {
 	rows, err := db.Query(`SELECT color, r, g, b, a, hex, creatorId, creatorHash FROM colors;`)
 	check(err)
 
-	var name, r, g, b, a, hex, cId, cH  string
+	var name, r, g, b, a, hex, cId, cH string
 
 	for rows.Next() {
 		err = rows.Scan(&name, &r, &g, &b, &a, &hex, &cId, &cH)
 		c := color{
 			name,
-			r, 
-			g, 
-			b, 
-			a, 
+			r,
+			g,
+			b,
+			a,
 			hex,
-			cId, 
+			cId,
 			cH,
 		}
 		check(err)
@@ -59,19 +62,19 @@ func getColor(w http.ResponseWriter, c string) {
 	rows, err := db.Query(q)
 	check(err)
 
-	var name, r, g, b, a, hex, cId, cH  string
+	var name, r, g, b, a, hex, cId, cH string
 	var co color
 
 	for rows.Next() {
 		err = rows.Scan(&name, &r, &g, &b, &a, &hex, &cId, &cH)
 		co = color{
 			name,
-			r, 
-			g, 
-			b, 
-			a, 
+			r,
+			g,
+			b,
+			a,
 			hex,
-			cId, 
+			cId,
 			cH,
 		}
 	}
@@ -110,7 +113,7 @@ func addColor(w http.ResponseWriter, req *http.Request) {
 
 func addColorToDB(w http.ResponseWriter, c color) string {
 	fmt.Printf("Adding")
-	q := fmt.Sprint("INSERT INTO colors(color, r, g, b, a, hex, creatorId, creatorHash) VALUES('", c.Color, "',", c.R, ",", c.G, ",", c.B, ",", c.A, ",'", c.Hex, "',", c.CreatorId, ",",  c.CreatorHash, ");")
+	q := fmt.Sprint("INSERT INTO colors(color, r, g, b, a, hex, creatorId, creatorHash) VALUES('", c.Color, "',", c.R, ",", c.G, ",", c.B, ",", c.A, ",'", c.Hex, "',", c.CreatorId, ",", c.CreatorHash, ");")
 	stmt, err := db.Prepare(q)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -130,4 +133,9 @@ func addColorToDB(w http.ResponseWriter, c color) string {
 	}
 	w.WriteHeader(http.StatusCreated)
 	return (fmt.Sprint("Colors created ", n))
+}
+
+func editColor(w http.ResponseWriter, req *http.Request) {
+	// colorName := req.FormValue("color")
+	fmt.Println("here")
 }
