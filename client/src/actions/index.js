@@ -20,6 +20,11 @@ export const createColor = colorQuery => async dispatch => {
   history.push('/');
 };
 
+export const editColor = (color, colorQuery) => async dispatch => {
+  const response = await api.patch(`api/colors`);
+  dispatch({ type: 'EDIT_COLOR', payload: response.data });
+};
+
 export const registerUser = userQuery => async dispatch => {
   const response = await api.post(`api/${userQuery}`);
   dispatch({ type: 'REGISTER_USER', payload: response.data });
