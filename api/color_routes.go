@@ -58,7 +58,7 @@ func getColors(w http.ResponseWriter) {
 }
 
 func getColor(w http.ResponseWriter, c string) {
-	q := fmt.Sprint(`SELECT color, r, g, b, a, hex, creatorId, creatorHash FROM colors WHERE color ="`, c, `";`)
+	q := fmt.Sprint(`SELECT color, r, g, b, a, hex, creatorId, creatorHash FROM colors WHERE hex ="`, c, `";`)
 	rows, err := db.Query(q)
 	check(err)
 
@@ -136,9 +136,9 @@ func addColorToDB(w http.ResponseWriter, c color) string {
 }
 
 func editColor(w http.ResponseWriter, req *http.Request) {
-	colorName := req.FormValue("color")
+	colorHash := req.FormValue("color")
 	newColorName := req.FormValue("name")
-	q := fmt.Sprintf(`UPDATE colors SET color = '%v' WHERE color = '%v' `, newColorName, colorName)
+	q := fmt.Sprintf(`UPDATE colors SET color = '%v' WHERE hex = '%v' `, newColorName, colorHash)
 
 	stmt, err := db.Prepare(q)
 	if err != nil {

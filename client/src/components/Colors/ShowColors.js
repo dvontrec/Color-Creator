@@ -33,7 +33,7 @@ class ShowColors extends Component {
     return colors.map(color => {
       return (
         <div key={color.color} className="col-md-4">
-          <ShowColor colorName={color.color} />
+          <ShowColor colorHex={color.hex} />
         </div>
       );
     });

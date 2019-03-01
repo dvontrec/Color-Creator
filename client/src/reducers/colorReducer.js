@@ -6,9 +6,9 @@ export default (state = {}, action) => {
       return { ...state, ..._.mapKeys(action.payload, 'color') };
     case 'FETCH_COLOR':
       // Returns the state and the stream with a key of the id
-      return { ...state, [action.payload.color]: action.payload };
+      return { ...state, [action.payload.hex]: action.payload };
     case 'EDIT_COLOR':
-      return { ...state, [action.payload.color]: action.payload };
+      return { ...state, [action.payload.hex]: action.payload };
     default:
       return state;
   }

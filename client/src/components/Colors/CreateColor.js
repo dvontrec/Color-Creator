@@ -47,7 +47,7 @@ class CreateColor extends Component {
       if (hexb.length == 1) {
         hexb = `0${hexb}`;
       }
-      const hex = `%23${hexr}${hexg}${hexb}`;
+      const hex = `${hexr}${hexg}${hexb}`;
       this.setState({ hex: hex });
     });
     this.updateColorState();

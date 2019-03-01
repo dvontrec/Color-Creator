@@ -12,7 +12,7 @@ class Color extends Component {
     this.state = {};
   }
   async componentDidMount() {
-    const res = await colorapi.get(`/api/colors?color=${this.props.colorName}`);
+    const res = await colorapi.get(`/api/colors?color=${this.props.colorHex}`);
     this.setState({ color: res.data });
   }
 
@@ -25,7 +25,7 @@ class Color extends Component {
         this.state.color.creatorHash == this.props.auth.userHash
       ) {
         return (
-          <Link to={`/edit/color/${this.state.color.color}`}>
+          <Link to={`/edit/color/${this.state.color.hex}`}>
             <div className={style.colorDiv} style={{ borderColor: colorCode }}>
               <div
                 className={style.colorBlock}
@@ -39,7 +39,7 @@ class Color extends Component {
         );
       }
       return (
-        <Link to={`/color/${this.state.color.color}`}>
+        <Link to={`/color/${this.state.color.hex}`}>
           <div className={style.colorDiv} style={{ borderColor: colorCode }}>
             <div
               className={style.colorBlock}
