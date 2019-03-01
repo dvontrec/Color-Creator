@@ -18,7 +18,7 @@ CREATE TABLE colors
   (1)  UNSIGNED DEFAULT 100 ,
 
   hex VARCHAR
-  (7) NOT NULL UNIQUE,
+  (6) NOT NULL UNIQUE,
 
   creatorId INT NOT NULL,
 
