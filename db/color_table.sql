@@ -35,18 +35,18 @@ CREATE TABLE colors
   -- Insert red, blue, and yellow into the db
   INSERT INTO colors
     (color,r, hex, creatorId, creatorHash)
-  VALUES("True Red", 255, "#ff0000", 1, 885536276);
+  VALUES("True Red", 255, "ff0000", 1, 885536276);
 
   INSERT INTO colors
     (color,b, hex, creatorId, creatorHash)
-  VALUES("True Blue", 255, "#0000ff", 1, 885536276);
+  VALUES("True Blue", 255, "0000ff", 1, 885536276);
 
   INSERT INTO colors
     (color,g, hex, creatorId, creatorHash)
-  VALUES("True Green", 255, "#00ff00", 1, 885536276);
+  VALUES("True Green", 255, "00ff00", 1, 885536276);
 
   INSERT INTO colors
     (color,r,g,b, hex, creatorId, creatorHash)
-  VALUES("Semi Pink", 220, 80, 125, "#dc507d", 1, 885536276);
+  VALUES("Semi Pink", 220, 80, 125, "dc507d", 1, 885536276);
 
 
