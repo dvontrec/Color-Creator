@@ -24,7 +24,27 @@ func favorites(w http.ResponseWriter, req *http.Request) {
 
 // Function used to get the favorites by user
 func getFavorites(w http.ResponseWriter, req *http.Request) {
-	fmt.Fprintf(w, "get")
+	u := req.FormValue("userId")
+	h := req.FormValue("userHash")
+	q := fmt.Sprint("SELECT colorHex FROM favorites WHERE userID =", u, " AND userHash =", h, ";")
+	fmt.Println(q)
+	rows, err := db.Query(q)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintln(w, err)
+	}
+
+	var f []string
+	var c string
+	for rows.Next() {
+		err := rows.Scan(&c)
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			fmt.Fprintln(w, err)
+		}
+		f = append(f, c)
+	}
+	fmt.Fprint(w, f)
 }
 
 // Function used to add favorites by users
