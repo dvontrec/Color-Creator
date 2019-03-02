@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS favorites;
 CREATE TABLE favorites
 (
   userId INT NOT NULL,
+  userHash INT NOT NULL,
   colorHex CHAR(6) NOT NULL,
 
   FOREIGN KEY
