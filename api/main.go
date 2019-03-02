@@ -31,6 +31,10 @@ type UserData struct {
 	Userhash uint32 `json:"hash"`
 }
 
+type favorite struct {
+	Favorites []string `json:"Favorites"`
+}
+
 func main() {
 
 	fmt.Printf("Server is running ")

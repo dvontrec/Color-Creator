@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 )
@@ -27,7 +28,6 @@ func getFavorites(w http.ResponseWriter, req *http.Request) {
 	u := req.FormValue("userId")
 	h := req.FormValue("userHash")
 	q := fmt.Sprint("SELECT colorHex FROM favorites WHERE userID =", u, " AND userHash =", h, ";")
-	fmt.Println(q)
 	rows, err := db.Query(q)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -44,7 +44,8 @@ func getFavorites(w http.ResponseWriter, req *http.Request) {
 		}
 		f = append(f, c)
 	}
-	fmt.Fprint(w, f)
+	err = json.NewEncoder(w).Encode(favorite{f})
+	check(err)
 }
 
 // Function used to add favorites by users
