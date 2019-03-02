@@ -78,5 +78,27 @@ func addFavorites(w http.ResponseWriter, req *http.Request) {
 
 // Function used to remove a favorite from a user
 func removeFavorites(w http.ResponseWriter, req *http.Request) {
-	fmt.Fprintf(w, "remove")
+	c := req.FormValue("colorHex")
+	u := req.FormValue("userId")
+	h := req.FormValue("userHash")
+	q := fmt.Sprint("DELETE FROM favorites WHERE userId=", u, " AND userHash=", h, " AND colorHex='", c, "';")
+	fmt.Print(q)
+	stmt, err := db.Prepare(q)
+
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintln(w, err)
+	}
+	r, err := stmt.Exec()
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintln(w, err)
+	}
+	n, err := r.RowsAffected()
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintln(w, err)
+	}
+	w.WriteHeader(http.StatusAccepted)
+	fmt.Fprintln(w, n)
 }
