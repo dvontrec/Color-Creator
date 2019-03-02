@@ -54,7 +54,7 @@ func addFavorites(w http.ResponseWriter, req *http.Request) {
 	u := req.FormValue("userId")
 	h := req.FormValue("userHash")
 	q := fmt.Sprint("INSERT INTO favorites(userId, userHash,  colorHex) VALUES(", u, ",", h, ",'", c, "');")
-
+	fmt.Println(q)
 	stmt, err := db.Prepare(q)
 
 	if err != nil {

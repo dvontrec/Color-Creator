@@ -49,3 +49,8 @@ export const signOut = () => {
     type: 'SIGN_OUT'
   };
 };
+
+export const addFavorites = favoritesQuery => async dispatch => {
+  const response = await api.post(`api/favorites?${favoritesQuery}`);
+  dispatch({ type: 'ADD_FAVORITES', payload: response.data });
+};

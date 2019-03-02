@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { addFavorites } from '../../actions';
 
 import colorapi from '../../apis/colors';
 
@@ -17,7 +18,10 @@ class Color extends Component {
   }
 
   addFavorite = () => {
-    alert('here');
+    const favoritesQuery = `userId=${this.props.auth.userId}&userHash=${
+      this.props.auth.userHash
+    }&colorHex=${this.props.colorHex}`;
+    this.props.addFavorites(favoritesQuery);
   };
 
   renderColor = () => {
@@ -68,4 +72,7 @@ class Color extends Component {
 const mapStateToProps = state => {
   return { auth: state.auth };
 };
-export default connect(mapStateToProps)(Color);
+export default connect(
+  mapStateToProps,
+  { addFavorites }
+)(Color);
