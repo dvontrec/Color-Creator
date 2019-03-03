@@ -32,7 +32,7 @@ type UserData struct {
 }
 
 type favorite struct {
-	Favorites []string `json:"Favorites"`
+	Favorites []string `json:"favorites"`
 }
 
 func main() {

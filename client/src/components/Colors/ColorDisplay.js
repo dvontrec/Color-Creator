@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchColor } from '../../actions';
+import { fetchColor, getFavoritesByColor } from '../../actions';
 
 class ColorDisplay extends Component {
   componentDidMount() {
     this.props.fetchColor(this.props.match.params.color);
+    this.props.getFavoritesByColor(this.props.match.params.color);
   }
 
   renderColor() {
@@ -29,20 +30,35 @@ class ColorDisplay extends Component {
             minHeight: '100px'
           }}
         />
+        {this.checkFavorite()}
       </div>
     );
   }
 
+  checkFavorite() {
+    const favArray = Array(this.props.favorites);
+    console.log(favArray);
+    if (favArray.includes(this.props.loggedUser)) {
+      return <p>Logged In</p>;
+    }
+    return <p>Logged Out</p>;
+  }
+
   render() {
-    return <div>{this.renderColor()}</div>;
+    console.log(this.props);
+    return <div className="container">{this.renderColor()}</div>;
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
-  return { color: state.colors[ownProps.match.params.color] };
+  return {
+    color: state.colors[ownProps.match.params.color],
+    loggedUser: state.auth.userId,
+    favorites: state.favorites.favorites
+  };
 };
 
 export default connect(
   mapStateToProps,
-  { fetchColor }
+  { fetchColor, getFavoritesByColor }
 )(ColorDisplay);
