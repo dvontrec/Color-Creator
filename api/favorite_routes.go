@@ -26,26 +26,51 @@ func favorites(w http.ResponseWriter, req *http.Request) {
 // Function used to get the favorites by user
 func getFavorites(w http.ResponseWriter, req *http.Request) {
 	u := req.FormValue("userId")
-	h := req.FormValue("userHash")
-	q := fmt.Sprint("SELECT colorHex FROM favorites WHERE userID =", u, " AND userHash =", h, ";")
-	rows, err := db.Query(q)
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintln(w, err)
-	}
-
-	var f []string
-	var c string
-	for rows.Next() {
-		err := rows.Scan(&c)
+	c := req.FormValue("colorHex")
+	if u != "" {
+		q := fmt.Sprint("SELECT DISTINCT colorHex FROM favorites WHERE userID =", u, ";")
+		rows, err := db.Query(q)
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
 			fmt.Fprintln(w, err)
 		}
-		f = append(f, c)
+
+		var f []string
+		var c string
+		for rows.Next() {
+			err := rows.Scan(&c)
+			if err != nil {
+				w.WriteHeader(http.StatusBadRequest)
+				fmt.Fprintln(w, err)
+			}
+			f = append(f, c)
+		}
+		err = json.NewEncoder(w).Encode(favorite{f})
+		check(err)
+		return
 	}
-	err = json.NewEncoder(w).Encode(favorite{f})
-	check(err)
+	if c != "" {
+		q := fmt.Sprint("SELECT DISTINCT userID FROM favorites WHERE colorHex ='", c, "';")
+		rows, err := db.Query(q)
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			fmt.Fprintln(w, err)
+		}
+
+		var f []string
+		var c string
+		for rows.Next() {
+			err := rows.Scan(&c)
+			if err != nil {
+				w.WriteHeader(http.StatusBadRequest)
+				fmt.Fprintln(w, err)
+			}
+			f = append(f, c)
+		}
+		err = json.NewEncoder(w).Encode(favorite{f})
+		check(err)
+		return
+	}
 }
 
 // Function used to add favorites by users
