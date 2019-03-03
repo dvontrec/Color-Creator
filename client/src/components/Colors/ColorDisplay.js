@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchColor, getFavoritesByColor } from '../../actions';
+import { fetchColor, getFavoritesByColor, addFavorites } from '../../actions';
 
 class ColorDisplay extends Component {
   componentDidMount() {
@@ -35,15 +35,31 @@ class ColorDisplay extends Component {
     );
   }
 
-  checkFavorite() {
+  addFavorite = () => {
+    const favoritesQuery = `userId=${this.props.auth.userId}&userHash=${
+      this.props.auth.userHash
+    }&colorHex=${this.props.color.hex}`;
+    this.props.addFavorites(favoritesQuery);
+  };
+
+  removeFavorite = () => {
+    console.log('here');
+  };
+
+  checkFavorite = () => {
     const favArray = Array(Object.values(this.props.favorites)[0]);
     console.log(favArray[0]);
-    console.log(this.props.loggedUser.toString());
-    if (favArray[0] && favArray[0].includes(this.props.loggedUser.toString())) {
-      return <p>Logged In</p>;
+    console.log(this.props.auth.userId.toString());
+    if (
+      favArray[0] &&
+      favArray[0].includes(this.props.auth.userId.toString())
+    ) {
+      return (
+        <button onClick={this.removeFavorite}>Remove From Favorites</button>
+      );
     }
-    return <p>Logged Out</p>;
-  }
+    return <button onClick={this.addFavorite}>Favorite</button>;
+  };
 
   render() {
     return <div className="container">{this.renderColor()}</div>;
@@ -53,12 +69,12 @@ class ColorDisplay extends Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     color: state.colors[ownProps.match.params.color],
-    loggedUser: state.auth.userId,
+    auth: state.auth,
     favorites: state.favorites
   };
 };
 
 export default connect(
   mapStateToProps,
-  { fetchColor, getFavoritesByColor }
+  { fetchColor, getFavoritesByColor, addFavorites }
 )(ColorDisplay);
