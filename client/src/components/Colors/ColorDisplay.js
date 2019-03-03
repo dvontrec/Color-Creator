@@ -36,16 +36,16 @@ class ColorDisplay extends Component {
   }
 
   checkFavorite() {
-    const favArray = Array(this.props.favorites);
-    console.log(favArray);
-    if (favArray.includes(this.props.loggedUser)) {
+    const favArray = Array(Object.values(this.props.favorites)[0]);
+    console.log(favArray[0]);
+    console.log(this.props.loggedUser.toString());
+    if (favArray[0] && favArray[0].includes(this.props.loggedUser.toString())) {
       return <p>Logged In</p>;
     }
     return <p>Logged Out</p>;
   }
 
   render() {
-    console.log(this.props);
     return <div className="container">{this.renderColor()}</div>;
   }
 }
@@ -54,7 +54,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     color: state.colors[ownProps.match.params.color],
     loggedUser: state.auth.userId,
-    favorites: state.favorites.favorites
+    favorites: state.favorites
   };
 };
 
