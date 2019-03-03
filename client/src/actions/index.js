@@ -2,6 +2,9 @@ import api from '../apis/colors';
 
 import history from '../history';
 
+// ***************************************************************
+//                  COLORS
+// ***************************************************************
 export const fetchColors = () => async dispatch => {
   const response = await api.get('/api/colors');
   dispatch({ type: 'FETCH_COLORS', payload: response.data });
@@ -28,6 +31,9 @@ export const editColor = colorQuery => async dispatch => {
   history.push('/');
 };
 
+// ***************************************************************
+//                  AUTH
+// ***************************************************************
 export const registerUser = userQuery => async dispatch => {
   const response = await api.post(`api/${userQuery}`);
   dispatch({ type: 'REGISTER_USER', payload: response.data });
@@ -50,7 +56,23 @@ export const signOut = () => {
   };
 };
 
+// ***************************************************************
+//                  FAVORITES
+// ***************************************************************
+// Posts to the api to create a new favorite link between the user and the color
 export const addFavorites = favoritesQuery => async dispatch => {
   const response = await api.post(`api/favorites?${favoritesQuery}`);
   dispatch({ type: 'ADD_FAVORITES', payload: response.data });
+};
+
+// Calls the api to get a list of colors favorited by the given user
+export const getFavoritesByUser = userId => async dispatch => {
+  const response = await api.get(`api/favorites?userId=${userId}`);
+  dispatch({ type: 'GET_USER_FAVORITES', payload: response.data });
+};
+
+// Calls the api to get a list of users who have favorited the given color
+export const getFavoritesByColor = colorHex => async dispatch => {
+  const response = await api.get(`api/favorites?colorHex=${colorHex}`);
+  dispatch({ type: 'GET_COLOR_FAVORITES', payload: response.data });
 };
