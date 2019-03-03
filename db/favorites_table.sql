@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS favorites;
 CREATE TABLE favorites
 (
   userId INT NOT NULL,
-  userHash INT NOT NULL,
+  userHash BIGINT NOT NULL,
   colorHex CHAR(6) NOT NULL,
 
   FOREIGN KEY
@@ -15,4 +15,12 @@ CREATE TABLE favorites
   FOREIGN KEY
   (colorHex) REFERENCES colors
   (hex)
-)
+);
+
+INSERT INTO favorites
+  (userId, userHash, colorHex)
+VALUES(1, 885536276, 'ff0000');
+
+INSERT INTO favorites
+  (userId, userHash, colorHex)
+VALUES(2, 2949673445, 'ff0000')

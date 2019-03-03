@@ -22,7 +22,7 @@ CREATE TABLE colors
 
   creatorId INT NOT NULL,
 
-  creatorHash INT NOT NULL,
+  creatorHash BIGINT NOT NULL,
 
   views INT DEFAULT 0,
 
