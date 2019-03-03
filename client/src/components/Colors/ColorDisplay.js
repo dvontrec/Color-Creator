@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchColor, getFavoritesByColor, addFavorites } from '../../actions';
+import {
+  fetchColor,
+  getFavoritesByColor,
+  addFavorites,
+  removeFavorites
+} from '../../actions';
 
 class ColorDisplay extends Component {
   componentDidMount() {
@@ -43,7 +48,10 @@ class ColorDisplay extends Component {
   };
 
   removeFavorite = () => {
-    console.log('here');
+    const favoritesQuery = `userId=${this.props.auth.userId}&userHash=${
+      this.props.auth.userHash
+    }&colorHex=${this.props.color.hex}`;
+    this.props.removeFavorites(favoritesQuery);
   };
 
   checkFavorite = () => {
@@ -58,7 +66,7 @@ class ColorDisplay extends Component {
         <button onClick={this.removeFavorite}>Remove From Favorites</button>
       );
     }
-    return <button onClick={this.addFavorite}>Favorite</button>;
+    return <button onClick={this.addFavorite}>Add To Favorite</button>;
   };
 
   render() {
@@ -76,5 +84,5 @@ const mapStateToProps = (state, ownProps) => {
 
 export default connect(
   mapStateToProps,
-  { fetchColor, getFavoritesByColor, addFavorites }
+  { fetchColor, getFavoritesByColor, addFavorites, removeFavorites }
 )(ColorDisplay);

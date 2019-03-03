@@ -64,6 +64,10 @@ export const addFavorites = favoritesQuery => async dispatch => {
   const response = await api.post(`api/favorites?${favoritesQuery}`);
   dispatch({ type: 'ADD_FAVORITES', payload: response.data });
 };
+export const removeFavorites = favoritesQuery => async dispatch => {
+  const response = await api.delete(`api/favorites?${favoritesQuery}`);
+  dispatch({ type: 'DELETE_FAVORITES', payload: response.data });
+};
 
 // Calls the api to get a list of colors favorited by the given user
 export const getFavoritesByUser = userId => async dispatch => {
