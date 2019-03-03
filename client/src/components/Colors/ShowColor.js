@@ -16,10 +16,6 @@ class Color extends Component {
     this.setState({ color: res.data });
   }
 
-  addFavorite = () => {
-    alert('here');
-  };
-
   renderColor = () => {
     if (this.state.color) {
       const color = this.state.color;
@@ -30,11 +26,6 @@ class Color extends Component {
       ) {
         return (
           <div className={style.colorDiv} style={{ borderColor: colorCode }}>
-            <i
-              className="fas fa-star fa-2x"
-              style={{ color: 'blue' }}
-              onClick={this.addFavorite}
-            />
             <div
               className={style.colorBlock}
               style={{ background: colorCode }}
@@ -49,7 +40,6 @@ class Color extends Component {
       }
       return (
         <div className={style.colorDiv} style={{ borderColor: colorCode }}>
-          <i className="fas fa-star" />
           <div className={style.colorBlock} style={{ background: colorCode }} />
           <Link to={`/color/${this.state.color.hex}`}>
             <p>

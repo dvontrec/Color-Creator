@@ -7,7 +7,7 @@ import (
 	"os"
 
 	_ "github.com/go-sql-driver/mysql"
-		"github.com/rs/cors"
+	"github.com/rs/cors"
 )
 
 // sets a db variable
@@ -16,19 +16,23 @@ var err error
 var dbpath string
 
 type color struct {
-	Color string `json:"color"`
-	R     string `json:"r"`
-	G     string `json:"g"`
-	B     string `json:"b"`
-	A     string `json:"a"`
-	Hex   string `json:"hex"`
+	Color       string `json:"color"`
+	R           string `json:"r"`
+	G           string `json:"g"`
+	B           string `json:"b"`
+	A           string `json:"a"`
+	Hex         string `json:"hex"`
 	CreatorId   string `json:"creatorId"`
-	CreatorHash   string `json:"creatorHash"`
+	CreatorHash string `json:"creatorHash"`
 }
 
 type UserData struct {
-	Userid int  `json:"id"`
+	Userid   int    `json:"id"`
 	Userhash uint32 `json:"hash"`
+}
+
+type favorite struct {
+	Favorites []string `json:"favorites"`
 }
 
 func main() {
@@ -53,6 +57,7 @@ func main() {
 	mux.HandleFunc("/", index)
 	mux.HandleFunc("/colors", colors)
 	mux.HandleFunc("/auth", users)
+	mux.HandleFunc("/favorites", favorites)
 	mux.Handle("/favicon.ico", http.NotFoundHandler())
 
 	handler := cors.Default().Handler(mux)
@@ -83,7 +88,7 @@ func connectDB() {
 	}
 	// combines env variables into a database path
 	dbpath = fmt.Sprint(dbuser, ":", dbpassword, "@(", dbhost, ":", dbport, ")/", dbname)
-} 
+}
 
 func check(err error) {
 	if err != nil {
