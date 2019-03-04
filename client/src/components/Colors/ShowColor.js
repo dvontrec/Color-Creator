@@ -25,28 +25,31 @@ class Color extends Component {
         this.state.color.creatorHash == this.props.auth.userHash
       ) {
         return (
+          <Link to={`/edit/color/${this.state.color.hex}`}>
+            <div className={style.colorDiv} style={{ borderColor: colorCode }}>
+              <div
+                className={style.colorBlock}
+                style={{ background: colorCode }}
+              />
+              <p>
+                Color: <span>{color.color}</span>
+              </p>
+            </div>
+          </Link>
+        );
+      }
+      return (
+        <Link to={`/color/${this.state.color.hex}`}>
           <div className={style.colorDiv} style={{ borderColor: colorCode }}>
             <div
               className={style.colorBlock}
               style={{ background: colorCode }}
             />
-            <Link to={`/edit/color/${this.state.color.hex}`}>
-              <p>
-                Color: <span style={{ color: colorCode }}>{color.color}</span>
-              </p>
-            </Link>
-          </div>
-        );
-      }
-      return (
-        <div className={style.colorDiv} style={{ borderColor: colorCode }}>
-          <div className={style.colorBlock} style={{ background: colorCode }} />
-          <Link to={`/color/${this.state.color.hex}`}>
             <p>
-              Color: <span style={{ color: colorCode }}>{color.color}</span>
+              Color: <span>{color.color}</span>
             </p>
-          </Link>
-        </div>
+          </div>
+        </Link>
       );
     }
     return <div>Loading Color</div>;
