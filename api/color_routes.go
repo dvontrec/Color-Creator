@@ -32,7 +32,7 @@ func getColors(w http.ResponseWriter) {
 	var colors []color
 
 	// runs a query to pull data from the database
-	rows, err := db.Query(`SELECT color, r, g, b, a, hex, creatorId, creatorHash FROM colors ORDER BY hex DESC;`)
+	rows, err := db.Query(`SELECT color, r, g, b, a, hex, creatorId, creatorHash FROM colors ORDER BY g ASC, b ASC, hex;`)
 	check(err)
 
 	var name, r, g, b, a, hex, cId, cH string
