@@ -16,14 +16,15 @@ var err error
 var dbpath string
 
 type color struct {
-	Color       string `json:"color"`
-	R           string `json:"r"`
-	G           string `json:"g"`
-	B           string `json:"b"`
-	A           string `json:"a"`
-	Hex         string `json:"hex"`
-	CreatorId   string `json:"creatorId"`
-	CreatorHash string `json:"creatorHash"`
+	Color       string  `json:"color"`
+	R           string  `json:"r"`
+	G           string  `json:"g"`
+	B           string  `json:"b"`
+	A           string  `json:"a"`
+	Hex         string  `json:"hex"`
+	Hue         float64 `json:hue`
+	CreatorId   string  `json:"creatorId"`
+	CreatorHash string  `json:"creatorHash"`
 }
 
 type UserData struct {

@@ -8,15 +8,70 @@ import (
 	"strconv"
 )
 
+// function used to sort colors
 func getColorSorted(c []color) []color {
 	sort.Slice(c, func(i, j int) bool {
-		r1, err := strconv.ParseInt(c[i].R, 0, 64)
-		check(err)
-		r2, err := strconv.ParseInt(c[j].R, 0, 64)
-		check(err)
-		return r1 > r2
+		return c[i].Hue > c[j].Hue
 	})
 	return c
+}
+
+// fuction used to calculate the hue of the color given the rgb values
+func calcHue(c color) float64 {
+	// divides the R, G, and B values by 255
+	r, _ := strconv.ParseFloat(c.R, 64)
+	r = float64(r / 255)
+	g, _ := strconv.ParseFloat(c.G, 64)
+	g = float64(g / 255)
+	b, _ := strconv.ParseFloat(c.B, 64)
+	b = float64(b / 255)
+
+	// finds the min and max of the colors
+	max := findMax([]float64{r, g, b})
+	min := findMin([]float64{r, g, b})
+	// finds the difference between the min and max
+	dif := max - min
+	// add := max + min
+	var hue float64
+	if min == max {
+		hue = 0
+	}
+	// if red is the max
+	if r == max {
+		hue = (((60 * (g - b)) / dif) + 360)
+	}
+	// if green is the max
+	if g == max {
+		hue = 2.0 + ((60 * (b - r)) / dif) + 120
+	}
+	// if blue is the max
+	if b == max {
+		hue = ((60 * (r - g)) / dif) + 240
+	}
+	// return the hue
+	return hue
+}
+
+// function to fund max of an array of colors
+func findMax(vals []float64) float64 {
+	max := float64(vals[0])
+	for v := range vals {
+		if vals[v] > max {
+			max = vals[v]
+		}
+	}
+	return float64(max)
+}
+
+// function used to find the min of a slice of colors
+func findMin(vals []float64) float64 {
+	min := float64(vals[0])
+	for v := range vals {
+		if vals[v] < min {
+			min = vals[v]
+		}
+	}
+	return float64(min)
 }
 
 func index(w http.ResponseWriter, req *http.Request) {
@@ -59,16 +114,18 @@ func getColors(w http.ResponseWriter) {
 			b,
 			a,
 			hex,
+			0.,
 			cId,
 			cH,
 		}
+		// calculate the hue and add it to the color
+		c.Hue = calcHue(c)
 		check(err)
 		colors = append(colors, c)
 
 	}
 	err = json.NewEncoder(w).Encode(getColorSorted(colors))
 	check(err)
-	fmt.Println()
 }
 
 func getColor(w http.ResponseWriter, c string) {
@@ -88,6 +145,7 @@ func getColor(w http.ResponseWriter, c string) {
 			b,
 			a,
 			hex,
+			0.,
 			cId,
 			cH,
 		}
@@ -119,6 +177,7 @@ func addColor(w http.ResponseWriter, req *http.Request) {
 		b,
 		a,
 		hex,
+		0.,
 		cId,
 		cH,
 	}
