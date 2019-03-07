@@ -4,9 +4,20 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"sort"
+	"strconv"
 )
 
-func getHue(r int, g int, b int) {}
+func getColorSorted(c []color) []color {
+	sort.Slice(c, func(i, j int) bool {
+		r1, err := strconv.ParseInt(c[i].R, 0, 64)
+		check(err)
+		r2, err := strconv.ParseInt(c[j].R, 0, 64)
+		check(err)
+		return r1 > r2
+	})
+	return c
+}
 
 func index(w http.ResponseWriter, req *http.Request) {
 	fmt.Fprintf(w, "Hello from the api")
@@ -37,8 +48,7 @@ func getColors(w http.ResponseWriter) {
 	rows, err := db.Query(`SELECT color, r, g, b, a, hex, creatorId, creatorHash FROM colors ORDER BY g ASC, b ASC, hex;`)
 	check(err)
 
-	var name, hex, cId, cH string
-	var r, g, b, a int64
+	var name, r, g, b, a, hex, cId, cH string
 
 	for rows.Next() {
 		err = rows.Scan(&name, &r, &g, &b, &a, &hex, &cId, &cH)
@@ -56,8 +66,9 @@ func getColors(w http.ResponseWriter) {
 		colors = append(colors, c)
 
 	}
-	err = json.NewEncoder(w).Encode(colors)
+	err = json.NewEncoder(w).Encode(getColorSorted(colors))
 	check(err)
+	fmt.Println()
 }
 
 func getColor(w http.ResponseWriter, c string) {
@@ -65,8 +76,7 @@ func getColor(w http.ResponseWriter, c string) {
 	rows, err := db.Query(q)
 	check(err)
 
-	var name, hex, cId, cH string
-	var r, g, b, a int64
+	var name, r, g, b, a, hex, cId, cH string
 	var co color
 
 	for rows.Next() {
@@ -89,6 +99,7 @@ func getColor(w http.ResponseWriter, c string) {
 
 	err = json.NewEncoder(w).Encode(co)
 	check(err)
+
 }
 
 func addColor(w http.ResponseWriter, req *http.Request) {

@@ -17,10 +17,10 @@ var dbpath string
 
 type color struct {
 	Color       string `json:"color"`
-	R           int64  `json:"r"`
-	G           int64  `json:"g"`
-	B           int64  `json:"b"`
-	A           int64  `json:"a"`
+	R           string `json:"r"`
+	G           string `json:"g"`
+	B           string `json:"b"`
+	A           string `json:"a"`
 	Hex         string `json:"hex"`
 	CreatorId   string `json:"creatorId"`
 	CreatorHash string `json:"creatorHash"`
