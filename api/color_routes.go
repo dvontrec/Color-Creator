@@ -37,7 +37,8 @@ func getColors(w http.ResponseWriter) {
 	rows, err := db.Query(`SELECT color, r, g, b, a, hex, creatorId, creatorHash FROM colors ORDER BY g ASC, b ASC, hex;`)
 	check(err)
 
-	var name, r, g, b, a, hex, cId, cH string
+	var name, hex, cId, cH string
+	var r, g, b, a int64
 
 	for rows.Next() {
 		err = rows.Scan(&name, &r, &g, &b, &a, &hex, &cId, &cH)
@@ -64,7 +65,8 @@ func getColor(w http.ResponseWriter, c string) {
 	rows, err := db.Query(q)
 	check(err)
 
-	var name, r, g, b, a, hex, cId, cH string
+	var name, hex, cId, cH string
+	var r, g, b, a int64
 	var co color
 
 	for rows.Next() {
