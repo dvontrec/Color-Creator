@@ -6,6 +6,8 @@ import (
 	"net/http"
 )
 
+func getHue(r int, g int, b int) {}
+
 func index(w http.ResponseWriter, req *http.Request) {
 	fmt.Fprintf(w, "Hello from the api")
 }
