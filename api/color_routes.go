@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"math"
 	"net/http"
 	"sort"
 	"strconv"
@@ -34,7 +35,7 @@ func calcHue(c color) float64 {
 	// add := max + min
 	var hue float64
 	if min == max {
-		hue = 0
+		hue = 0.
 	}
 	// if red is the max
 	if r == max {
@@ -120,6 +121,9 @@ func getColors(w http.ResponseWriter) {
 		}
 		// calculate the hue and add it to the color
 		c.Hue = calcHue(c)
+		if math.IsNaN(c.Hue) {
+			c.Hue = 0.
+		}
 		check(err)
 		colors = append(colors, c)
 
