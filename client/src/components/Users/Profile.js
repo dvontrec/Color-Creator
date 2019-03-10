@@ -45,6 +45,7 @@ class Profile extends Component {
         <div className="row">
           {createdColors && createdColors.map(color => this.renderColor(color))}
         </div>
+        <hr />
         <h4>Favorite Colors</h4>
         <div className="row">
           {favoriteColors &&
