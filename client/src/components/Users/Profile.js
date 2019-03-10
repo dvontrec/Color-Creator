@@ -16,14 +16,12 @@ class Profile extends Component {
     if (color) {
       const colorCode = `rgba(${color.r},${color.g},${color.b},${color.a})`;
       return (
-        <div key={color.hex} className="col-md-3">
+        <div key={color.hex} className="col-md-1">
           <Link to={`/color/${color.hex}`}>
-            <div className={style.colorDiv} style={{ borderColor: colorCode }}>
-              <div
-                className={style.colorBlock}
-                style={{ background: colorCode }}
-              />
-            </div>
+            <div
+              className={style.colorBlock}
+              style={{ background: colorCode }}
+            />
           </Link>
         </div>
       );
