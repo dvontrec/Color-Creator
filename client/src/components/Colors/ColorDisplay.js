@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import {
   fetchColor,
   getFavoritesByColor,
@@ -43,6 +44,12 @@ class ColorDisplay extends Component {
             minHeight: '100px'
           }}
         />
+        <Link
+          className="btn btn-primary"
+          to={`/profile/${this.props.color.creatorId}`}
+        >
+          View Creator Profile
+        </Link>
         {this.checkFavorite()}
       </div>
     );
@@ -81,6 +88,7 @@ class ColorDisplay extends Component {
   };
 
   render() {
+    console.log(this.props);
     return <div className="container">{this.renderColor()}</div>;
   }
 }
