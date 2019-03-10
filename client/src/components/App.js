@@ -10,6 +10,7 @@ import LoginForm from './Users/LoginForm';
 import Logout from './Users/Logout';
 import ColorDisplay from './Colors/ColorDisplay';
 import ColorEdit from './Colors/ColorEdit';
+import Profile from './Users/Profile';
 
 class App extends Component {
   render() {
@@ -26,6 +27,7 @@ class App extends Component {
           <Route path="/register" component={RegisterForm} />
           <Route path="/login" component={LoginForm} />
           <Route path="/logout" component={Logout} />
+          <Route path="/profile/:id" component={Profile} />
         </div>
       </Router>
     );
