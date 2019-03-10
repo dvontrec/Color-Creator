@@ -8,9 +8,17 @@ import {
 } from '../../actions';
 
 class ColorDisplay extends Component {
+  state = {
+    favorites: this.props.favorites
+  };
   componentDidMount() {
     this.props.fetchColor(this.props.match.params.color);
     this.props.getFavoritesByColor(this.props.match.params.color);
+  }
+
+  // function called when props update
+  componentDidUpdate() {
+    // this.props.getFavoritesByColor(this.props.match.params.color);
   }
 
   renderColor() {
@@ -41,27 +49,29 @@ class ColorDisplay extends Component {
   }
 
   addFavorite = () => {
+    const favs = this.props.favorites;
+    favs.push(this.props.auth.userId);
     const favoritesQuery = `userId=${this.props.auth.userId}&userHash=${
       this.props.auth.userHash
     }&colorHex=${this.props.color.hex}`;
     this.props.addFavorites(favoritesQuery);
+    this.setState({ favorites: favs });
   };
 
   removeFavorite = () => {
+    const newFavs = this.props.favorites.filter(
+      e => e != this.props.auth.userId
+    );
     const favoritesQuery = `userId=${this.props.auth.userId}&userHash=${
       this.props.auth.userHash
     }&colorHex=${this.props.color.hex}`;
     this.props.removeFavorites(favoritesQuery);
+    this.setState({ favorites: newFavs });
   };
 
   checkFavorite = () => {
-    const favArray = Array(Object.values(this.props.favorites)[0]);
-    console.log(favArray[0]);
-    console.log(this.props.auth.userId.toString());
-    if (
-      favArray[0] &&
-      favArray[0].includes(this.props.auth.userId.toString())
-    ) {
+    const favArray = this.state.favorites || this.props.favorites;
+    if (favArray && favArray.includes(this.props.auth.userId.toString())) {
       return (
         <button onClick={this.removeFavorite}>Remove From Favorites</button>
       );
@@ -78,7 +88,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     color: state.colors[ownProps.match.params.color],
     auth: state.auth,
-    favorites: state.favorites
+    favorites: Object.values(state.favorites)[0]
   };
 };
 
