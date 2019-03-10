@@ -236,3 +236,29 @@ func editColor(w http.ResponseWriter, req *http.Request) {
 	w.WriteHeader(http.StatusCreated)
 	fmt.Fprintln(w, n)
 }
+
+// function used to query the database and get one color
+func getOneColor(h string) color {
+	q := fmt.Sprint(`SELECT color, r, g, b, a, hex, creatorId, creatorHash FROM colors WHERE hex ="`, h, `";`)
+	rows, err := db.Query(q)
+	check(err)
+
+	var name, r, g, b, a, hex, cId, cH string
+	var co color
+
+	for rows.Next() {
+		err = rows.Scan(&name, &r, &g, &b, &a, &hex, &cId, &cH)
+		co = color{
+			name,
+			r,
+			g,
+			b,
+			a,
+			hex,
+			0.,
+			cId,
+			cH,
+		}
+	}
+	return co
+}

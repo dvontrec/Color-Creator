@@ -127,8 +127,36 @@ func getUser(w http.ResponseWriter, req *http.Request) {
 		int(id),
 		0,
 	}
+	fullUser := UserFullData{
+		u,
+		getUserFavorites(1),
+		getUserFavorites(1),
+	}
 	// pass the userdata object encoded as json
-	err = json.NewEncoder(w).Encode(u)
+	err = json.NewEncoder(w).Encode(fullUser)
 	check(err)
+}
 
+// Function used to get all colors favorited by the user with the passed index
+func getUserFavorites(id int) []color {
+	// creates a query that will get the unique colors favorited by the user
+	q := fmt.Sprint("SELECT DISTINCT colorHex FROM favorites WHERE userID =", id, ";")
+	// Runs the query
+	rows, err := db.Query(q)
+	// check for any error
+	check(err)
+	// creates a variable to store the hex values
+	var h string
+	// creates a variable to store the slice of colors
+	var c []color
+	// Loops through each row returned by the sql query
+	for rows.Next() {
+		// Sets the userName variable to be the username grabbed from the query
+		err = rows.Scan(&h)
+		if (err) != nil {
+			check(err)
+		}
+		c = append(c, getOneColor(h))
+	}
+	return c
 }
