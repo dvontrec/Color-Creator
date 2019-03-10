@@ -37,6 +37,13 @@ type favorite struct {
 	Favorites []string `json:"favorites"`
 }
 
+// UserFullData used to display all user profile information as json
+type UserFullData struct {
+	User          UserData `json:"userInfo"`
+	CreatedColors []color  `json:"createdColors"`
+	Favorites     []color  `json:"favoriteColors"`
+}
+
 func main() {
 
 	fmt.Printf("Server is running ")
