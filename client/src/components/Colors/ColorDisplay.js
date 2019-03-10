@@ -9,7 +9,7 @@ import {
 
 class ColorDisplay extends Component {
   state = {
-    favorites: this.props.favorites
+    favorites: this.props.favorites || []
   };
   componentDidMount() {
     this.props.fetchColor(this.props.match.params.color);
@@ -49,7 +49,7 @@ class ColorDisplay extends Component {
   }
 
   addFavorite = () => {
-    const favs = this.props.favorites;
+    const favs = this.props.favorites || this.state.favorites;
     favs.push(this.props.auth.userId);
     const favoritesQuery = `userId=${this.props.auth.userId}&userHash=${
       this.props.auth.userHash
@@ -59,9 +59,10 @@ class ColorDisplay extends Component {
   };
 
   removeFavorite = () => {
-    const newFavs = this.props.favorites.filter(
-      e => e != this.props.auth.userId
-    );
+    const newFavs =
+      this.props.favorites.filter(e => e != this.props.auth.userId) ||
+      this.props.favorites ||
+      this.state.favorites.filter(e => e != this.props.auth.userId);
     const favoritesQuery = `userId=${this.props.auth.userId}&userHash=${
       this.props.auth.userHash
     }&colorHex=${this.props.color.hex}`;
