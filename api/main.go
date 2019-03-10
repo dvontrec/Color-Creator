@@ -28,6 +28,7 @@ type color struct {
 }
 
 type UserData struct {
+	Username string `json:"username"`
 	Userid   int    `json:"id"`
 	Userhash uint32 `json:"hash"`
 }
@@ -57,7 +58,8 @@ func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", index)
 	mux.HandleFunc("/colors", colors)
-	mux.HandleFunc("/auth", users)
+	mux.HandleFunc("/user", user)
+	mux.HandleFunc("/auth", auth)
 	mux.HandleFunc("/favorites", favorites)
 	mux.Handle("/favicon.ico", http.NotFoundHandler())
 
