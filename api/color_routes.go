@@ -239,15 +239,20 @@ func editColor(w http.ResponseWriter, req *http.Request) {
 
 // function used to query the database and get one color
 func getOneColor(h string) color {
+	// creates a query to select all relevent data from color table by hex
 	q := fmt.Sprint(`SELECT color, r, g, b, a, hex, creatorId, creatorHash FROM colors WHERE hex ="`, h, `";`)
+	// Runs the query checking for errors
 	rows, err := db.Query(q)
+	// check the errors
 	check(err)
-
+	// Creates a variable to store all color data
 	var name, r, g, b, a, hex, cId, cH string
 	var co color
-
+	// loops through each row retuened from the query
 	for rows.Next() {
+		// sets each data piece to be what is in the row
 		err = rows.Scan(&name, &r, &g, &b, &a, &hex, &cId, &cH)
+		// saves data to color struct
 		co = color{
 			name,
 			r,
@@ -260,5 +265,6 @@ func getOneColor(h string) color {
 			cH,
 		}
 	}
+	// returns the color
 	return co
 }
