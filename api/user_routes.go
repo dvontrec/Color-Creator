@@ -129,8 +129,8 @@ func getUser(w http.ResponseWriter, req *http.Request) {
 	}
 	fullUser := UserFullData{
 		u,
-		getUserCreatedColors(1),
-		getUserFavoriteColors(1),
+		getUserCreatedColors(int(id)),
+		getUserFavoriteColors(int(id)),
 	}
 	// pass the userdata object encoded as json
 	err = json.NewEncoder(w).Encode(fullUser)
