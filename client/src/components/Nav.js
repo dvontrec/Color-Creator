@@ -9,6 +9,7 @@ class Nav extends Component {
     if (this.props.isSignedIn) {
       return (
         <li>
+          <Link to="/new/color">Create Color</Link>/
           <Link to="/logout">Log Out</Link>
         </li>
       );
@@ -27,9 +28,6 @@ class Nav extends Component {
         <ul>
           <li>
             <Link to="/">Colors</Link>
-          </li>
-          <li>
-            <Link to="/new/color">Create Color</Link>
           </li>
           {this.renderNav()}
         </ul>
