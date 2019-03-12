@@ -78,13 +78,15 @@ class ColorDisplay extends Component {
   };
 
   checkFavorite = () => {
-    const favArray = this.state.favorites || this.props.favorites;
-    if (favArray && favArray.includes(this.props.auth.userId.toString())) {
-      return (
-        <button onClick={this.removeFavorite}>Remove From Favorites</button>
-      );
+    if (this.props.auth.userId) {
+      const favArray = this.state.favorites || this.props.favorites;
+      if (favArray && favArray.includes(this.props.auth.userId.toString())) {
+        return (
+          <button onClick={this.removeFavorite}>Remove From Favorites</button>
+        );
+      }
+      return <button onClick={this.addFavorite}>Add To Favorite</button>;
     }
-    return <button onClick={this.addFavorite}>Add To Favorite</button>;
   };
 
   render() {
