@@ -42,56 +42,65 @@ func auth(w http.ResponseWriter, req *http.Request) {
 	}
 }
 
+// function used to register user in Database, returning the string of whether user is created
 func registerUser(w http.ResponseWriter, req *http.Request) string {
+	// Grabs username and password from request
 	username := req.FormValue("username")
 	password := req.FormValue("password")
+	// creates a query request to insert user with credintials into the db
 	q := fmt.Sprint("INSERT INTO users(username, password) VALUES('", username, "', '", password, "');")
+	// prepares the query
 	stmt, err := db.Prepare(q)
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return (fmt.Sprint("There was an error ", err))
-	}
+	// checks the error
+	htmlCheck(err, w, fmt.Sprint("There was an error ", err))
 
+	// checks for the rows after execution
 	r, err := stmt.Exec()
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return (fmt.Sprint("There was an error ", err))
-	}
+	htmlCheck(err, w, fmt.Sprint("There was an error ", err))
 
 	n, err := r.RowsAffected()
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return (fmt.Sprint("There was an error ", err))
-	}
+	htmlCheck(err, w, fmt.Sprint("There was an error ", err))
+
+	// writes the status to the response
 	w.WriteHeader(http.StatusCreated)
+	// returns that one user was created
 	return (fmt.Sprint("User created ", n))
 
 }
 
+// function used to handle user login returning the users info and an error
 func handleLogin(req *http.Request) (UserData, error) {
+	// grabs the credentials from the request
 	username := req.FormValue("username")
 	password := req.FormValue("password")
+	// creates a query to get the user by username and password
 	q := fmt.Sprint("SELECT id FROM users WHERE username='", username, "' AND password='", password, "';")
+	// runs the query to get user data
 	rows, err := db.Query(q)
+	// if there is an error send back an error and an empty user
 	if err != nil {
-
 		return UserData{}, err
 	}
+	// creates an int to save the id
 	var id int
+	// for every row
 	for rows.Next() {
+		// sets the id variable to be the id from the query
 		err = rows.Scan(&id)
+		// if there is an error send back an error and an empty user
 		if err != nil {
-
 			return UserData{}, err
 		}
 	}
 	// Sets the hashed id that is username hashed
 	h := hash(username)
+	// Sets user data
 	u := UserData{
-		"",
+		username,
 		id,
 		h,
 	}
+	// returns the user and no error
 	return u, nil
 }
 
