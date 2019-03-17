@@ -28,13 +28,16 @@ type Color struct {
 	CreatorHash string  `json:"creatorHash"`
 }
 
+// UserData Struct for storing information about users
 type UserData struct {
 	Username string `json:"username"`
 	Userid   int    `json:"id"`
+	// Not stored in DB but used for client side auth
 	Userhash uint32 `json:"hash"`
 }
 
-type favorite struct {
+// Favorite Struct stores a slice of strings, each string is the hex of a color
+type Favorite struct {
 	Favorites []string `json:"favorites"`
 }
 
@@ -46,16 +49,17 @@ type UserFullData struct {
 }
 
 func main() {
-
+	// Prints to the local console that Server is running.  Lets me know api is working after reloads
 	fmt.Printf("Server is running ")
-	// calls function to connect to sql database
+	// calls function to connect to sql database and fill db path
 	connectDB()
-
-	db, err = sql.Open("mysql", dbpath) // connects to local host using local credentials
+	// connects to local host using db credentials
+	db, err = sql.Open("mysql", dbpath)
+	// checks the error
 	check(err)
 	// defer the close
 	defer db.Close()
-
+	// Print stuff to show that we are up
 	fmt.Println()
 	fmt.Println("Pinging db...")
 	fmt.Println()
@@ -64,17 +68,20 @@ func main() {
 	check(err)
 	// Create a mux for handling cors
 	mux := http.NewServeMux()
+	// Routes and handlers
 	mux.HandleFunc("/", index)
 	mux.HandleFunc("/colors", colors)
 	mux.HandleFunc("/user", user)
 	mux.HandleFunc("/auth", auth)
 	mux.HandleFunc("/favorites", favorites)
 	mux.Handle("/favicon.ico", http.NotFoundHandler())
-
+	// Create a handler to allow Cross Origin Resource Sharing over the mux
 	handler := cors.Default().Handler(mux)
+	// Tells the server to listen on port 8001 with the cors handler
 	http.ListenAndServe(":8001", handler)
 }
 
+// function used to connect to the DB and set the dbpath variable
 func connectDB() {
 	// Allows for use of env variables
 	dbuser := os.Getenv("DBUSER")
@@ -101,6 +108,7 @@ func connectDB() {
 	dbpath = fmt.Sprint(dbuser, ":", dbpassword, "@(", dbhost, ":", dbport, ")/", dbname)
 }
 
+// function used to print error if there is one
 func check(err error) {
 	if err != nil {
 		fmt.Println(err)

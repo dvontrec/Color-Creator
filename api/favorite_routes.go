@@ -45,7 +45,7 @@ func getFavorites(w http.ResponseWriter, req *http.Request) {
 			}
 			f = append(f, c)
 		}
-		err = json.NewEncoder(w).Encode(favorite{f})
+		err = json.NewEncoder(w).Encode(Favorite{f})
 		check(err)
 		return
 	}
@@ -67,7 +67,7 @@ func getFavorites(w http.ResponseWriter, req *http.Request) {
 			}
 			f = append(f, c)
 		}
-		err = json.NewEncoder(w).Encode(favorite{f})
+		err = json.NewEncoder(w).Encode(Favorite{f})
 		check(err)
 		return
 	}
