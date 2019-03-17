@@ -13,7 +13,6 @@ import (
 // sets a db variable
 var db *sql.DB
 var err error
-var dbpath string
 
 // Color Struct containing all color properties
 type Color struct {
@@ -51,10 +50,9 @@ type UserFullData struct {
 func main() {
 	// Prints to the local console that Server is running.  Lets me know api is working after reloads
 	fmt.Printf("Server is running ")
-	// calls function to connect to sql database and fill db path
-	connectDB()
-	// connects to local host using db credentials
-	db, err = sql.Open("mysql", dbpath)
+
+	// calls function to connect to sql database using dbpath returned from connectDB function
+	db, err = sql.Open("mysql", connectDB())
 	// checks the error
 	check(err)
 	// defer the close
@@ -82,7 +80,7 @@ func main() {
 }
 
 // function used to connect to the DB and set the dbpath variable
-func connectDB() {
+func connectDB() string {
 	// Allows for use of env variables
 	dbuser := os.Getenv("DBUSER")
 	if dbuser == "" {
@@ -105,7 +103,9 @@ func connectDB() {
 		dbport = "3306"
 	}
 	// combines env variables into a database path
-	dbpath = fmt.Sprint(dbuser, ":", dbpassword, "@(", dbhost, ":", dbport, ")/", dbname)
+	dbpath := fmt.Sprint(dbuser, ":", dbpassword, "@(", dbhost, ":", dbport, ")/", dbname)
+	// return the dbpath
+	return dbpath
 }
 
 // function used to print error if there is one
