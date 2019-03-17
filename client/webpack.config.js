@@ -6,13 +6,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 // list of dependencies should be altered as more are added
 const VENDER_LIBS = [
   'axios',
+  'lodash',
   'react',
   'react-dom',
   'react-redux',
   'react-router-dom',
   'redux',
-  'redux-thunk',
-  'lodash'
+  'redux-form',
+  'redux-thunk'
 ];
 
 // Create a config object
