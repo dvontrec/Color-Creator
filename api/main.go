@@ -114,3 +114,13 @@ func check(err error) {
 		fmt.Println(err)
 	}
 }
+
+// function used to send the html error response
+func htmlCheck(err error, w http.ResponseWriter, response string) {
+	// if there is an error print the response passed in
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintln(w, response)
+		return
+	}
+}

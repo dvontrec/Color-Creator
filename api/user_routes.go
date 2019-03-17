@@ -15,18 +15,27 @@ func hash(s string) uint32 {
 	return h.Sum32()
 }
 
+// handlerFunc used to handle user authentication requests
 func auth(w http.ResponseWriter, req *http.Request) {
+	// If it is a get request, the user is attempting to login
 	if req.Method == http.MethodGet {
-		u, err := handleLogIn(req)
-		if err != nil || u.Userid == 0 {
+		// gets userdata and error from handleLogin request
+		u, err := handleLogin(req)
+		// calls htmlCheck for the error
+		htmlCheck(err, w, "Invalid Credentials")
+		if u.Userid == 0 {
 			w.WriteHeader(http.StatusBadRequest)
 			fmt.Fprintln(w, "Invalid Credentials")
 			return
 		}
+		// encodes the user returned as json
 		err = json.NewEncoder(w).Encode(u)
+		// checks the error
 		check(err)
+		// returns so code will go no further
 		return
 	}
+	// Post methods are used for user registration
 	if req.Method == http.MethodPost {
 		fmt.Fprintln(w, registerUser(w, req))
 		return
@@ -59,7 +68,7 @@ func registerUser(w http.ResponseWriter, req *http.Request) string {
 
 }
 
-func handleLogIn(req *http.Request) (UserData, error) {
+func handleLogin(req *http.Request) (UserData, error) {
 	username := req.FormValue("username")
 	password := req.FormValue("password")
 	q := fmt.Sprint("SELECT id FROM users WHERE username='", username, "' AND password='", password, "';")
