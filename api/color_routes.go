@@ -10,7 +10,7 @@ import (
 )
 
 // function used to sort colors
-func getColorSorted(c []color) []color {
+func getColorSorted(c []Color) []Color {
 	sort.Slice(c, func(i, j int) bool {
 		return c[i].Hue > c[j].Hue
 	})
@@ -18,7 +18,7 @@ func getColorSorted(c []color) []color {
 }
 
 // fuction used to calculate the hue of the color given the rgb values
-func calcHue(c color) float64 {
+func calcHue(c Color) float64 {
 	// divides the R, G, and B values by 255
 	r, _ := strconv.ParseFloat(c.R, 64)
 	r = float64(r / 255)
@@ -98,17 +98,17 @@ func colors(w http.ResponseWriter, req *http.Request) {
 }
 
 func getColors(w http.ResponseWriter) {
-	var colors []color
+	var colors []Color
 
 	// runs a query to pull data from the database
 	rows, err := db.Query(`SELECT color, r, g, b, a, hex, creatorId, creatorHash FROM colors ORDER BY g ASC, b ASC, hex;`)
 	check(err)
 
-	var name, r, g, b, a, hex, cId, cH string
+	var name, r, g, b, a, hex, cID, cH string
 
 	for rows.Next() {
-		err = rows.Scan(&name, &r, &g, &b, &a, &hex, &cId, &cH)
-		c := color{
+		err = rows.Scan(&name, &r, &g, &b, &a, &hex, &cID, &cH)
+		c := Color{
 			name,
 			r,
 			g,
@@ -116,7 +116,7 @@ func getColors(w http.ResponseWriter) {
 			a,
 			hex,
 			0.,
-			cId,
+			cID,
 			cH,
 		}
 		// calculate the hue and add it to the color
@@ -137,12 +137,12 @@ func getColor(w http.ResponseWriter, c string) {
 	rows, err := db.Query(q)
 	check(err)
 
-	var name, r, g, b, a, hex, cId, cH string
-	var co color
+	var name, r, g, b, a, hex, cID, cH string
+	var co Color
 
 	for rows.Next() {
-		err = rows.Scan(&name, &r, &g, &b, &a, &hex, &cId, &cH)
-		co = color{
+		err = rows.Scan(&name, &r, &g, &b, &a, &hex, &cID, &cH)
+		co = Color{
 			name,
 			r,
 			g,
@@ -150,7 +150,7 @@ func getColor(w http.ResponseWriter, c string) {
 			a,
 			hex,
 			0.,
-			cId,
+			cID,
 			cH,
 		}
 	}
@@ -171,10 +171,10 @@ func addColor(w http.ResponseWriter, req *http.Request) {
 	b := req.FormValue("b")
 	a := req.FormValue("a")
 	hex := req.FormValue("hex")
-	cId := req.FormValue("creatorId")
+	cID := req.FormValue("creatorId")
 	cH := req.FormValue("creatorHash")
 
-	c := color{
+	c := Color{
 		cName,
 		r,
 		g,
@@ -182,16 +182,16 @@ func addColor(w http.ResponseWriter, req *http.Request) {
 		a,
 		hex,
 		0.,
-		cId,
+		cID,
 		cH,
 	}
 	fmt.Fprintln(w, addColorToDB(w, c))
 
 }
 
-func addColorToDB(w http.ResponseWriter, c color) string {
+func addColorToDB(w http.ResponseWriter, c Color) string {
 	fmt.Printf("Adding")
-	q := fmt.Sprint("INSERT INTO colors(color, r, g, b, a, hex, creatorId, creatorHash) VALUES('", c.Color, "',", c.R, ",", c.G, ",", c.B, ",", c.A, ",'", c.Hex, "',", c.CreatorId, ",", c.CreatorHash, ");")
+	q := fmt.Sprint("INSERT INTO colors(color, r, g, b, a, hex, creatorId, creatorHash) VALUES('", c.Color, "',", c.R, ",", c.G, ",", c.B, ",", c.A, ",'", c.Hex, "',", c.CreatorID, ",", c.CreatorHash, ");")
 	stmt, err := db.Prepare(q)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -238,7 +238,7 @@ func editColor(w http.ResponseWriter, req *http.Request) {
 }
 
 // function used to query the database and get one color
-func getOneColor(h string) color {
+func getOneColor(h string) Color {
 	// creates a query to select all relevent data from color table by hex
 	q := fmt.Sprint(`SELECT color, r, g, b, a, hex, creatorId, creatorHash FROM colors WHERE hex ="`, h, `";`)
 	// Runs the query checking for errors
@@ -246,14 +246,14 @@ func getOneColor(h string) color {
 	// check the errors
 	check(err)
 	// Creates a variable to store all color data
-	var name, r, g, b, a, hex, cId, cH string
-	var co color
+	var name, r, g, b, a, hex, cID, cH string
+	var co Color
 	// loops through each row retuened from the query
 	for rows.Next() {
 		// sets each data piece to be what is in the row
-		err = rows.Scan(&name, &r, &g, &b, &a, &hex, &cId, &cH)
+		err = rows.Scan(&name, &r, &g, &b, &a, &hex, &cID, &cH)
 		// saves data to color struct
-		co = color{
+		co = Color{
 			name,
 			r,
 			g,
@@ -261,7 +261,7 @@ func getOneColor(h string) color {
 			a,
 			hex,
 			0.,
-			cId,
+			cID,
 			cH,
 		}
 	}

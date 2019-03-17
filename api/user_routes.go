@@ -138,7 +138,7 @@ func getUser(w http.ResponseWriter, req *http.Request) {
 }
 
 // Function used to get all colors favorited by the user with the passed index
-func getUserFavoriteColors(id int) []color {
+func getUserFavoriteColors(id int) []Color {
 	// creates a query that will get the unique colors favorited by the user
 	q := fmt.Sprint("SELECT DISTINCT colorHex FROM favorites WHERE userID =", id, ";")
 	// Runs the query
@@ -148,7 +148,7 @@ func getUserFavoriteColors(id int) []color {
 	// creates a variable to store the hex values
 	var h string
 	// creates a variable to store the slice of colors
-	var c []color
+	var c []Color
 	// Loops through each row returned by the sql query
 	for rows.Next() {
 		// Sets the userName variable to be the username grabbed from the query
@@ -162,7 +162,7 @@ func getUserFavoriteColors(id int) []color {
 }
 
 // Function used to get all colors created by a user with the given creatorId
-func getUserCreatedColors(id int) []color {
+func getUserCreatedColors(id int) []Color {
 	// creates a query that will get the unique colors created by the user
 	q := fmt.Sprint("SELECT DISTINCT hex FROM colors WHERE creatorId =", id, ";")
 	// Runs the query
@@ -172,7 +172,7 @@ func getUserCreatedColors(id int) []color {
 	// creates a variable to store the hex values
 	var h string
 	// creates a variable to store the slice of colors
-	var c []color
+	var c []Color
 	// Loops through each row returned by the sql query
 	for rows.Next() {
 		// Sets the userName variable to be the username grabbed from the query

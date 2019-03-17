@@ -15,15 +15,16 @@ var db *sql.DB
 var err error
 var dbpath string
 
-type color struct {
+// Color Struct containing all color properties
+type Color struct {
 	Color       string  `json:"color"`
 	R           string  `json:"r"`
 	G           string  `json:"g"`
 	B           string  `json:"b"`
 	A           string  `json:"a"`
 	Hex         string  `json:"hex"`
-	Hue         float64 `json:hue`
-	CreatorId   string  `json:"creatorId"`
+	Hue         float64 `json:"hue"`
+	CreatorID   string  `json:"creatorId"`
 	CreatorHash string  `json:"creatorHash"`
 }
 
@@ -40,8 +41,8 @@ type favorite struct {
 // UserFullData used to display all user profile information as json
 type UserFullData struct {
 	User          UserData `json:"userInfo"`
-	CreatedColors []color  `json:"createdColors"`
-	Favorites     []color  `json:"favoriteColors"`
+	CreatedColors []Color  `json:"createdColors"`
+	Favorites     []Color  `json:"favoriteColors"`
 }
 
 func main() {
