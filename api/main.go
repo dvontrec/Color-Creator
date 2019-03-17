@@ -79,6 +79,11 @@ func main() {
 	http.ListenAndServe(":8001", handler)
 }
 
+// index handlerFunc
+func index(w http.ResponseWriter, req *http.Request) {
+	fmt.Fprintf(w, "Hello from the api")
+}
+
 // function used to connect to the DB and set the dbpath variable
 func connectDB() string {
 	// Allows for use of env variables

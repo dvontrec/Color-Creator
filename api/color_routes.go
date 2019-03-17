@@ -11,6 +11,7 @@ import (
 
 // function used to sort colors
 func getColorSorted(c []Color) []Color {
+	// Sorts the colors by hue Ascending
 	sort.Slice(c, func(i, j int) bool {
 		return c[i].Hue > c[j].Hue
 	})
@@ -75,39 +76,51 @@ func findMin(vals []float64) float64 {
 	return float64(min)
 }
 
-func index(w http.ResponseWriter, req *http.Request) {
-	fmt.Fprintf(w, "Hello from the api")
-}
-
+// Handlerfunc for color routes
 func colors(w http.ResponseWriter, req *http.Request) {
+	// if method is get
 	if req.Method == http.MethodGet {
+		// grabs the color hex from the request
 		c := req.FormValue("color")
+		// if one color is not specified get them all
 		if c == "" {
 			getColors(w)
 			return
 		}
+		// gets the specific color asked for
 		getColor(w, c)
 		return
 	}
+	// if the request is a post method, add the color to the db.
 	if req.Method == http.MethodPost {
 		addColor(w, req)
+		return
 	}
+	// if the Method is a patch methd update the color
 	if req.Method == http.MethodPatch {
 		editColor(w, req)
+		return
 	}
 }
 
+// functino used to send all colors to the the response writer
 func getColors(w http.ResponseWriter) {
+	// creates a new slice of colors
 	var colors []Color
 
 	// runs a query to pull data from the database
 	rows, err := db.Query(`SELECT color, r, g, b, a, hex, creatorId, creatorHash FROM colors ORDER BY g ASC, b ASC, hex;`)
-	check(err)
-
+	// checks the error
+	htmlCheck(err, w, fmt.Sprint("There was an error ", err))
+	// create variables to hold color properties
 	var name, r, g, b, a, hex, cID, cH string
-
+	// for each color
 	for rows.Next() {
+		// fill in the variables in given order
 		err = rows.Scan(&name, &r, &g, &b, &a, &hex, &cID, &cH)
+		// checks the error
+		htmlCheck(err, w, fmt.Sprint("There was an error ", err))
+		// creates a color with the rows details
 		c := Color{
 			name,
 			r,
@@ -121,27 +134,39 @@ func getColors(w http.ResponseWriter) {
 		}
 		// calculate the hue and add it to the color
 		c.Hue = calcHue(c)
+		// if the hue is not returned set it to zero
 		if math.IsNaN(c.Hue) {
 			c.Hue = 0.
 		}
-		check(err)
+		// add the new color to the colors slice
 		colors = append(colors, c)
 
 	}
+	// encodes the colors array to json
 	err = json.NewEncoder(w).Encode(getColorSorted(colors))
-	check(err)
+	// checks the error
+	htmlCheck(err, w, fmt.Sprint("There was an error ", err))
 }
 
+// function used to get one color given the hex
 func getColor(w http.ResponseWriter, c string) {
+	// querys the DB to select color props based on the given hex
 	q := fmt.Sprint(`SELECT color, r, g, b, a, hex, creatorId, creatorHash FROM colors WHERE hex ="`, c, `";`)
+	// queries the DB
 	rows, err := db.Query(q)
-	check(err)
-
+	// checks the error
+	htmlCheck(err, w, fmt.Sprint("There was an error ", err))
+	// creates variables to hold color information
 	var name, r, g, b, a, hex, cID, cH string
+	// creates a color variable
 	var co Color
-
+	// for each row
 	for rows.Next() {
+		// fill in the variables in given order
 		err = rows.Scan(&name, &r, &g, &b, &a, &hex, &cID, &cH)
+		// checks the error
+		htmlCheck(err, w, fmt.Sprint("There was an error ", err))
+		// sets co to be the color with the given variables
 		co = Color{
 			name,
 			r,
@@ -154,17 +179,21 @@ func getColor(w http.ResponseWriter, c string) {
 			cH,
 		}
 	}
+	// if no color, color needs to be created
 	if co.Color == "" {
 		fmt.Fprintf(w, "Color has to be created")
 		return
 	}
-
+	// encodes the color as json
 	err = json.NewEncoder(w).Encode(co)
-	check(err)
+	// checks the error
+	htmlCheck(err, w, fmt.Sprint("There was an error ", err))
 
 }
 
+// handler func used to add a color to the DB
 func addColor(w http.ResponseWriter, req *http.Request) {
+	// gets the for data from the request
 	cName := req.FormValue("color")
 	r := req.FormValue("r")
 	g := req.FormValue("g")
@@ -173,7 +202,7 @@ func addColor(w http.ResponseWriter, req *http.Request) {
 	hex := req.FormValue("hex")
 	cID := req.FormValue("creatorId")
 	cH := req.FormValue("creatorHash")
-
+	// saves a new color with the given data
 	c := Color{
 		cName,
 		r,
@@ -185,54 +214,54 @@ func addColor(w http.ResponseWriter, req *http.Request) {
 		cID,
 		cH,
 	}
+	// prints the results of the addColorToDB function
 	fmt.Fprintln(w, addColorToDB(w, c))
 
 }
 
+// function used to run a query to add color to the db
 func addColorToDB(w http.ResponseWriter, c Color) string {
-	fmt.Printf("Adding")
+	// creates a query with given color details
 	q := fmt.Sprint("INSERT INTO colors(color, r, g, b, a, hex, creatorId, creatorHash) VALUES('", c.Color, "',", c.R, ",", c.G, ",", c.B, ",", c.A, ",'", c.Hex, "',", c.CreatorID, ",", c.CreatorHash, ");")
+	// Prepares the query
 	stmt, err := db.Prepare(q)
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return (fmt.Sprint("There was an error ", err))
-	}
+	// checks the error
+	htmlCheck(err, w, fmt.Sprint("There was an error ", err))
 
 	r, err := stmt.Exec()
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return (fmt.Sprint("There was an error ", err))
-	}
+	// checks the error
+	htmlCheck(err, w, fmt.Sprint("There was an error ", err))
 
 	n, err := r.RowsAffected()
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return (fmt.Sprint("There was an error ", err))
-	}
+	// checks the error
+	htmlCheck(err, w, fmt.Sprint("There was an error ", err))
+	// writes the status was created
 	w.WriteHeader(http.StatusCreated)
+	// return color created string
 	return (fmt.Sprint("Colors created ", n))
 }
 
+// handlerFunc used to update the name of an existing color
 func editColor(w http.ResponseWriter, req *http.Request) {
+	// grabs the data from the request
 	colorHash := req.FormValue("color")
 	newColorName := req.FormValue("name")
+	// creates a new query string
 	q := fmt.Sprintf(`UPDATE colors SET color = '%v' WHERE hex = '%v' `, newColorName, colorHash)
 
 	stmt, err := db.Prepare(q)
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintln(w, err)
-	}
+	// checks the error
+	htmlCheck(err, w, fmt.Sprint("There was an error ", err))
+
 	r, err := stmt.Exec()
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintln(w, err)
-	}
+	// checks the error
+	htmlCheck(err, w, fmt.Sprint("There was an error ", err))
+
 	n, err := r.RowsAffected()
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintln(w, err)
-	}
+	// checks the error
+	htmlCheck(err, w, fmt.Sprint("There was an error ", err))
+
+	// writes the correct status to respond successful
 	w.WriteHeader(http.StatusCreated)
 	fmt.Fprintln(w, n)
 }
