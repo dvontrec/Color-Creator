@@ -31,7 +31,7 @@ class Color extends Component {
                 className={style.colorBlock}
                 style={{ background: colorCode }}
               />
-              <p>
+              <p className="col-md-6">
                 Color: <span>{color.color}</span>
               </p>
             </div>
