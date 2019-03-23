@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createColor } from '../../actions';
 
+import style from '../../style.css';
+
 class CreateColor extends Component {
   constructor() {
     super();
@@ -99,7 +101,7 @@ class CreateColor extends Component {
       >
         <div className="container">
           <form action="" onSubmit={this.submitColorForm}>
-            <div>
+            <div className="col-sm-12">
               <label htmlFor="colorName">Color Name</label>
               <input
                 type="text"
@@ -109,8 +111,8 @@ class CreateColor extends Component {
                 required
               />
             </div>
-            <div className="color-group">
-              <div className="input-group">
+            <div className={style.colorGroup}>
+              <div className={style.inputGroup}>
                 <label>Red </label>
                 <input
                   type="number"
@@ -128,7 +130,7 @@ class CreateColor extends Component {
                 />
               </div>
 
-              <div className="input-group">
+              <div className={style.inputGroup}>
                 <label>Green </label>
                 <input
                   type="number"
@@ -145,7 +147,7 @@ class CreateColor extends Component {
                   name="g"
                 />
               </div>
-              <div className="input-group">
+              <div className={style.inputGroup}>
                 <label>Blue </label>
                 <input
                   type="number"
@@ -162,7 +164,7 @@ class CreateColor extends Component {
                   name="b"
                 />
               </div>
-              <div className="input-group">
+              <div className={style.inputGroup}>
                 <label>Alpha/Opacity </label>
                 <input
                   type="number"
@@ -180,9 +182,12 @@ class CreateColor extends Component {
                 />
               </div>
               <input type="submit" />
+              <button onClick={this.randomizeColor} type="button">
+                Randomize
+              </button>
             </div>
           </form>
-          <button onClick={this.randomizeColor}>Randomize</button>
+          {/* <button onClick={this.randomizeColor}>Randomize</button> */}
         </div>
       </div>
     );

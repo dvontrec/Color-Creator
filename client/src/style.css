@@ -6,6 +6,39 @@ body {
 a {
   color: black;
 }
+.colorGroup {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: auto;
+}
+
+.colorGroup label {
+  width: 100px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 15px;
+}
+
+.inputGroup label {
+  margin-right: 20px;
+  text-align: center;
+}
+
+.inputGroup input[type='text'] {
+  text-align: center;
+  width: 45px;
+  margin-right: 20px;
+  border: 2px solid #000;
+  border-radius: 0.3em;
+  padding: 3px;
+}
+
+.inputGroup input[type='range'] {
+  flex-grow: 1;
+}
 
 .nav {
   background-color: #1f1f1f;
