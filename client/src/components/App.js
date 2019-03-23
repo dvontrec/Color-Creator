@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Route, Router, IndexRoute } from 'react-router-dom';
 
 import Nav from './Nav';
+import Footer from './Footer';
 import history from '../history';
 import ShowColors from './Colors/ShowColors';
 import CreateColor from './Colors/CreateColor';
@@ -12,6 +13,8 @@ import ColorDisplay from './Colors/ColorDisplay';
 import ColorEdit from './Colors/ColorEdit';
 import Profile from './Users/Profile';
 
+import style from '../style.css';
+
 class App extends Component {
   render() {
     return (
@@ -20,14 +23,19 @@ class App extends Component {
           <div>
             <Nav />
           </div>
-          <Route exact path="/" component={ShowColors} />
-          <Route path="/new/color/" component={CreateColor} />
-          <Route path="/edit/color/:color" component={ColorEdit} />
-          <Route path="/color/:color" component={ColorDisplay} />
-          <Route path="/register" component={RegisterForm} />
-          <Route path="/login" component={LoginForm} />
-          <Route path="/logout" component={Logout} />
-          <Route path="/profile/:id" component={Profile} />
+          <div className={style.mainContainer}>
+            <Route exact path="/" component={ShowColors} />
+            <Route path="/new/color/" component={CreateColor} />
+            <Route path="/edit/color/:color" component={ColorEdit} />
+            <Route path="/color/:color" component={ColorDisplay} />
+            <Route path="/register" component={RegisterForm} />
+            <Route path="/login" component={LoginForm} />
+            <Route path="/logout" component={Logout} />
+            <Route path="/profile/:id" component={Profile} />
+          </div>
+          <div className={style.footer}>
+            <Footer />
+          </div>
         </div>
       </Router>
     );

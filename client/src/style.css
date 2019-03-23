@@ -2,10 +2,20 @@ body {
   height: 100%;
   width: 100%;
 }
-
+footer {
+  height: 30px;
+  width: 100%;
+}
 a {
   color: black;
 }
+
+.mainContainer {
+  min-height: 100vh; /* will cover the 100% of viewport */
+  padding-bottom: 30px; /* height of your footer */
+  margin-bottom: -30px;
+}
+
 .colorGroup {
   display: flex;
   flex-direction: column;
@@ -81,6 +91,15 @@ a {
 
 .searchBar {
   margin-bottom: 30px;
+}
+
+.footer {
+  background-color: #1f1f1f;
+  color: white;
+}
+
+.footer a {
+  color: white;
 }
 
 @media screen and (max-width: 750px) {
