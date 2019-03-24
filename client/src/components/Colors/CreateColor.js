@@ -90,6 +90,109 @@ class CreateColor extends Component {
     const colorCode = `rgba(${this.state.r},${this.state.g},${
       this.state.b
     },${this.state.a / 100})`;
+    if (!this.props.isPalette) {
+      return (
+        <div
+          className="colorCreator"
+          style={{
+            backgroundColor: colorCode,
+            height: '100vh',
+            color: this.state.textColor
+          }}
+        >
+          <div className="container">
+            <form action="" onSubmit={this.submitColorForm}>
+              <div className="col-sm-12">
+                <label htmlFor="colorName">Color Name</label>
+                <input
+                  type="text"
+                  name="color"
+                  value={this.state.color}
+                  onChange={this.updateSlider}
+                  required
+                />
+              </div>
+              <div className={style.colorGroup}>
+                <div className={style.inputGroup}>
+                  <label>Red </label>
+                  <input
+                    type="number"
+                    onChange={this.updateSlider}
+                    value={this.state.r}
+                    name="r"
+                  />
+                  <input
+                    type="range"
+                    min="0"
+                    max="255"
+                    value={this.state.r}
+                    onChange={this.updateSlider}
+                    name="r"
+                  />
+                </div>
+
+                <div className={style.inputGroup}>
+                  <label>Green </label>
+                  <input
+                    type="number"
+                    onChange={this.updateSlider}
+                    value={this.state.g}
+                    name="g"
+                  />
+                  <input
+                    type="range"
+                    min="0"
+                    max="255"
+                    value={this.state.g}
+                    onChange={this.updateSlider}
+                    name="g"
+                  />
+                </div>
+                <div className={style.inputGroup}>
+                  <label>Blue </label>
+                  <input
+                    type="number"
+                    onChange={this.updateSlider}
+                    value={this.state.b}
+                    name="b"
+                  />
+                  <input
+                    type="range"
+                    min="0"
+                    max="255"
+                    value={this.state.b}
+                    onChange={this.updateSlider}
+                    name="b"
+                  />
+                </div>
+                <div className={style.inputGroup}>
+                  <label>Alpha/Opacity </label>
+                  <input
+                    type="number"
+                    onChange={this.updateSlider}
+                    value={this.state.a}
+                    name="a"
+                  />
+                  <input
+                    type="range"
+                    min="0"
+                    max="100"
+                    value={this.state.a}
+                    onChange={this.updateSlider}
+                    name="a"
+                  />
+                </div>
+                <input type="submit" />
+                <button onClick={this.randomizeColor} type="button">
+                  Randomize
+                </button>
+              </div>
+            </form>
+            {/* <button onClick={this.randomizeColor}>Randomize</button> */}
+          </div>
+        </div>
+      );
+    }
     return (
       <div
         className="colorCreator"
@@ -181,7 +284,11 @@ class CreateColor extends Component {
                   name="a"
                 />
               </div>
-              <input type="submit" />
+              <div>
+                <button onClick={this.props.setPrimary}>Set Primary</button>
+                <button>test</button>
+                <button>test</button>
+              </div>
               <button onClick={this.randomizeColor} type="button">
                 Randomize
               </button>

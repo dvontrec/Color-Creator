@@ -3,6 +3,8 @@ import colorapi from '../../apis/colors';
 
 import style from '../../style.css';
 import ColorContainer from '../Colors/ColorContainer';
+import ColorForm from '../Colors/CreateColor';
+import CreateColor from '../Colors/CreateColor';
 
 class CreatePalette extends Component {
   state = {};
@@ -21,6 +23,7 @@ class CreatePalette extends Component {
               <ColorContainer colors={this.state.colors} isPalette="true" />
             </div>
           </div>
+          <CreateColor isPalette="true" />
         </div>
       );
     }
