@@ -21,12 +21,12 @@ class Profile extends Component {
         <h4>{this.state.UserData.userInfo.username.toUpperCase()}</h4>
         <h4>Created Colors</h4>
         <div className="row">
-          <ColorContainer color={this.state.UserData.createdColors} />
+          <ColorContainer colors={this.state.UserData.createdColors} />
         </div>
         <hr />
         <h4>Favorite Colors</h4>
         <div className="row">
-          <ColorContainer color={this.state.UserData.favoriteColors} />
+          <ColorContainer colors={this.state.UserData.favoriteColors} />
         </div>
       </div>
     );
