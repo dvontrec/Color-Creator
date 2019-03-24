@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import style from '../../style.css';
 import api from '../../apis/colors';
+import ColorContainer from '../Colors/ColorContainer';
 
 class Profile extends Component {
   async componentDidMount() {
@@ -41,13 +42,12 @@ class Profile extends Component {
         <h4>{userInfo.username.toUpperCase()}</h4>
         <h4>Created Colors</h4>
         <div className="row">
-          {createdColors && createdColors.map(color => this.renderColor(color))}
+          <ColorContainer color={createdColors} />
         </div>
         <hr />
         <h4>Favorite Colors</h4>
         <div className="row">
-          {favoriteColors &&
-            favoriteColors.map(color => this.renderColor(color))}
+          <ColorContainer color={favoriteColors} />
         </div>
       </div>
     );
