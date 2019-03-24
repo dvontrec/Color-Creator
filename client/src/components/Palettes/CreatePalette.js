@@ -14,8 +14,8 @@ class CreatePalette extends Component {
     this.setState({ colors: colorArray });
   }
 
-  setPrimary = () => {
-    console.log('clicked');
+  setPrimary = hex => {
+    console.log(hex);
   };
   render() {
     if (this.state.colors) {

@@ -26,7 +26,7 @@ class CreateColor extends Component {
     const rR = this.getRandomNum(255);
     const rG = this.getRandomNum(255);
     const rB = this.getRandomNum(255);
-    const hex = `#${rR.toString(16)}${rG.toString(16)}${rB.toString(16)}`;
+    const hex = `${rR.toString(16)}${rG.toString(16)}${rB.toString(16)}`;
     this.setState({ r: rR, g: rG, b: rB, hex: hex });
     this.updateColorState();
   };
@@ -286,7 +286,9 @@ class CreateColor extends Component {
               </div>
               <div>
                 <button
-                  onClick={this.props.setPrimary}
+                  onClick={() => {
+                    this.props.setPrimary(this.state.hex);
+                  }}
                   type="button"
                   className="col-md-4"
                 >
