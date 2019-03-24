@@ -49,4 +49,8 @@ CREATE TABLE colors
     (color,r,g,b, hex, creatorId, creatorHash)
   VALUES("Semi Pink", 220, 80, 125, "dc507d", 1, 885536276);
 
+  INSERT INTO colors
+    (color,r,g,b, hex, creatorId, creatorHash)
+  VALUES("White", 255, 255, 255, "ffffff", 1, 885536276);
+
 

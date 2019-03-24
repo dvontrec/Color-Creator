@@ -285,9 +285,27 @@ class CreateColor extends Component {
                 />
               </div>
               <div>
-                <button onClick={this.props.setPrimary}>Set Primary</button>
-                <button>test</button>
-                <button>test</button>
+                <button
+                  onClick={this.props.setPrimary}
+                  type="button"
+                  className="col-md-4"
+                >
+                  Set Primary
+                </button>
+                <button
+                  onClick={this.props.setPrimary}
+                  type="button"
+                  className="col-md-4"
+                >
+                  Set Primary
+                </button>
+                <button
+                  onClick={this.props.setPrimary}
+                  type="button"
+                  className="col-md-4"
+                >
+                  Set Primary
+                </button>
               </div>
               <button onClick={this.randomizeColor} type="button">
                 Randomize

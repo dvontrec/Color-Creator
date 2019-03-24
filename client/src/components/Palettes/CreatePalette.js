@@ -3,17 +3,20 @@ import colorapi from '../../apis/colors';
 
 import style from '../../style.css';
 import ColorContainer from '../Colors/ColorContainer';
-import ColorForm from '../Colors/CreateColor';
 import CreateColor from '../Colors/CreateColor';
 
 class CreatePalette extends Component {
   state = {};
   async componentDidMount() {
-    const res = await colorapi.get('/api/colors?color=ff0000');
+    const res = await colorapi.get('/api/colors?color=ffffff');
     const colorArray = [res.data, res.data, res.data];
     console.log(colorArray);
     this.setState({ colors: colorArray });
   }
+
+  setPrimary = () => {
+    console.log('clicked');
+  };
   render() {
     if (this.state.colors) {
       return (
@@ -23,7 +26,7 @@ class CreatePalette extends Component {
               <ColorContainer colors={this.state.colors} isPalette="true" />
             </div>
           </div>
-          <CreateColor isPalette="true" />
+          <CreateColor isPalette="true" setPrimary={this.setPrimary} />
         </div>
       );
     }
