@@ -14,19 +14,38 @@ class CreatePalette extends Component {
     this.setState({ colors: colorArray });
   }
 
-  setPrimary = hex => {
-    console.log(hex);
+  async setPrimary(hex) {
+    console.log(this.state.colors);
+    const res = await colorapi.get(`/api/colors?color=${hex}`);
+    this.state.colors[0] = res.data;
+    this.forceUpdate();
+  }
+  async setSecondary(hex) {
+    console.log(this.state.colors);
+    const res = await colorapi.get(`/api/colors?color=${hex}`);
+    this.state.colors[1] = res.data;
+    this.forceUpdate();
+  }
+
+  renderPalette = () => {
+    return (
+      <div className={`jumbotron ${style.jumbotron}`}>
+        <div className="row" style={{ justifyContent: 'center' }}>
+          <ColorContainer colors={this.state.colors} isPalette="true" />
+        </div>
+      </div>
+    );
   };
   render() {
     if (this.state.colors) {
       return (
         <div className="container">
-          <div className={`jumbotron ${style.jumbotron}`}>
-            <div className="row" style={{ justifyContent: 'center' }}>
-              <ColorContainer colors={this.state.colors} isPalette="true" />
-            </div>
-          </div>
-          <CreateColor isPalette="true" setPrimary={this.setPrimary} />
+          {this.renderPalette()}
+          <CreateColor
+            isPalette="true"
+            setPrimary={this.setPrimary.bind(this)}
+            setSecondary={this.setSecondary.bind(this)}
+          />
         </div>
       );
     }
