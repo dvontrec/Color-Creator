@@ -10,6 +10,7 @@ class Nav extends Component {
       return (
         <li>
           <Link to="/new/color">Create Color</Link>/
+          <Link to="/new/palette">Create Pallet</Link>/
           <Link to="/logout">Log Out</Link>
         </li>
       );
