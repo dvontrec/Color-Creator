@@ -15,10 +15,15 @@ class CreatePalette extends Component {
   }
 
   async setPrimary(hex) {
-    console.log(this.state.colors);
+    console.log('primart: ', this.state.colors);
     const res = await colorapi.get(`/api/colors?color=${hex}`);
-    this.state.colors[0] = res.data;
-    this.forceUpdate();
+    if (res.status === 404) {
+      console.log('response', res);
+      this.state.colors[0] = res.data;
+      this.forceUpdate();
+    } else {
+      alert('Color must becreated');
+    }
   }
   async setSecondary(hex) {
     console.log(this.state.colors);

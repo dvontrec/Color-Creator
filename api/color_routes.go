@@ -181,6 +181,8 @@ func getColor(w http.ResponseWriter, c string) {
 	}
 	// if no color, color needs to be created
 	if co.Color == "" {
+		// writes the status to the response
+		w.WriteHeader(http.StatusPartialContent)
 		fmt.Fprintf(w, "Color has to be created")
 		return
 	}
