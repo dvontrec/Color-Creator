@@ -17,27 +17,74 @@ class CreatePalette extends Component {
 
   async setPrimary(colorState) {
     console.log('primary: ', colorState);
-    const res = await colorapi.get(`/api/colors?color=${colorState.hex}`);
-    if (res.status === 404) {
+    let res = await colorapi.get(`/api/colors?color=${colorState.hex}`);
+    if (res.status === 200) {
       console.log('response', res);
       this.state.colors[0] = res.data;
       this.forceUpdate();
     } else {
-      const colName = prompt("You've Discovered a new Color!! Give ia a name");
+      const colName =
+        colorState.color ||
+        prompt("You've Discovered a new Color!! Give ia a name");
       const queryString = `color=${colName}&r=${colorState.r}&g=${
         colorState.g
       }&b=${colorState.b}&a=${colorState.a}&hex=${colorState.hex}&creatorId=${
         this.props.auth.userId
       }&creatorHash=${this.props.auth.userHash}`;
       console.log(queryString);
-      colorapi.post(`/api/colors?${queryString}`);
+      res = await colorapi.post(`/api/colors?${queryString}`);
+      this.state.colors[0] = res.data;
+      console.log('state', this.state.colors);
+      this.forceUpdate();
     }
   }
-  async setSecondary(hex) {
-    console.log(this.state.colors);
-    const res = await colorapi.get(`/api/colors?color=${hex}`);
-    this.state.colors[1] = res.data;
-    this.forceUpdate();
+
+  async setSecondary(colorState) {
+    console.log('primary: ', colorState);
+    let res = await colorapi.get(`/api/colors?color=${colorState.hex}`);
+    if (res.status === 200) {
+      console.log('response', res);
+      this.state.colors[1] = res.data;
+      this.forceUpdate();
+    } else {
+      const colName =
+        colorState.color ||
+        prompt("You've Discovered a new Color!! Give ia a name");
+      const queryString = `color=${colName}&r=${colorState.r}&g=${
+        colorState.g
+      }&b=${colorState.b}&a=${colorState.a}&hex=${colorState.hex}&creatorId=${
+        this.props.auth.userId
+      }&creatorHash=${this.props.auth.userHash}`;
+      console.log(queryString);
+      res = await colorapi.post(`/api/colors?${queryString}`);
+      this.state.colors[1] = res.data;
+      console.log('state', this.state.colors);
+      this.forceUpdate();
+    }
+  }
+
+  async setTertiary(colorState) {
+    console.log('primary: ', colorState);
+    let res = await colorapi.get(`/api/colors?color=${colorState.hex}`);
+    if (res.status === 200) {
+      console.log('response', res);
+      this.state.colors[2] = res.data;
+      this.forceUpdate();
+    } else {
+      const colName =
+        colorState.color ||
+        prompt("You've Discovered a new Color!! Give ia a name");
+      const queryString = `color=${colName}&r=${colorState.r}&g=${
+        colorState.g
+      }&b=${colorState.b}&a=${colorState.a}&hex=${colorState.hex}&creatorId=${
+        this.props.auth.userId
+      }&creatorHash=${this.props.auth.userHash}`;
+      console.log(queryString);
+      res = await colorapi.post(`/api/colors?${queryString}`);
+      this.state.colors[2] = res.data;
+      console.log('state', this.state.colors);
+      this.forceUpdate();
+    }
   }
 
   renderPalette = () => {
@@ -58,6 +105,7 @@ class CreatePalette extends Component {
             isPalette="true"
             setPrimary={this.setPrimary.bind(this)}
             setSecondary={this.setSecondary.bind(this)}
+            setTertiary={this.setTertiary.bind(this)}
           />
         </div>
       );

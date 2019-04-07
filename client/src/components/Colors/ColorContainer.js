@@ -23,7 +23,7 @@ const ColorContainer = props => {
     const colorCode = `rgba(${color.r},${color.g},${color.b},${color.a})`;
 
     return (
-      <div key={color.hex} className="col-md-1">
+      <div className="col-md-1">
         <div className={style.colorBlock} style={{ background: colorCode }} />
       </div>
     );

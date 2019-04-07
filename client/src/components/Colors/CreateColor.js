@@ -301,14 +301,16 @@ class CreateColor extends Component {
                   type="button"
                   className="col-md-4"
                 >
-                  Set Primary
+                  Set Secondary
                 </button>
                 <button
-                  onClick={this.props.setPrimary}
+                  onClick={() => {
+                    this.props.setTertiary(this.state);
+                  }}
                   type="button"
                   className="col-md-4"
                 >
-                  Set Primary
+                  Set Tertiary
                 </button>
               </div>
               <button onClick={this.randomizeColor} type="button">
