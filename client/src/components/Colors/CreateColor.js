@@ -287,7 +287,7 @@ class CreateColor extends Component {
               <div>
                 <button
                   onClick={() => {
-                    this.props.setPrimary(this.state.hex);
+                    this.props.setPrimary(this.state);
                   }}
                   type="button"
                   className="col-md-4"
@@ -296,7 +296,7 @@ class CreateColor extends Component {
                 </button>
                 <button
                   onClick={() => {
-                    this.props.setSecondary(this.state.hex);
+                    this.props.setSecondary(this.state);
                   }}
                   type="button"
                   className="col-md-4"

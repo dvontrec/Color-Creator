@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import colorapi from '../../apis/colors';
 
 import style from '../../style.css';
@@ -14,15 +15,22 @@ class CreatePalette extends Component {
     this.setState({ colors: colorArray });
   }
 
-  async setPrimary(hex) {
-    console.log('primart: ', this.state.colors);
-    const res = await colorapi.get(`/api/colors?color=${hex}`);
+  async setPrimary(colorState) {
+    console.log('primary: ', colorState);
+    const res = await colorapi.get(`/api/colors?color=${colorState.hex}`);
     if (res.status === 404) {
       console.log('response', res);
       this.state.colors[0] = res.data;
       this.forceUpdate();
     } else {
-      alert('Color must becreated');
+      const colName = prompt("You've Discovered a new Color!! Give ia a name");
+      const queryString = `color=${colName}&r=${colorState.r}&g=${
+        colorState.g
+      }&b=${colorState.b}&a=${colorState.a}&hex=${colorState.hex}&creatorId=${
+        this.props.auth.userId
+      }&creatorHash=${this.props.auth.userHash}`;
+      console.log(queryString);
+      colorapi.post(`/api/colors?${queryString}`);
     }
   }
   async setSecondary(hex) {
@@ -58,4 +66,8 @@ class CreatePalette extends Component {
   }
 }
 
-export default CreatePalette;
+const mapStateToProps = ({ auth }) => {
+  return { auth };
+};
+
+export default connect(mapStateToProps)(CreatePalette);
