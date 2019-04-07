@@ -15,14 +15,18 @@ class CreatePalette extends Component {
     this.setState({ colors: colorArray });
   }
 
+  // Sets the color to the position in state
   async setPrimary(colorState) {
     console.log('primary: ', colorState);
+    // tries to find the color by hex
     let res = await colorapi.get(`/api/colors?color=${colorState.hex}`);
+    // if color exists set it
     if (res.status === 200) {
       console.log('response', res);
       this.state.colors[0] = res.data;
       this.forceUpdate();
     } else {
+      // if color does not exist prompt for color if nothing is input
       const colName =
         colorState.color ||
         prompt("You've Discovered a new Color!! Give ia a name");
@@ -32,6 +36,7 @@ class CreatePalette extends Component {
         this.props.auth.userId
       }&creatorHash=${this.props.auth.userHash}`;
       console.log(queryString);
+      // sets the color in the palette container
       res = await colorapi.post(`/api/colors?${queryString}`);
       this.state.colors[0] = res.data;
       console.log('state', this.state.colors);
@@ -86,12 +91,19 @@ class CreatePalette extends Component {
       this.forceUpdate();
     }
   }
+  // function for saving pallet by hex to the api
+  submitPalette = () => {
+    alert('click');
+  };
 
   renderPalette = () => {
     return (
       <div className={`jumbotron ${style.jumbotron}`}>
         <div className="row" style={{ justifyContent: 'center' }}>
           <ColorContainer colors={this.state.colors} isPalette="true" />
+          <button className="btn btn-primary" onClick={this.submitPalette}>
+            Submit
+          </button>
         </div>
       </div>
     );
