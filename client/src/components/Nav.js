@@ -28,7 +28,11 @@ class Nav extends Component {
       <div className={style.nav}>
         <ul>
           <li>
-            <Link to="/">Colors</Link>
+            <Link to="/">
+              <h4>
+                <em>Colors</em>
+              </h4>
+            </Link>
           </li>
           {this.renderNav()}
         </ul>
