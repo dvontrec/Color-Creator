@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-func palette(w http.ResponseWriter, req *http.Request) {
+func palettes(w http.ResponseWriter, req *http.Request) {
 	if req.Method == http.MethodPost {
 		createPalette(w, req)
 		return
