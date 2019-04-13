@@ -92,7 +92,7 @@ func main() {
 
 // index handlerFunc
 func index(w http.ResponseWriter, req *http.Request) {
-	fmt.Fprintf(w, "Hello from the api")
+	fmt.Fprintf(w, "Hello from the api v1.2")
 }
 
 // function used to connect to the DB and set the dbpath variable
