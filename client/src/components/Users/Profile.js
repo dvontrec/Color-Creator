@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import api from '../../apis/colors';
 import ColorContainer from '../Colors/ColorContainer';
+import PaletteContainer from '../Palettes/PaletteContainer';
 
 class Profile extends Component {
   async componentDidMount() {
@@ -27,6 +28,11 @@ class Profile extends Component {
         <h4>Favorite Colors</h4>
         <div className="row">
           <ColorContainer colors={this.state.UserData.favoriteColors} />
+        </div>
+        <hr />
+        <h4>Palettes</h4>
+        <div>
+          <PaletteContainer palettes={this.state.UserData.palettes} />
         </div>
       </div>
     );
