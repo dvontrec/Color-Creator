@@ -207,7 +207,6 @@ func getUserCreatedColors(id int) []Color {
 func getUserPalettes(userID int) []PaletteData {
 	// queries for palette name and hexes
 	q := fmt.Sprintf("SELECT paletteName, primaryHex, secondaryHex, tertiaryHex FROM palettes WHERE creatorID = '%v';", userID)
-	fmt.Println(q)
 	// queries the DB
 	rows, err := db.Query(q)
 	// checks the error
