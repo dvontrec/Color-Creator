@@ -32,7 +32,9 @@ class Profile extends Component {
         <hr />
         <h4>Palettes</h4>
         <div>
-          <PaletteContainer palettes={this.state.UserData.palettes} />
+          {this.state.UserData.palettes && (
+            <PaletteContainer palettes={this.state.UserData.palettes} />
+          )}
         </div>
       </div>
     );
