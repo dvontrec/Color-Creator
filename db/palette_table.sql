@@ -1,27 +1,33 @@
 -- Drop the pallette table if it exists
-DROP TABLE IF EXISTS pallette;
+DROP TABLE IF EXISTS palettes;
 
 -- Creates a table for pallets palletteName, CreatorID, and 3 Color Hashes
-CREATE TABLE pallette
+CREATE TABLE palettes
 (
   creatorID INT NOT NULL,
-  primaryColorHex CHAR(6) NOT NULL,
-  secondaryColorHex CHAR(6) NOT NULL,
-  tertiaryColorHex CHAR(6) NOT NULL,
+  paletteID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  PaletteName VARCHAR
+(255),
+  primaryHex CHAR
+(6) NOT NULL,
+  secondaryHex CHAR
+(6) NOT NULL,
+  tertiaryHex CHAR
+(6) NOT NULL,
 
   FOREIGN KEY
-  (creatorID) REFERENCES users
-  (id),
+(creatorID) REFERENCES users
+(id),
 
   FOREIGN KEY
-  (primarycolorHex) REFERENCES colors
-  (hex),
+(primaryHex) REFERENCES colors
+(hex),
 
   FOREIGN KEY
-  (secondaryColorHex) REFERENCES colors
-  (hex),
+(secondaryHex) REFERENCES colors
+(hex),
 
   FOREIGN KEY
-  (tertiaryColorHex) REFERENCES colors
-  (hex)
+(tertiaryHex) REFERENCES colors
+(hex)
 );
