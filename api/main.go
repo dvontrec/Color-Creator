@@ -51,6 +51,7 @@ type UserFullData struct {
 // PaletteData displays the primary, secondary, and tertiary color of the palette
 type PaletteData struct {
 	PaletteName    string `json:"PaletteName"`
+	ID             string `json:"ID"`
 	PrimaryColor   Color  `json:"Primary"`
 	SecondaryColor Color  `json:"Secondary"`
 	TertiaryColor  Color  `json:"Tertiary"`

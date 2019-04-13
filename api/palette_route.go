@@ -40,6 +40,7 @@ func getPalette(w http.ResponseWriter, req *http.Request) {
 		// makes a palette for date
 		p = PaletteData{
 			paletteName,
+			paletteID,
 			getOneColor(pHex),
 			getOneColor(sHex),
 			getOneColor(tHex),
