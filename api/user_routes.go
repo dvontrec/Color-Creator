@@ -149,6 +149,7 @@ func getUser(w http.ResponseWriter, req *http.Request) {
 		u,
 		getUserCreatedColors(int(id)),
 		getUserFavoriteColors(int(id)),
+		getUserPalettes(int(id)),
 	}
 	// pass the userdata object encoded as json
 	err = json.NewEncoder(w).Encode(fullUser)
@@ -201,4 +202,34 @@ func getUserCreatedColors(id int) []Color {
 		c = append(c, getOneColor(h))
 	}
 	return c
+}
+
+func getUserPalettes(userID int) []PaletteData {
+	// queries for palette name and hexes
+	q := fmt.Sprintf("SELECT paletteName, paletteID, primaryHex, secondaryHex, tertiaryHex FROM palettes WHERE creatorID = '%v';", userID)
+	// queries the DB
+	rows, err := db.Query(q)
+	// checks the error
+	check(err)
+	// creates variables to hold color information
+	var paletteName, paletteID, pHex, sHex, tHex string
+	// create the array to hold palettes
+	var palettes []PaletteData
+	// for each row
+	for rows.Next() {
+		// fill in the variables in given order
+		err = rows.Scan(&paletteName, &paletteID, &pHex, &sHex, &tHex)
+		// checks the error
+		check(err)
+		// makes a palette for date
+		p := PaletteData{
+			paletteName,
+			paletteID,
+			getOneColor(pHex),
+			getOneColor(sHex),
+			getOneColor(tHex),
+		}
+		palettes = append(palettes, p)
+	}
+	return palettes
 }

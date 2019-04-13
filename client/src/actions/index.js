@@ -80,3 +80,19 @@ export const getFavoritesByColor = colorHex => async dispatch => {
   const response = await api.get(`api/favorites?colorHex=${colorHex}`);
   dispatch({ type: 'GET_COLOR_FAVORITES', payload: response.data });
 };
+
+// ***************************************************************
+//                  Palettes
+// ***************************************************************
+
+export const createPalette = paletteData => async dispatch => {
+  const response = await api.post(`api/palettes?${paletteData}`);
+  dispatch({ type: 'CREATE_PALETTE', payload: response.data });
+  alert('Palette Created');
+  history.push('/');
+};
+
+export const getPalette = paletteID => async dispatch => {
+  const response = await api.get(`api/palettes?paletteId=${paletteID}`);
+  dispatch({ type: 'GET_PALETTE', payload: response.data });
+};

@@ -181,6 +181,8 @@ func getColor(w http.ResponseWriter, c string) {
 	}
 	// if no color, color needs to be created
 	if co.Color == "" {
+		// writes the status to the response
+		w.WriteHeader(http.StatusPartialContent)
 		fmt.Fprintf(w, "Color has to be created")
 		return
 	}
@@ -214,13 +216,13 @@ func addColor(w http.ResponseWriter, req *http.Request) {
 		cID,
 		cH,
 	}
-	// prints the results of the addColorToDB function
-	fmt.Fprintln(w, addColorToDB(w, c))
+	// calls addColorToDB function
+	addColorToDB(w, c)
 
 }
 
 // function used to run a query to add color to the db
-func addColorToDB(w http.ResponseWriter, c Color) string {
+func addColorToDB(w http.ResponseWriter, c Color) {
 	// creates a query with given color details
 	q := fmt.Sprint("INSERT INTO colors(color, r, g, b, a, hex, creatorId, creatorHash) VALUES('", c.Color, "',", c.R, ",", c.G, ",", c.B, ",", c.A, ",'", c.Hex, "',", c.CreatorID, ",", c.CreatorHash, ");")
 	// Prepares the query
@@ -232,13 +234,15 @@ func addColorToDB(w http.ResponseWriter, c Color) string {
 	// checks the error
 	htmlCheck(err, w, fmt.Sprint("There was an error ", err))
 
-	n, err := r.RowsAffected()
+	_, err = r.RowsAffected()
 	// checks the error
 	htmlCheck(err, w, fmt.Sprint("There was an error ", err))
 	// writes the status was created
 	w.WriteHeader(http.StatusCreated)
-	// return color created string
-	return (fmt.Sprint("Colors created ", n))
+	// return color as json
+	err = json.NewEncoder(w).Encode(c)
+	// checks the error
+	htmlCheck(err, w, fmt.Sprint("There was an error ", err))
 }
 
 // handlerFunc used to update the name of an existing color

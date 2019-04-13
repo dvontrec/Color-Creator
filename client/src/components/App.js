@@ -12,6 +12,8 @@ import Logout from './Users/Logout';
 import ColorDisplay from './Colors/ColorDisplay';
 import ColorEdit from './Colors/ColorEdit';
 import Profile from './Users/Profile';
+import CreatePalette from './Palettes/CreatePalette';
+import ShowPalette from './Palettes/ShowPalette';
 
 import style from '../style.css';
 
@@ -28,6 +30,8 @@ class App extends Component {
             <Route path="/new/color/" component={CreateColor} />
             <Route path="/edit/color/:color" component={ColorEdit} />
             <Route path="/color/:color" component={ColorDisplay} />
+            <Route path="/new/palette" component={CreatePalette} />
+            <Route path="/palette/:id" component={ShowPalette} />
             <Route path="/register" component={RegisterForm} />
             <Route path="/login" component={LoginForm} />
             <Route path="/logout" component={Logout} />

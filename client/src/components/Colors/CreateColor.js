@@ -26,7 +26,7 @@ class CreateColor extends Component {
     const rR = this.getRandomNum(255);
     const rG = this.getRandomNum(255);
     const rB = this.getRandomNum(255);
-    const hex = `#${rR.toString(16)}${rG.toString(16)}${rB.toString(16)}`;
+    const hex = `${rR.toString(16)}${rG.toString(16)}${rB.toString(16)}`;
     this.setState({ r: rR, g: rG, b: rB, hex: hex });
     this.updateColorState();
   };
@@ -90,6 +90,113 @@ class CreateColor extends Component {
     const colorCode = `rgba(${this.state.r},${this.state.g},${
       this.state.b
     },${this.state.a / 100})`;
+    if (!this.props.isPalette) {
+      return (
+        <div
+          className="colorCreator"
+          style={{
+            backgroundColor: colorCode,
+            height: '100vh',
+            color: this.state.textColor
+          }}
+        >
+          <div className="container">
+            <form action="" onSubmit={this.submitColorForm}>
+              <div className="col-sm-12">
+                <label htmlFor="colorName">Color Name</label>
+                <input
+                  tabIndex="1"
+                  type="text"
+                  name="color"
+                  value={this.state.color}
+                  onChange={this.updateSlider}
+                  required
+                />
+              </div>
+              <div className={style.colorGroup}>
+                <div className={style.inputGroup}>
+                  <label>Red </label>
+                  <input
+                    tabIndex="2"
+                    type="number"
+                    onChange={this.updateSlider}
+                    value={this.state.r}
+                    name="r"
+                  />
+                  <input
+                    type="range"
+                    min="0"
+                    max="255"
+                    value={this.state.r}
+                    onChange={this.updateSlider}
+                    name="r"
+                  />
+                </div>
+
+                <div className={style.inputGroup}>
+                  <label>Green </label>
+                  <input
+                    tabIndex="3"
+                    type="number"
+                    onChange={this.updateSlider}
+                    value={this.state.g}
+                    name="g"
+                  />
+                  <input
+                    type="range"
+                    min="0"
+                    max="255"
+                    value={this.state.g}
+                    onChange={this.updateSlider}
+                    name="g"
+                  />
+                </div>
+                <div className={style.inputGroup}>
+                  <label>Blue </label>
+                  <input
+                    tabIndex="4"
+                    type="number"
+                    onChange={this.updateSlider}
+                    value={this.state.b}
+                    name="b"
+                  />
+                  <input
+                    type="range"
+                    min="0"
+                    max="255"
+                    value={this.state.b}
+                    onChange={this.updateSlider}
+                    name="b"
+                  />
+                </div>
+                <div className={style.inputGroup}>
+                  <label>Alpha/Opacity </label>
+                  <input
+                    type="number"
+                    onChange={this.updateSlider}
+                    value={this.state.a}
+                    name="a"
+                  />
+                  <input
+                    type="range"
+                    min="0"
+                    max="100"
+                    value={this.state.a}
+                    onChange={this.updateSlider}
+                    name="a"
+                  />
+                </div>
+                <input type="submit" />
+                <button onClick={this.randomizeColor} type="button">
+                  Randomize
+                </button>
+              </div>
+            </form>
+            {/* <button onClick={this.randomizeColor}>Randomize</button> */}
+          </div>
+        </div>
+      );
+    }
     return (
       <div
         className="colorCreator"
@@ -104,6 +211,7 @@ class CreateColor extends Component {
             <div className="col-sm-12">
               <label htmlFor="colorName">Color Name</label>
               <input
+                tabIndex="1"
                 type="text"
                 name="color"
                 value={this.state.color}
@@ -115,6 +223,7 @@ class CreateColor extends Component {
               <div className={style.inputGroup}>
                 <label>Red </label>
                 <input
+                  tabIndex="2"
                   type="number"
                   onChange={this.updateSlider}
                   value={this.state.r}
@@ -133,6 +242,7 @@ class CreateColor extends Component {
               <div className={style.inputGroup}>
                 <label>Green </label>
                 <input
+                  tabIndex="3"
                   type="number"
                   onChange={this.updateSlider}
                   value={this.state.g}
@@ -150,6 +260,7 @@ class CreateColor extends Component {
               <div className={style.inputGroup}>
                 <label>Blue </label>
                 <input
+                  tabIndex="4"
                   type="number"
                   onChange={this.updateSlider}
                   value={this.state.b}
@@ -181,13 +292,40 @@ class CreateColor extends Component {
                   name="a"
                 />
               </div>
-              <input type="submit" />
+              <div>
+                <button
+                  onClick={() => {
+                    this.props.setPrimary(this.state);
+                  }}
+                  type="button"
+                  className="col-md-4"
+                >
+                  Set Primary
+                </button>
+                <button
+                  onClick={() => {
+                    this.props.setSecondary(this.state);
+                  }}
+                  type="button"
+                  className="col-md-4"
+                >
+                  Set Secondary
+                </button>
+                <button
+                  onClick={() => {
+                    this.props.setTertiary(this.state);
+                  }}
+                  type="button"
+                  className="col-md-4"
+                >
+                  Set Tertiary
+                </button>
+              </div>
               <button onClick={this.randomizeColor} type="button">
                 Randomize
               </button>
             </div>
           </form>
-          {/* <button onClick={this.randomizeColor}>Randomize</button> */}
         </div>
       </div>
     );

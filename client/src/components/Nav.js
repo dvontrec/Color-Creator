@@ -10,6 +10,7 @@ class Nav extends Component {
       return (
         <li>
           <Link to="/new/color">Create Color</Link>/
+          <Link to="/new/palette">Create Pallet</Link>/
           <Link to="/logout">Log Out</Link>
         </li>
       );
@@ -27,7 +28,11 @@ class Nav extends Component {
       <div className={style.nav}>
         <ul>
           <li>
-            <Link to="/">Colors</Link>
+            <Link to="/">
+              <h4>
+                <em>Colors</em>
+              </h4>
+            </Link>
           </li>
           {this.renderNav()}
         </ul>
