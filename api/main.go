@@ -47,6 +47,13 @@ type UserFullData struct {
 	Favorites     []Color  `json:"favoriteColors"`
 }
 
+// PaletteData displays the primary, secondary, and tertiary color of the palette
+type PaletteData struct {
+	PrimaryColor   Color `json:"Primary"`
+	SecondaryColor Color `json:"Secondary"`
+	TertiaryColor  Color `json:"Tertiary"`
+}
+
 func main() {
 	// Prints to the local console that Server is running.  Lets me know api is working after reloads
 	fmt.Printf("Server is running ")
