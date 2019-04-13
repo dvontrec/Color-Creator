@@ -21,7 +21,7 @@ func createPalette(w http.ResponseWriter, req *http.Request) {
 	secondaryHex := req.FormValue("secondaryHex")
 	tertiaryHex := req.FormValue("tertiaryHex")
 	// created a query to create the palette
-	q := fmt.Sprintf("INSERT INTO palettes(creatorID, paletteName, primaryHex, secondaryHex, tertiaryHex) VALUES(%v, %v, %v, %v, %v);", userID, paletteName, primaryHex, secondaryHex, tertiaryHex)
+	q := fmt.Sprintf("INSERT INTO palettes(creatorID, paletteName, primaryHex, secondaryHex, tertiaryHex) VALUES(%v, '%v', '%v', '%v', '%v');", userID, paletteName, primaryHex, secondaryHex, tertiaryHex)
 	fmt.Println(q)
 	// // Prepares the query
 	// stmt, err := db.Prepare(q)
