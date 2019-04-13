@@ -53,7 +53,6 @@ class ShowPalette extends Component {
   }
 
   render() {
-    console.log(this.state);
     return <div className="container">{this.renderPalette()}</div>;
   }
 }
