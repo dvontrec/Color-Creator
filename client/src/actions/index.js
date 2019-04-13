@@ -86,6 +86,6 @@ export const getFavoritesByColor = colorHex => async dispatch => {
 // ***************************************************************
 
 export const createPalette = paletteData => async dispatch => {
-  const response = await api.get(`api/palettes?${paletteData}`);
+  const response = await api.post(`api/palettes?${paletteData}`);
   dispatch({ type: 'CREATE_PALETTE', payload: response.data });
 };

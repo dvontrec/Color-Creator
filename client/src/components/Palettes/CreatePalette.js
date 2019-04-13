@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import colorapi from '../../apis/colors';
+import { createPalette } from '../../actions';
 
 import style from '../../style.css';
 import ColorContainer from '../Colors/ColorContainer';
@@ -93,7 +94,14 @@ class CreatePalette extends Component {
   }
   // function for saving pallet by hex to the api
   submitPalette = () => {
-    alert('click');
+    const paletteName = prompt('Please enter a name for the palette: ');
+    const primaryHex = this.state.colors[0].hex;
+    const secondaryHex = this.state.colors[1].hex;
+    const tertiaryHex = this.state.colors[2].hex;
+    const paletteData = `userID=${
+      this.props.auth.userId
+    }&paletteName=${paletteName}&primaryHex=${primaryHex}&secondaryHex=${secondaryHex}&tertiaryHex=${tertiaryHex}`;
+    this.props.createPalette(paletteData);
   };
 
   renderPalette = () => {
@@ -130,4 +138,7 @@ const mapStateToProps = ({ auth }) => {
   return { auth };
 };
 
-export default connect(mapStateToProps)(CreatePalette);
+export default connect(
+  mapStateToProps,
+  { createPalette }
+)(CreatePalette);
