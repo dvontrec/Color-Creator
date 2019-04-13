@@ -6,7 +6,7 @@ CREATE TABLE palettes
 (
   creatorID INT NOT NULL,
   paletteID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  PaletteName VARCHAR
+  paletteName VARCHAR
 (255),
   primaryHex CHAR
 (6) NOT NULL,
