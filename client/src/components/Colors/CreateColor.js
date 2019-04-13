@@ -105,6 +105,7 @@ class CreateColor extends Component {
               <div className="col-sm-12">
                 <label htmlFor="colorName">Color Name</label>
                 <input
+                  tabIndex="1"
                   type="text"
                   name="color"
                   value={this.state.color}
@@ -116,6 +117,7 @@ class CreateColor extends Component {
                 <div className={style.inputGroup}>
                   <label>Red </label>
                   <input
+                    tabIndex="2"
                     type="number"
                     onChange={this.updateSlider}
                     value={this.state.r}
@@ -134,6 +136,7 @@ class CreateColor extends Component {
                 <div className={style.inputGroup}>
                   <label>Green </label>
                   <input
+                    tabIndex="3"
                     type="number"
                     onChange={this.updateSlider}
                     value={this.state.g}
@@ -151,6 +154,7 @@ class CreateColor extends Component {
                 <div className={style.inputGroup}>
                   <label>Blue </label>
                   <input
+                    tabIndex="4"
                     type="number"
                     onChange={this.updateSlider}
                     value={this.state.b}
@@ -207,6 +211,7 @@ class CreateColor extends Component {
             <div className="col-sm-12">
               <label htmlFor="colorName">Color Name</label>
               <input
+                tabIndex="1"
                 type="text"
                 name="color"
                 value={this.state.color}
@@ -218,6 +223,7 @@ class CreateColor extends Component {
               <div className={style.inputGroup}>
                 <label>Red </label>
                 <input
+                  tabIndex="2"
                   type="number"
                   onChange={this.updateSlider}
                   value={this.state.r}
@@ -236,6 +242,7 @@ class CreateColor extends Component {
               <div className={style.inputGroup}>
                 <label>Green </label>
                 <input
+                  tabIndex="3"
                   type="number"
                   onChange={this.updateSlider}
                   value={this.state.g}
@@ -253,6 +260,7 @@ class CreateColor extends Component {
               <div className={style.inputGroup}>
                 <label>Blue </label>
                 <input
+                  tabIndex="4"
                   type="number"
                   onChange={this.updateSlider}
                   value={this.state.b}
@@ -318,7 +326,6 @@ class CreateColor extends Component {
               </button>
             </div>
           </form>
-          {/* <button onClick={this.randomizeColor}>Randomize</button> */}
         </div>
       </div>
     );
