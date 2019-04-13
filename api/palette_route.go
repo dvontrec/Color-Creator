@@ -22,23 +22,21 @@ func createPalette(w http.ResponseWriter, req *http.Request) {
 	tertiaryHex := req.FormValue("tertiaryHex")
 	// created a query to create the palette
 	q := fmt.Sprintf("INSERT INTO palettes(creatorID, paletteName, primaryHex, secondaryHex, tertiaryHex) VALUES(%v, '%v', '%v', '%v', '%v');", userID, paletteName, primaryHex, secondaryHex, tertiaryHex)
-	fmt.Println(q)
-	// // Prepares the query
-	// stmt, err := db.Prepare(q)
-	// // checks the error
-	// htmlCheck(err, w, fmt.Sprint("There was an error ", err))
+	// Prepares the query
+	stmt, err := db.Prepare(q)
+	// checks the error
+	htmlCheck(err, w, fmt.Sprint("There was an error ", err))
 
-	// r, err := stmt.Exec()
-	// // checks the error
-	// htmlCheck(err, w, fmt.Sprint("There was an error ", err))
+	r, err := stmt.Exec()
+	// checks the error
+	htmlCheck(err, w, fmt.Sprint("There was an error ", err))
 
-	// _, err = r.RowsAffected()
-	// // checks the error
-	// htmlCheck(err, w, fmt.Sprint("There was an error ", err))
-	// // writes the status was created
-	// w.WriteHeader(http.StatusCreated)
-	// fmt.Fprintf(w, "palette created")
-	// // checks the error
-	// htmlCheck(err, w, fmt.Sprint("There was an error ", err))
-
+	_, err = r.RowsAffected()
+	// checks the error
+	htmlCheck(err, w, fmt.Sprint("There was an error ", err))
+	// writes the status was created
+	w.WriteHeader(http.StatusCreated)
+	fmt.Fprintf(w, "palette created")
+	// checks the error
+	htmlCheck(err, w, fmt.Sprint("There was an error ", err))
 }
