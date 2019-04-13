@@ -91,3 +91,8 @@ export const createPalette = paletteData => async dispatch => {
   alert('Palette Created');
   history.push('/');
 };
+
+export const getPalette = paletteID => async dispatch => {
+  const response = await api.get(`api/palettes?paletteId=${paletteID}`);
+  dispatch({ type: 'GET_PALETTE', payload: response.data });
+};
