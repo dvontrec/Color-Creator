@@ -36,16 +36,15 @@ class ShowPalette extends Component {
   }
 
   renderPalette() {
-    console.log(this.props);
-    if (this.state.paletteData) {
+    if (this.props.palette.palette) {
       return (
         <div>
-          <h1>{this.state.paletteData.PaletteName}</h1>
-          <div>{this.renderColor(this.state.paletteData.Primary)}</div>
+          <h1>{this.props.palette.palette.PaletteName}</h1>
+          <div>{this.renderColor(this.props.palette.palette.Primary)}</div>
           <hr />
-          <div>{this.renderColor(this.state.paletteData.Secondary)}</div>
+          <div>{this.renderColor(this.props.palette.palette.Secondary)}</div>
           <hr />
-          <div>{this.renderColor(this.state.paletteData.Tertiary)}</div>
+          <div>{this.renderColor(this.props.palette.palette.Tertiary)}</div>
           <Link className="btn btn-primary" to={`/profile/`}>
             View Creator Profile
           </Link>
