@@ -12,6 +12,6 @@ CREATE TABLE paletteFavs
   (id),
 
   FOREIGN KEY
-  (colorHex) REFERENCES palettes
+  (paletteId) REFERENCES palettes
   (paletteID)
 );
