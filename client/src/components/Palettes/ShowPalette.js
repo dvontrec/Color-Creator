@@ -95,7 +95,11 @@ class ShowPalette extends Component {
   }
 }
 
+const matchStateToProps = state => {
+  return { palette: state.palette };
+};
+
 export default connect(
-  null,
+  matchStateToProps,
   { getPalette }
 )(ShowPalette);

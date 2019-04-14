@@ -93,6 +93,6 @@ export const createPalette = paletteData => async dispatch => {
 };
 
 export const getPalette = paletteID => async dispatch => {
-  const response = await api.get(`api/palettes?paletteId=${paletteID}`);
+  const response = await api.get(`api/palettes?paletteID=${paletteID}`);
   dispatch({ type: 'GET_PALETTE', payload: response.data });
 };
