@@ -77,7 +77,7 @@ func getPaletteFavorites(w http.ResponseWriter, req *http.Request) {
 func addPaletteFavorites(w http.ResponseWriter, req *http.Request) {
 	p := req.FormValue("paletteId")
 	u := req.FormValue("userId")
-	q := fmt.Sprint("INSERT INTO palettesFavs(userId, paletteId) VALUES(", u, ",", p, ");")
+	q := fmt.Sprint("INSERT INTO paletteFavs(userId, paletteId) VALUES(", u, ",", p, ");")
 	fmt.Println(q)
 	stmt, err := db.Prepare(q)
 
@@ -104,7 +104,7 @@ func addPaletteFavorites(w http.ResponseWriter, req *http.Request) {
 func removePaletteFavorites(w http.ResponseWriter, req *http.Request) {
 	p := req.FormValue("colorHex")
 	u := req.FormValue("userId")
-	q := fmt.Sprint("DELETE FROM palettes WHERE userId=", u, " AND paletteId=", p, ";")
+	q := fmt.Sprint("DELETE FROM paletteFavs WHERE userId=", u, " AND paletteId=", p, ";")
 	fmt.Print(q)
 	stmt, err := db.Prepare(q)
 
