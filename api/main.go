@@ -81,7 +81,7 @@ func main() {
 	mux.HandleFunc("/colors", colors)
 	mux.HandleFunc("/user", user)
 	mux.HandleFunc("/auth", auth)
-	mux.HandleFunc("/favorites", favorites)
+	mux.HandleFunc("/colorfavorites", colorFavorites)
 	mux.HandleFunc("/palettes", palettes)
 	mux.Handle("/favicon.ico", http.NotFoundHandler())
 	// Create a handler to allow Cross Origin Resource Sharing over the mux
