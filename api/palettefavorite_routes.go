@@ -28,7 +28,7 @@ func getPaletteFavorites(w http.ResponseWriter, req *http.Request) {
 	u := req.FormValue("userId")
 	p := req.FormValue("paletteId")
 	if u != "" {
-		q := fmt.Sprint("SELECT DISTINCT paletteId FROM palettes WHERE userID =", u, ";")
+		q := fmt.Sprint("SELECT DISTINCT paletteId FROM paletteFavs WHERE userID =", u, ";")
 		rows, err := db.Query(q)
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
@@ -50,7 +50,7 @@ func getPaletteFavorites(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 	if p != "" {
-		q := fmt.Sprint("SELECT DISTINCT userID FROM pallettes WHERE paletteId ='", p, "';")
+		q := fmt.Sprint("SELECT DISTINCT userID FROM palletteFavs WHERE paletteId ='", p, "';")
 		rows, err := db.Query(q)
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
@@ -77,7 +77,7 @@ func getPaletteFavorites(w http.ResponseWriter, req *http.Request) {
 func addPaletteFavorites(w http.ResponseWriter, req *http.Request) {
 	p := req.FormValue("paletteId")
 	u := req.FormValue("userId")
-	q := fmt.Sprint("INSERT INTO palette(userId, paletteId) VALUES(", u, ",", p, "');")
+	q := fmt.Sprint("INSERT INTO palettesFavs(userId, paletteId) VALUES(", u, ",", p, ");")
 	fmt.Println(q)
 	stmt, err := db.Prepare(q)
 
