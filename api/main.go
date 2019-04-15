@@ -42,10 +42,11 @@ type Favorite struct {
 
 // UserFullData used to display all user profile information as json
 type UserFullData struct {
-	User          UserData      `json:"userInfo"`
-	CreatedColors []Color       `json:"createdColors"`
-	Favorites     []Color       `json:"favoriteColors"`
-	Palettes      []PaletteData `json:"palettes"`
+	User             UserData      `json:"userInfo"`
+	CreatedColors    []Color       `json:"createdColors"`
+	Favorites        []Color       `json:"favoriteColors"`
+	Palettes         []PaletteData `json:"palettes"`
+	FavoritePalettes []PaletteData `json:"favoritePalettes"`
 }
 
 // PaletteData displays the primary, secondary, and tertiary color of the palette

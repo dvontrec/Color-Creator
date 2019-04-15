@@ -150,6 +150,7 @@ func getUser(w http.ResponseWriter, req *http.Request) {
 		getUserCreatedColors(int(id)),
 		getUserFavoriteColors(int(id)),
 		getUserPalettes(int(id)),
+		getUserFavoritePalettes(int(id)),
 	}
 	// pass the userdata object encoded as json
 	err = json.NewEncoder(w).Encode(fullUser)
@@ -232,4 +233,54 @@ func getUserPalettes(userID int) []PaletteData {
 		palettes = append(palettes, p)
 	}
 	return palettes
+}
+func getUserFavoritePalettes(userID int) []PaletteData {
+	// queries for palette name and hexes
+	q := fmt.Sprintf("SELECT DISTINCT paletteID FROM paletteFavs WHERE userId = '%v';", userID)
+	// queries the DB
+	rows, err := db.Query(q)
+	// checks the error
+	check(err)
+	// creates variables to hold paletteIds and palettes
+	var p string
+	var palettes []PaletteData
+	// for each row
+	for rows.Next() {
+		// fill in the variables in given order
+		err = rows.Scan(&p)
+		// checks the error
+		check(err)
+		// makes a palette for date
+		palettes = append(palettes, getOnePalette(p))
+	}
+	return palettes
+}
+
+func getOnePalette(id string) PaletteData {
+	// queries for palette name and hexes
+	q := fmt.Sprintf("SELECT paletteName, paletteID, primaryHex, secondaryHex, tertiaryHex FROM palettes WHERE paletteID = '%v';", id)
+	// queries the DB
+	rows, err := db.Query(q)
+	// checks the error
+	check(err)
+	// creates variables to hold color information
+	var paletteName, paletteID, pHex, sHex, tHex string
+	// create the array to hold palettes
+	var palette PaletteData
+	// for each row
+	for rows.Next() {
+		// fill in the variables in given order
+		err = rows.Scan(&paletteName, &paletteID, &pHex, &sHex, &tHex)
+		// checks the error
+		check(err)
+		// makes a palette for date
+		palette = PaletteData{
+			paletteName,
+			paletteID,
+			getOneColor(pHex),
+			getOneColor(sHex),
+			getOneColor(tHex),
+		}
+	}
+	return palette
 }
