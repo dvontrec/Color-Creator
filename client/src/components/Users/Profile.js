@@ -20,28 +20,28 @@ class Profile extends Component {
     return (
       <div>
         <h4>{this.state.UserData.userInfo.username.toUpperCase()}</h4>
-        <h4>Created Colors</h4>
+        <h3>Created Colors</h3>
         <div className="row">
           {this.state.UserData.createdColors && (
             <ColorContainer colors={this.state.UserData.createdColors} />
           )}
         </div>
         <hr />
-        <h4>Favorite Colors</h4>
+        <h3>Favorite Colors</h3>
         <div className="row">
           {this.state.UserData.favoriteColors && (
             <ColorContainer colors={this.state.UserData.favoriteColors} />
           )}
         </div>
         <hr />
-        <h4>Palettes</h4>
+        <h3>Palettes</h3>
         <div>
           {this.state.UserData.palettes && (
             <PaletteContainer palettes={this.state.UserData.palettes} />
           )}
         </div>
         <hr />
-        <h4>Favorite Palettes</h4>
+        <h3>Favorite Palettes</h3>
         <div>
           {this.state.UserData.favoritePalettes && (
             <PaletteContainer palettes={this.state.UserData.favoritePalettes} />
