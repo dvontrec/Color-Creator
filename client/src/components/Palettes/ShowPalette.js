@@ -2,13 +2,21 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { getPalette } from '../../actions';
+import {
+  getPalette,
+  getFavoritesByPalette,
+  addPaletteFavorites,
+  removePaletteFavorites
+} from '../../actions';
 import api from '../../apis/colors';
 
 class ShowPalette extends Component {
-  state = {};
+  state = {
+    favorites: this.props.favorites || []
+  };
   async componentDidMount() {
     this.props.getPalette(this.props.match.params.id);
+    this.props.getFavoritesByPalette(this.props.match.params.id);
   }
 
   renderColor(color) {
@@ -45,10 +53,7 @@ class ShowPalette extends Component {
           <div>{this.renderColor(this.props.palette.palette.Secondary)}</div>
           <hr />
           <div>{this.renderColor(this.props.palette.palette.Tertiary)}</div>
-          <Link className="btn btn-primary" to={`/profile/`}>
-            View Creator Profile
-          </Link>
-          {/* {this.checkFavorite()} */}
+          {this.checkFavorite()}
         </div>
       );
     }
@@ -58,10 +63,10 @@ class ShowPalette extends Component {
   addFavorite = () => {
     const favs = this.props.favorites || this.state.favorites;
     favs.push(this.props.auth.userId);
-    const favoritesQuery = `userId=${this.props.auth.userId}&userHash=${
-      this.props.auth.userHash
-    }&colorHex=${this.props.color.hex}`;
-    this.props.addFavorites(favoritesQuery);
+    const favoritesQuery = `userId=${this.props.auth.userId}&paletteId=${
+      this.props.match.params.id
+    }`;
+    this.props.addPaletteFavorites(favoritesQuery);
     this.setState({ favorites: favs });
   };
 
@@ -70,10 +75,10 @@ class ShowPalette extends Component {
       this.props.favorites.filter(e => e != this.props.auth.userId) ||
       this.props.favorites ||
       this.state.favorites.filter(e => e != this.props.auth.userId);
-    const favoritesQuery = `userId=${this.props.auth.userId}&userHash=${
-      this.props.auth.userHash
-    }&colorHex=${this.props.color.hex}`;
-    this.props.removeFavorites(favoritesQuery);
+    const favoritesQuery = `userId=${this.props.auth.userId}&paletteId=${
+      this.props.match.params.id
+    }`;
+    this.props.removePaletteFavorites(favoritesQuery);
     this.setState({ favorites: newFavs });
   };
 
@@ -95,10 +100,19 @@ class ShowPalette extends Component {
 }
 
 const matchStateToProps = state => {
-  return { palette: state.palette };
+  return {
+    palette: state.palette,
+    auth: state.auth,
+    favorites: Object.values(state.favorites)[0]
+  };
 };
 
 export default connect(
   matchStateToProps,
-  { getPalette }
+  {
+    getPalette,
+    getFavoritesByPalette,
+    addPaletteFavorites,
+    removePaletteFavorites
+  }
 )(ShowPalette);
