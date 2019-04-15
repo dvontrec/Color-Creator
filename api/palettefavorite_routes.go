@@ -97,7 +97,7 @@ func addPaletteFavorites(w http.ResponseWriter, req *http.Request) {
 		fmt.Fprintln(w, err)
 	}
 	w.WriteHeader(http.StatusCreated)
-	fmt.Fprintln(w, n)
+	fmt.Fprintf(w, "Added %v palette to favorite", n)
 
 }
 
