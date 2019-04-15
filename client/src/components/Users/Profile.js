@@ -40,6 +40,13 @@ class Profile extends Component {
             <PaletteContainer palettes={this.state.UserData.palettes} />
           )}
         </div>
+        <hr />
+        <h4>Favorite Palettes</h4>
+        <div>
+          {this.state.UserData.favoritePalettes && (
+            <PaletteContainer palettes={this.state.UserData.favoritePalettes} />
+          )}
+        </div>
       </div>
     );
   }
