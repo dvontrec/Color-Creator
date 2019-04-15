@@ -57,27 +57,27 @@ export const signOut = () => {
 };
 
 // ***************************************************************
-//                  FAVORITES
+//                  COLOR FAVORITES
 // ***************************************************************
 // Posts to the api to create a new favorite link between the user and the color
 export const addFavorites = favoritesQuery => async dispatch => {
-  const response = await api.post(`api/favorites?${favoritesQuery}`);
+  const response = await api.post(`api/colorfavorites?${favoritesQuery}`);
   dispatch({ type: 'ADD_FAVORITES', payload: response.data });
 };
 export const removeFavorites = favoritesQuery => async dispatch => {
-  const response = await api.delete(`api/favorites?${favoritesQuery}`);
+  const response = await api.delete(`api/colorfavorites?${favoritesQuery}`);
   dispatch({ type: 'DELETE_FAVORITES', payload: response.data });
 };
 
 // Calls the api to get a list of colors favorited by the given user
 export const getFavoritesByUser = userId => async dispatch => {
-  const response = await api.get(`api/favorites?userId=${userId}`);
+  const response = await api.get(`api/colorfavorites?userId=${userId}`);
   dispatch({ type: 'GET_USER_FAVORITES', payload: response.data });
 };
 
 // Calls the api to get a list of users who have favorited the given color
 export const getFavoritesByColor = colorHex => async dispatch => {
-  const response = await api.get(`api/favorites?colorHex=${colorHex}`);
+  const response = await api.get(`api/colorfavorites?colorHex=${colorHex}`);
   dispatch({ type: 'GET_COLOR_FAVORITES', payload: response.data });
 };
 
@@ -93,6 +93,31 @@ export const createPalette = paletteData => async dispatch => {
 };
 
 export const getPalette = paletteID => async dispatch => {
-  const response = await api.get(`api/palettes?paletteId=${paletteID}`);
+  const response = await api.get(`api/palettes?paletteID=${paletteID}`);
   dispatch({ type: 'GET_PALETTE', payload: response.data });
+};
+
+// ***************************************************************
+//                  Palette FAVORITES
+// ***************************************************************
+// Posts to the api to create a new favorite link between the user and the palette
+export const addPaletteFavorites = favoritesQuery => async dispatch => {
+  const response = await api.post(`api/palettefavorites?${favoritesQuery}`);
+  dispatch({ type: 'ADD_PALETTE_FAVORITES', payload: response.data });
+};
+export const removePaletteFavorites = favoritesQuery => async dispatch => {
+  const response = await api.delete(`api/palettefavorites?${favoritesQuery}`);
+  dispatch({ type: 'DELETE_PALETTE_FAVORITES', payload: response.data });
+};
+
+// Calls the api to get a list of palettes favorited by the given user
+export const getPaletteFavoritesByUser = userId => async dispatch => {
+  const response = await api.get(`api/palettefavorites?userId=${userId}`);
+  dispatch({ type: 'GET_USER_PALETTE_FAVORITES', payload: response.data });
+};
+
+// Calls the api to get a list of users who have favorited the given palette
+export const getFavoritesByPalette = colorHex => async dispatch => {
+  const response = await api.get(`api/palettefavorites?colorHex=${colorHex}`);
+  dispatch({ type: 'GET_PALETTE_FAVORITES', payload: response.data });
 };

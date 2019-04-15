@@ -7,7 +7,7 @@ import (
 )
 
 // Function used to route when api calls to favorites
-func favorites(w http.ResponseWriter, req *http.Request) {
+func colorFavorites(w http.ResponseWriter, req *http.Request) {
 	if req.Method == http.MethodGet {
 		getFavorites(w, req)
 		return

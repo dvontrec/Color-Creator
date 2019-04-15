@@ -42,10 +42,11 @@ type Favorite struct {
 
 // UserFullData used to display all user profile information as json
 type UserFullData struct {
-	User          UserData      `json:"userInfo"`
-	CreatedColors []Color       `json:"createdColors"`
-	Favorites     []Color       `json:"favoriteColors"`
-	Palettes      []PaletteData `json:"palettes"`
+	User             UserData      `json:"userInfo"`
+	CreatedColors    []Color       `json:"createdColors"`
+	Favorites        []Color       `json:"favoriteColors"`
+	Palettes         []PaletteData `json:"palettes"`
+	FavoritePalettes []PaletteData `json:"favoritePalettes"`
 }
 
 // PaletteData displays the primary, secondary, and tertiary color of the palette
@@ -81,7 +82,8 @@ func main() {
 	mux.HandleFunc("/colors", colors)
 	mux.HandleFunc("/user", user)
 	mux.HandleFunc("/auth", auth)
-	mux.HandleFunc("/favorites", favorites)
+	mux.HandleFunc("/colorfavorites", colorFavorites)
+	mux.HandleFunc("/palettefavorites", paletteFavorites)
 	mux.HandleFunc("/palettes", palettes)
 	mux.Handle("/favicon.ico", http.NotFoundHandler())
 	// Create a handler to allow Cross Origin Resource Sharing over the mux
