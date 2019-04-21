@@ -93,10 +93,16 @@ class ShowPalette extends Component {
       const favArray = this.state.favorites || this.props.favorites;
       if (favArray && favArray.includes(this.props.auth.userId.toString())) {
         return (
-          <button onClick={this.removeFavorite}>Remove From Favorites</button>
+          <button className="btn btn-secondary" onClick={this.removeFavorite}>
+            Remove From Favorites
+          </button>
         );
       }
-      return <button onClick={this.addFavorite}>Add To Favorite</button>;
+      return (
+        <button className="btn btn-success" onClick={this.addFavorite}>
+          Add To Favorite
+        </button>
+      );
     }
   };
 
