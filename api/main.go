@@ -53,7 +53,7 @@ type UserFullData struct {
 type PaletteData struct {
 	PaletteName    string `json:"PaletteName"`
 	ID             string `json:"ID"`
-	creatorID      int    `json:"creatorID"`
+	CreatorID      int    `json:"CreatorID"`
 	PrimaryColor   Color  `json:"Primary"`
 	SecondaryColor Color  `json:"Secondary"`
 	TertiaryColor  Color  `json:"Tertiary"`
