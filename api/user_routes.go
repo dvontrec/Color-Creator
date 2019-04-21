@@ -226,6 +226,7 @@ func getUserPalettes(userID int) []PaletteData {
 		p := PaletteData{
 			paletteName,
 			paletteID,
+			userID,
 			getOneColor(pHex),
 			getOneColor(sHex),
 			getOneColor(tHex),
@@ -258,25 +259,27 @@ func getUserFavoritePalettes(userID int) []PaletteData {
 
 func getOnePalette(id string) PaletteData {
 	// queries for palette name and hexes
-	q := fmt.Sprintf("SELECT paletteName, paletteID, primaryHex, secondaryHex, tertiaryHex FROM palettes WHERE paletteID = '%v';", id)
+	q := fmt.Sprintf("SELECT paletteName, paletteID, creatorId, primaryHex, secondaryHex, tertiaryHex FROM palettes WHERE paletteID = '%v';", id)
 	// queries the DB
 	rows, err := db.Query(q)
 	// checks the error
 	check(err)
 	// creates variables to hold color information
 	var paletteName, paletteID, pHex, sHex, tHex string
+	var creatorID int
 	// create the array to hold palettes
 	var palette PaletteData
 	// for each row
 	for rows.Next() {
 		// fill in the variables in given order
-		err = rows.Scan(&paletteName, &paletteID, &pHex, &sHex, &tHex)
+		err = rows.Scan(&paletteName, &paletteID, &creatorID, &pHex, &sHex, &tHex)
 		// checks the error
 		check(err)
 		// makes a palette for date
 		palette = PaletteData{
 			paletteName,
 			paletteID,
+			creatorID,
 			getOneColor(pHex),
 			getOneColor(sHex),
 			getOneColor(tHex),

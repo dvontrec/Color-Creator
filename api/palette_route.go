@@ -29,7 +29,8 @@ func getPalette(w http.ResponseWriter, req *http.Request) {
 	// checks the error
 	htmlCheck(err, w, fmt.Sprint("There was an error ", err))
 	// creates variables to hold color information
-	var paletteName, creatorID, pHex, sHex, tHex string
+	var paletteName, pHex, sHex, tHex string
+	var creatorID int
 	var p PaletteData
 	// for each row
 	for rows.Next() {
@@ -41,6 +42,7 @@ func getPalette(w http.ResponseWriter, req *http.Request) {
 		p = PaletteData{
 			paletteName,
 			paletteID,
+			creatorID,
 			getOneColor(pHex),
 			getOneColor(sHex),
 			getOneColor(tHex),
