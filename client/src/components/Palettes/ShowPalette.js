@@ -53,6 +53,12 @@ class ShowPalette extends Component {
           <div>{this.renderColor(this.props.palette.palette.Secondary)}</div>
           <hr />
           <div>{this.renderColor(this.props.palette.palette.Tertiary)}</div>
+          <Link
+            className="btn btn-primary"
+            to={`/profile/${this.props.palette.palette.CreatorID}`}
+          >
+            View Creator Profile
+          </Link>
           {this.checkFavorite()}
         </div>
       );
@@ -95,7 +101,6 @@ class ShowPalette extends Component {
   };
 
   render() {
-    console.log(this.props);
     return <div className="container">{this.renderPalette()}</div>;
   }
 }
